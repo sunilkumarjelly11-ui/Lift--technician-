@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lift Technician</title>
+<style>
+body{margin:0;font-family:Arial;background:#eef3f8;color:#062542}
+.screen{display:none;padding:20px;min-height:100vh;box-sizing:border-box}
+.active{display:block}
+.logo{font-size:42px;text-align:center;margin-top:40px}
+h1{text-align:center}
+.card{background:white;padding:18px;margin:15px 0;border-radius:15px;box-shadow:0 3px 10px #bbb}
+input,select,textarea,button{width:100%;box-sizing:border-box;padding:14px;margin:8px 0;border-radius:8px;border:1px solid #bbb;font-size:16px}
+button{background:#062542;color:white;border:0;font-weight:bold}
+</style>
+</head>
+<body>
+
+<section id="loginScreen" class="screen active">
+<div class="logo">🛗</div>
+<h1>JSK Elevators</h1>
+<div class="card">
+<h2>Technician Login</h2>
+<input id="technician" placeholder="Technician Name">
+<input id="pin" type="password" placeholder="PIN">
+<button onclick="login()">LOGIN</button>
+<p id="message"></p>
+</div>
+</section>
+
+<section id="dashboardScreen" class="screen">
+<h1>Technician Dashboard</h1>
+<p>Welcome, <b id="welcomeName"></b></p>
+
+<div class="card">
+<h2>🛗 Lift Details</h2>
+<p>Enter customer and lift information.</p>
+<button onclick="showLift()">OPEN LIFT DETAILS</button>
+</div>
+
+<div class="card">
+<h2>🚨 Breakdown Report</h2>
+<p>Report lift breakdown problems.</p>
+<button onclick="showBreakdown()">CREATE BREAKDOWN REPORT</button>
+</div>
+
+<div class="card">
+<h2>🔧 Maintenance</h2>
+<p>Maintenance checklist.</p>
+<button onclick="alert('Maintenance checklist coming next')">OPEN CHECKLIST</button>
+</div>
+
+<div class="card">
+<h2>📍 GPS Location</h2>
+<button onclick="getLocation()">GET LOCATION</button>
+<p id="location">Location not captured</p>
+</div>
+
+<button onclick="logout()">LOGOUT</button>
+</section>
+
+<section id="liftScreen" class="screen">
+<h1>Lift Details</h1>
+<div class="card">
+<input id="liftNumber" placeholder="Lift Number">
+<input id="customerName" placeholder="Customer Name">
+<input id="locationName" placeholder="Lift Location">
+<button onclick="saveLift()">SAVE LIFT</button>
+<button onclick="backDashboard()">BACK</button>
+</div>
+</section>
+
+<section id="breakdownScreen" class="screen">
+<h1>Breakdown Report</h1>
+<div class="card">
+<input id="breakdownLift" placeholder="Lift Number">
+<select id="breakdownType">
+<option>Select Breakdown Type</option>
+<option>Lift Not Moving</option>
+<option>Door Problem</option>
+<option>Lift Stuck</option>
+<option>Noise / Vibration</option>
+<option>Electrical Problem</option>
+<option>Other</option>
+</select>
+<textarea id="breakdownProblem" placeholder="Describe the problem"></textarea>
+<button onclick="saveBreakdown()">SAVE BREAKDOWN</button>
+<button onclick="backDashboard()">BACK</button>
+</div>
+</section>
+
+<script>
+function login(){
+let name=document.getElementById("technician").value.trim();
+if(!name){
+document.getElementById("message").innerText="Enter Technician Name";
+return;
+}
+document.getElementById("welcomeName").innerText=name;
+document.getElementById("loginScreen").classList.remove("active");
+document.getElementById("dashboardScreen").classList.add("active");
+}
+
+function logout(){
+document.getElementById("dashboardScreen").classList.remove("active");
+document.getElementById("loginScreen").classList.add("active");
+document.getElementById("technician").value="";
+document.getElementById("pin").value="";
+}
+
+function showLift(){
+document.getElementById("dashboardScreen").classList.remove("active");
+document.getElementById("liftScreen").classList.add("active");
+}
+
+function showBreakdown(){
+document.getElementById("dashboardScreen").classList.remove("active");
+document.getElementById("breakdownScreen").classList.add("active");
+}
+
+function backDashboard(){
+document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));
+document.getElementById("dashboardScreen").classList.add("active");
+}
+
+function saveLift(){
+alert("Lift details saved");
+}
+
+function saveBreakdown(){
+alert("Breakdown report saved");
+}
+
+function getLocation(){
+if(!navigator.geolocation){
+document.getElementById("location").innerText="GPS not supported";
+return;
+}
+navigator.geolocation.getCurrentPosition(
+p=>document.getElementById("location").innerText=
+"Location: "+p.coords.latitude.toFixed(5)+", "+p.coords.longitude.toFixed(5),
+()=>document.getElementById("location").innerText="Location permission denied"
+);
+}
+</script>
+
+</body>
+</html>
