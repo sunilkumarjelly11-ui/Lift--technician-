@@ -48,7 +48,7 @@ button{background:#062542;color:white;border:0;font-weight:bold}
 <div class="card">
 <h2>🔧 Maintenance</h2>
 <p>Maintenance checklist.</p>
-<button onclick="alert('Maintenance checklist coming next')">OPEN CHECKLIST</button>
+<button onclick="showChecklist()">OPEN CHECKLIST</button>
 </div>
 
 <div class="card">
@@ -114,6 +114,13 @@ document.getElementById("dashboardScreen").classList.remove("active");
 document.getElementById("liftScreen").classList.add("active");
 }
 
+function showChecklist(){
+document.getElementById("dashboardScreen").classList.remove("active");
+document.getElementById("checklistScreen").classList.add("active");
+}
+function saveChecklist(){
+alert("Maintenance Checklist saved successfully!");
+}
 function showBreakdown(){
 document.getElementById("dashboardScreen").classList.remove("active");
 document.getElementById("breakdownScreen").classList.add("active");
@@ -145,5 +152,21 @@ p=>document.getElementById("location").innerText=
 }
 </script>
 
+<section id="checklistScreen" class="screen">
+<h1>🔧 Maintenance Checklist</h1>
+<div class="card">
+<label><input type="checkbox"> Machine Room Inspection</label><br>
+<label><input type="checkbox"> Lift Oil Level</label><br>
+<label><input type="checkbox"> Door Operation</label><br>
+<label><input type="checkbox"> Door Lock</label><br>
+<label><input type="checkbox"> Safety Circuit</label><br>
+<label><input type="checkbox"> Emergency Alarm</label><br>
+<label><input type="checkbox"> Cabin Light & Fan</label><br>
+<label><input type="checkbox"> Limit Switches</label><br>
+<label><input type="checkbox"> Final Test</label><br><br>
+<button onclick="saveChecklist()">SAVE CHECKLIST</button>
+<button onclick="backDashboard()">BACK</button>
+</div>
+</section>
 </body>
 </html>
