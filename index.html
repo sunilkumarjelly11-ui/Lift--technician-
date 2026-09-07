@@ -141,16 +141,32 @@ alert("Breakdown report saved");
 }
 
 function getLocation(){
-if(!navigator.geolocation){
-document.getElementById("location").innerText="GPS not supported";
-return;
+      if(!navigator.geolocation){
+          document.getElementById("location").innerText = "GPS not supported";
+              return;
+                }
+
+                  navigator.geolocation.getCurrentPosition(
+                      function(p){
+                            var lat = p.coords.latitude.toFixed(5);
+                                  var lon = p.coords.longitude.toFixed(5);
+
+                                        document.getElementById("location").innerText =
+                                                "Location: " + lat + ", " + lon;
+
+                                                      var liftLocation = document.getElementById("locationName");
+                                                            if(liftLocation){
+                                                                    liftLocation.value = lat + ", " + lon;
+                                                                          }
+                                                                              },
+                                                                                  function(){
+                                                                                        document.getElementById("location").innerText =
+                                                                                                "Location permission denied";
+                                                                                                    }
+                                                                                                      );
+                                                                                                      } 
 }
-navigator.geolocation.getCurrentPosition(
-p=>document.getElementById("location").innerText=
-"Location: "+p.coords.latitude.toFixed(5)+", "+p.coords.longitude.toFixed(5),
-()=>document.getElementById("location").innerText="Location permission denied"
-);
-}
+
 </script>
 
 <section id="checklistScreen" class="screen">
