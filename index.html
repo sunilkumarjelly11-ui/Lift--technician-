@@ -92,108 +92,160 @@ button{background:#062542;color:white;border:0;font-weight:bold}
 </section>
 
 <script>
-function login() {
-      const name = document.getElementById("technician").value.trim();
-          const pin = document.getElementById("pin").value.trim();
+    function login() {
+        const name = document.getElementById("technician").value.trim();
+            const pin = document.getElementById("pin").value.trim();
 
-              if (name === "") {
-                      alert("Please enter Technician Name");
-                              return;
-                                  }
+                if (name === "") {
+                        alert("Please enter Technician Name");
+                                return;
+                                    }
 
-                                      if (pin === "") {
-                                              alert("Please enter PIN");
-                                                      return;
-                                                          }
+                                        if (pin === "") {
+                                                alert("Please enter PIN");
+                                                        return;
+                                                            }
 
-                                                              if (pin !== "1234") {
-                                                                      alert("Invalid PIN. Use 1234 for testing.");
-                                                                              return;
-                                                                                  }
+                                                                if (pin !== "1234") {
+                                                                        alert("Invalid PIN. Use 1234 for testing.");
+                                                                                return;
+                                                                                    }
 
-                                                                                      const welcome = document.getElementById("welcomeName");
+                                                                                        document.getElementById("welcomeName").innerText = "Welcome, " + name;
 
-                                                                                          if (welcome) {
-                                                                                                  welcome.innerText = "Welcome, " + name;
-                                                                                                      }
+                                                                                            document.getElementById("loginScreen").classList.remove("active");
+                                                                                                document.getElementById("dashboardScreen").classList.add("active");
+                                                                                                }
 
-                                                                                                          document.getElementById("loginScreen").classList.remove("active");
-                                                                                                              document.getElementById("dashboardScreen").classList.add("active");
-                                                                                                              }
+                                                                                                function showChecklist() {
+                                                                                                    document.getElementById("dashboardScreen").classList.remove("active");
+                                                                                                        document.getElementById("checklistScreen").classList.add("active");
+                                                                                                        }
 
-                                                                                                              function logout() {
-                                                                                                                  document.getElementById("dashboardScreen").classList.remove("active");
-                                                                                                                      document.getElementById("loginScreen").classList.add("active");
-                                                                                                                          document.getElementById("technician").value = "";
-                                                                                                                              document.getElementById("pin").value = "";
-                                                                                                                              }
+                                                                                                        function saveChecklist() {
+                                                                                                            alert("Maintenance Checklist saved successfully!");
+                                                                                                            }
 
-                                                                                                                              function showLift() {
-                                                                                                                                  document.getElementById("dashboardScreen").classList.remove("active");
-                                                                                                                                      document.getElementById("liftScreen").classList.add("active");
-                                                                                                                                      }
+                                                                                                            function showBreakdown() {
+                                                                                                                document.getElementById("dashboardScreen").classList.remove("active");
+                                                                                                                    document.getElementById("breakdownScreen").classList.add("active");
+                                                                                                                    }
 
-                                                                                                                                      function showChecklist() {
-                                                                                                                                          document.getElementById("dashboardScreen").classList.remove("active");
-                                                                                                                                              document.getElementById("checklistScreen").classList.add("active");
-                                                                                                                                              }
+                                                                                                                    function backDashboard() {
+                                                                                                                        document.querySelectorAll(".screen").forEach(function(screen) {
+                                                                                                                                screen.classList.remove("active");
+                                                                                                                                    });
 
-                                                                                                                                              function saveChecklist() {
-                                                                                                                                                  alert("Maintenance Checklist saved successfully!");
-                                                                                                                                                  }
+                                                                                                                                        document.getElementById("dashboardScreen").classList.add("active");
+                                                                                                                                        }
 
-                                                                                                                                                  function showBreakdown() {
-                                                                                                                                                      document.getElementById("dashboardScreen").classList.remove("active");
-                                                                                                                                                          document.getElementById("breakdownScreen").classList.add("active");
-                                                                                                                                                          }
+                                                                                                                                        function saveLift() {
+                                                                                                                                            alert("Lift details saved successfully!");
+                                                                                                                                            }
 
-                                                                                                                                                          function backDashboard() {
-                                                                                                                                                              document.querySelectorAll(".screen").forEach(x => x.classList.remove("active"));
-                                                                                                                                                                  document.getElementById("dashboardScreen").classList.add("active");
-                                                                                                                                                                  }
+                                                                                                                                            function saveBreakdown() {
+                                                                                                                                                alert("Breakdown report saved successfully!");
+                                                                                                                                                }
 
-                                                                                                                                                                  function saveLift() {
-                                                                                                                                                                      alert("Lift details saved");
-                                                                                                                                                                      }
+                                                                                                                                                function getLocation() {
 
-                                                                                                                                                                      function saveBreakdown() {
-                                                                                                                                                                          alert("Breakdown report saved");
-                                                                                                                                                                          }
+                                                                                                                                                    const locationBox = document.getElementById("location");
 
-                                                                                                                                                                          function getLocation() {
-                                                                                                                                                                              if (!navigator.geolocation) {
-                                                                                                                                                                                      document.getElementById("location").innerText = "GPS not supported";
-                                                                                                                                                                                              return;
-                                                                                                                                                                                                  }
+                                                                                                                                                        if (!navigator.geolocation) {
+                                                                                                                                                                locationBox.value = "GPS not supported";
+                                                                                                                                                                        return;
+                                                                                                                                                                            }
 
-                                                                                                                                                                                                      navigator.geolocation.getCurrentPosition(function(p) {
-                                                                                                                                                                                                              const lat = p.coords.latitude.toFixed(5);
-                                                                                                                                                                                                                      const lon = p.coords.longitude.toFixed(5);
+                                                                                                                                                                                locationBox.value = "Getting location...";
 
-                                                                                                                                                                                                                              document.getElementById("location").innerText =
-                                                                                                                                                                                                                                          "Location: " + lat + ", " + lon;
-                                                                                                                                                                                                                                              });
-                                                                                                                                                                                                                                              }
-                                                                                                                                                                                                                                              </script>
-}
+                                                                                                                                                                                    navigator.geolocation.getCurrentPosition(
+                                                                                                                                                                                            function(position) {
 
-</script>
+                                                                                                                                                                                                        const lat = position.coords.latitude.toFixed(6);
+                                                                                                                                                                                                                    const lon = position.coords.longitude.toFixed(6);
 
-<section id="checklistScreen" class="screen">
-<h1>🔧 Maintenance Checklist</h1>
-<div class="card">
-<label><input type="checkbox"> Machine Room Inspection</label><br>
-<label><input type="checkbox"> Lift Oil Level</label><br>
-<label><input type="checkbox"> Door Operation</label><br>
-<label><input type="checkbox"> Door Lock</label><br>
-<label><input type="checkbox"> Safety Circuit</label><br>
-<label><input type="checkbox"> Emergency Alarm</label><br>
-<label><input type="checkbox"> Cabin Light & Fan</label><br>
-<label><input type="checkbox"> Limit Switches</label><br>
-<label><input type="checkbox"> Final Test</label><br><br>
-<button onclick="saveChecklist()">SAVE CHECKLIST</button>
-<button onclick="backDashboard()">BACK</button>
-</div>
-</section>
-</body>
-</html>
+                                                                                                                                                                                                                                locationBox.value = lat + ", " + lon;
+
+                                                                                                                                                                                                                                        },
+                                                                                                                                                                                                                                                function(error) {
+
+                                                                                                                                                                                                                                                            if (error.code === 1) {
+                                                                                                                                                                                                                                                                            locationBox.value = "Location permission denied";
+                                                                                                                                                                                                                                                                                        } else if (error.code === 2) {
+                                                                                                                                                                                                                                                                                                        locationBox.value = "Location unavailable";
+                                                                                                                                                                                                                                                                                                                    } else if (error.code === 3) {
+                                                                                                                                                                                                                                                                                                                                    locationBox.value = "GPS timeout - try again";
+                                                                                                                                                                                                                                                                                                                                                } else {
+                                                                                                                                                                                                                                                                                                                                                                locationBox.value = "GPS error";
+                                                                                                                                                                                                                                                                                                                                                                            }
+
+                                                                                                                                                                                                                                                                                                                                                                                    },
+                                                                                                                                                                                                                                                                                                                                                                                            {
+                                                                                                                                                                                                                                                                                                                                                                                                        enableHighAccuracy: true,
+                                                                                                                                                                                                                                                                                                                                                                                                                    timeout: 15000,
+                                                                                                                                                                                                                                                                                                                                                                                                                                maximumAge: 0
+                                                                                                                                                                                                                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                                                                                                                                                                                                                            );
+                                                                                                                                                                                                                                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                                                                                                                                                                                                                            </script>
+
+                                                                                                            
+                                                                            
+                                                                                                                      
+                                                                                                    
+                                                                                                                    
+                                                                                                                            
+                                                                                                                                  
+                                                                                                                        
+                                                                                                
+                                                                                                                                    
+                                                                                                                                
+                                                                                                                                              
+                                                                                    
+                                                                                                                
+                                                                                                                                                
+                                                                                                                            
+                                                                                                                                                        
+                                                                                                                                                    
+                                                                                                                                    
+                                                                                                                                                                
+                                                                                                                                                                  
+
+                                                                                                                                                    
+                                                                                                                                                
+                                                                                                                                                                    
+                                                                                                                                                                            
+
+                                                                                                                                                                        
+                                                                                                                                                                                    
+                                                                                                                                                                                                
+                                                                                                                                                                                                        
+
+                                                                                                                                                                                        
+
+                                                                                                                                                                                                
+                                                                                                                                                                                            
+                                                                                                                                                                                                        
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         </script>
+    <section id="checklistScreen" class="screen"></section>
+        <h1>🔧 Maintenance Checklist</h1>
+
+        <div class="card">
+        <label><input type="checkbox"> Machine Room Inspection</label><br>
+        <label><input type="checkbox"> Lift Oil Level</label><br>
+        <label><input type="checkbox"> Door Operation</label><br>
+        <label><input type="checkbox"> Door Lock</label><br>
+        <label><input type="checkbox"> Safety Circuit</label><br>
+        <label><input type="checkbox"> Emergency Alarm</label><br>
+        <label><input type="checkbox"> Cabin Light & Fan</label><br>
+        <label><input type="checkbox"> Limit Switches</label><br>
+        <label><input type="checkbox"> Final Test</label><br>
+
+        <button onclick="saveChecklist()">SAVE CHECKLIST</button>
+        <button onclick="backDashboard()">BACK</button>
+        </div>
+        </section>
+
+        </body>
+        </html>
