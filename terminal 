@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#0b5cff">
+<link rel="manifest" href="manifest.json">
+<title>JSK Elevators - Technician</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+     margin:0;
+      font-family:Arial,sans-serif;
+       background:#f3f6fb;
+        color:#172033;
+}
+header{
+     background:linear-gradient(135deg,#0757d9,#0b8cff);
+      color:white;
+       padding:22px 18px;
+        border-radius:0 0 25px 25px;
+}
+.logo{
+     font-size:25px;
+      font-weight:bold;
+}
+.subtitle{opacity:.9;margin-top:5px}
+.container{padding:16px;max-width:600px;margin:auto}
+.card{
+     background:white;
+      border-radius:18px;
+       padding:18px;
+        margin-bottom:15px;
+         box-shadow:0 5px 18px #00000012;
+}
+h2{margin:0 0 12px}
+.grid{
+     display:grid;
+      grid-template-columns:1fr 1fr;
+       gap:12px;
+}
+button{
+     border:0;
+      border-radius:14px;
+       padding:16px;
+        font-size:15px;
+         font-weight:bold;
+          cursor:pointer;
+}
+.blue{background:#0b68ee;color:white}
+.light{background:#eaf2ff;color:#0757d9}
+.green{background:#16a66a;color:white}
+.orange{background:#ff9f1c;color:white}
+.red{background:#e74c3c;color:white}
+.item{
+     padding:14px;
+      background:#f6f8fc;
+       border-radius:12px;
+        margin:8px 0;
+}
+.bottom{
+     position:sticky;
+      bottom:0;
+       background:white;
+        padding:10px;
+         display:flex;
+          justify-content:space-around;
+           box-shadow:0 -4px 15px #0002;
+}
+.bottom button{
+     padding:10px;
+      background:white;
+       color:#555;
+}
+.screen{display:none}
+.screen.active{display:block}
+input,textarea,select{
+     width:100%;
+      padding:13px;
+       border:1px solid #d8deea;
+        border-radius:10px;
+         margin:7px 0 12px;
+          font-size:15px;
+}
+label{font-weight:bold;font-size:14px}
+.status{
+     display:inline-block;
+      padding:7px 12px;
+       border-radius:20px;
+        background:#e4f8ed;
+         color:#12814f;
+          font-size:13px;
+           font-weight:bold;
+}
+.icon{font-size:30px;margin-bottom:8px}
+</style>
+</head>
+
+
+
+<header>
+ <div class="logo">⚙️ JSK ELEVATORS</div>
+  <div class="subtitle">Lift Technician Assistant</div>
+  </header>
+
+  <div class="container">
+
+  <!-- DASHBOARD -->
+  <section id="dashboard" class="screen active">
+   <div class="card">
+     <h2>Technician Dashboard</h2>
+       <span class="status">● Ready for Service</span>
+        </div>
+
+         <div class="grid">
+           <button class="blue" onclick="show('breakdown')">
+              🚨<br>Breakdown
+                </button>
+
+                  <button class="light" onclick="show('checklist')">
+                     ☑️<br>Checklist
+                       </button>
+
+                         <button class="light" onclick="show('history')">
+                            📋<br>History
+                              </button>
+
+                                <button class="green" onclick="getLocation()">
+                                   📍<br>GPS Location
+                                     </button>
+                                      </div>
+
+                                       <div class="card">
+                                         <h2>Quick Troubleshooting</h2>
+
+                                           <div class="item" onclick="alert('Check door lock circuit, door contacts, obstruction and door operator.')">
+                                              🚪 <b>Door Not Opening</b>
+                                                </div>
+
+                                                  <div class="item" onclick="alert('Check controller fault code, motor supply, brake and safety circuit.')">
+                                                     ⚙️ <b>Lift Not Moving</b>
+                                                       </div>
+
+                                                         <div class="item" onclick="alert('Check phase supply, fuses, contactors and controller input.')">
+                                                            ⚡ <b>Power Problem</b>
+                                                              </div>
+
+                                                                <div class="item" onclick="alert('Check encoder, leveling sensor, brake and floor sensor.')">
+                                                                   🎯 <b>Leveling Problem</b>
+                                                                     </div>
+                                                                      </div>
+                                                                      </section>
+
+
+                                                                      <!-- BREAKDOWN -->
+                                                                      <section id="breakdown" class="screen">
+                                                                       <div class="card">
+                                                                         <h2>🚨 Breakdown Report</h2>
+
+                                                                           <label>Customer / Building</label>
+                                                                             <input id="customer" placeholder="Enter building name">
+
+                                                                               <label>Lift Number</label>
+                                                                                 <input id="liftno" placeholder="Example: Lift 1">
+
+                                                                                   <label>Problem</label>
+                                                                                     <select id="problem">
+                                                                                        <option>Door not opening</option>
+                                                                                           <option>Lift not moving</option>
+                                                                                              <option>Lift stuck</option>
+                                                                                                 <option>Power failure</option>
+                                                                                                    <option>Leveling problem</option>
+                                                                                                       <option>Abnormal noise</option>
+                                                                                                          <option>Other</option>
+                                                                                                            </select>
+
+                                                                                                              <label>Technician Notes</label>
+                                                                                                                <textarea id="notes" rows="5" placeholder="Write service details"></textarea>
+
+                                                                                                                  <button class="green" style="width:100%" onclick="saveReport()">
+                                                                                                                     💾 Save Service Report
+                                                                                                                       </button>
+
+                                                                                                                         <br><br>
+
+                                                                                                                           <button class="orange" style="width:100%" onclick="takePhoto()">
+                                                                                                                              📷 Take Photo
+                                                                                                                                </button>
+                                                                                                                                 </div>
+
+                                                                                                                                  <button class="light" onclick="show('dashboard')">← Back</button>
+                                                                                                                                  </section>
+
+
+                                                                                                                                  <!-- CHECKLIST -->
+                                                                                                                                  <section id="checklist" class="screen">
+                                                                                                                                   <div class="card">
+                                                                                                                                     <h2>☑️ Maintenance Checklist</h2>
+
+                                                                                                                                       <div class="item">
+                                                                                                                                          <input type="checkbox"> Safety circuit checked
+                                                                                                                                            </div>
+
+                                                                                                                                              <div class="item">
+                                                                                                                                                 <input type="checkbox"> Door locks checked
+                                                                                                                                                   </div>
+
+                                                                                                                                                     <div class="item">
+                                                                                                                                                        <input type="checkbox"> Door operator checked
+                                                                                                                                                          </div>
+
+                                                                                                                                                            <div class="item">
+                                                                                                                                                               <input type="checkbox"> Brake checked
+                                                                                                                                                                 </div>
+
+                                                                                                                                                                   <div class="item">
+                                                                                                                                                                      <input type="checkbox"> Motor checked
+                                                                                                                                                                        </div>
+
+                                                                                                                                                                          <div class="item">
+                                                                                                                                                                             <input type="checkbox"> Controller checked
+                                                                                                                                                                               </div>
+
+                                                                                                                                                                                 <div class="item">
+                                                                                                                                                                                    <input type="checkbox"> Encoder checked
+                                                                                                                                                                                      </div>
+
+                                                                                                                                                                                        <div class="item">
+                                                                                                                                                                                           <input type="checkbox"> Leveling checked
+                                                                                                                                                                                             </div>
+
+                                                                                                                                                                                               <div class="item">
+                                                                                                                                                                                                  <input type="checkbox"> Emergency alarm checked
+                                                                                                                                                                                                    </div>
+
+                                                                                                                                                                                                      <div class="item">
+                                                                                                                                                                                                         <input type="checkbox"> Final test completed
+                                                                                                                                                                                                           </div>
+
+                                                                                                                                                                                                             <button class="green" style="width:100%" onclick="alert('Checklist completed and saved!')">
+                                                                                                                                                                                                                ✅ Complete Checklist
+                                                                                                                                                                                                                  </button>
+                                                                                                                                                                                                                   </div>
+
+                                                                                                                                                                                                                    <button class="light" onclick="show('dashboard')">← Back</button>
+                                                                                                                                                                                                                    </section>
+
+
+                                                                                                                                                                                                                    <!-- HISTORY -->
+                                                                                                                                                                                                                    <section id="history" class="screen">
+                                                                                                                                                                                                                     <div class="card">
+                                                                                                                                                                                                                       <h2>📋 Service History</h2>
+                                                                                                                                                                                                                         <div id="historyList">
+                                                                                                                                                                                                                            <p>No service reports yet.</p>
+                                                                                                                                                                                                                              </div>
+                                                                                                                                                                                                                               </div>
+
+                                                                                                                                                                                                                                <button class="light" onclick="show('dashboard')">← Back</button>
+                                                                                                                                                                                                                                </section>
+
+                                                                                                                                                                                                                                </div>
+
+
+                                                                                                                                                                                                                                <!-- BOTTOM NAV -->
+                                                                                                                                                                                                                                <nav class="bottom">
+                                                                                                                                                                                                                                 <button onclick="show('dashboard')">🏠<br>Home</button>
+                                                                                                                                                                                                                                  <button onclick="show('breakdown')">🚨<br>Service</button>
+                                                                                                                                                                                                                                   <button onclick="show('checklist')">☑️<br>Check</button>
+                                                                                                                                                                                                                                    <button onclick="show('history')">📋<br>History</button>
+                                                                                                                                                                                                                                    </nav>
+
+
+                                                                                                                                                                                                                                    <script>
+
+                                                                                                                                                                                                                                    function show(id){
+                                                                                                                                                                                                                                         document.querySelectorAll('.screen').forEach(
+                                                                                                                                                                                                                                              s=>s.classList.remove('active')
+                                                                                                                                                                                                                                         );
+                                                                                                                                                                                                                                          document.getElementById(id).classList.add('active');
+                                                                                                                                                                                                                                           window.scrollTo(0,0);
+                                                                                                                                                                                                                                    }
+
+                                                                                                                                                                                                                                    function saveReport(){
+
+                                                                                                                                                                                                                                         let customer=document.getElementById('customer').value;
+                                                                                                                                                                                                                                          let lift=document.getElementById('liftno').value;
+                                                                                                                                                                                                                                           let problem=document.getElementById('problem').value;
+                                                                                                                                                                                                                                            let notes=document.getElementById('notes').value;
+
+                                                                                                                                                                                                                                             if(!customer || !lift){
+                                                                                                                                                                                                                                                  alert('Please enter customer/building and lift number.');
+                                                                                                                                                                                                                                                    return;
+                                                                                                                                                                                                                                             }
+
+                                                                                                                                                                                                                                              let reports=JSON.parse(localStorage.getItem('jskReports')||'[]');
+
+                                                                                                                                                                                                                                               reports.push({
+                                                                                                                                                                                                                                                  customer:customer,
+                                                                                                                                                                                                                                                    lift:lift,
+                                                                                                                                                                                                                                                      problem:problem,
+                                                                                                                                                                                                                                                        notes:notes,
+                                                                                                                                                                                                                                                          date:new Date().toLocaleString()
+                                                                                                                                                                                                                                               });
+
+                                                                                                                                                                                                                                                localStorage.setItem('jskReports',JSON.stringify(reports));
+
+                                                                                                                                                                                                                                                 alert('✅ Service report saved successfully!');
+
+                                                                                                                                                                                                                                                  document.getElementById('customer').value='';
+                                                                                                                                                                                                                                                   document.getElementById('liftno').value='';
+                                                                                                                                                                                                                                                    document.getElementById('notes').value='';
+
+                                                                                                                                                                                                                                                     loadHistory();
+                                                                                                                                                                                                                                    }
+
+                                                                                                                                                                                                                                    function loadHistory(){
+
+                                                                                                                                                                                                                                         let reports=JSON.parse(localStorage.getItem('jskReports')||'[]');
+                                                                                                                                                                                                                                          let box=document.getElementById('historyList');
+
+                                                                                                                                                                                                                                           if(reports.length===0){
+                                                                                                                                                                                                                                              box.innerHTML='<p>No service reports yet.</p>';
+                                                                                                                                                                                                                                                return;
+                                                                                                                                                                                                                                           }
+
+                                                                                                                                                                                                                                            box.innerHTML='';
+
+                                                                                                                                                                                                                                             reports.reverse().forEach(r=>{
+                                                                                                                                                                                                                                                  box.innerHTML+=`
+                                                                                                                                                                                                                                                     <div class="item">
+                                                                                                                                                                                                                                                         <b>${r.customer}</b><br>
+                                                                                                                                                                                                                                                             Lift: ${r.lift}<br>
+                                                                                                                                                                                                                                                                 Problem: ${r.problem}<br>
+                                                                                                                                                                                                                                                                     Notes: ${r.notes||'None'}<br>
+                                                                                                                                                                                                                                                                         <small>${r.date}</small>
+                                                                                                                                                                                                                                                                            </div>
+                                                                                                                                                                                                                                                                              `;
+                                                                                                                                                                                                                                             });
+                                                                                                                                                                                                                                    }
+
+                                                                                                                                                                                                                                    function getLocation(){
+
+                                                                                                                                                                                                                                         if(!navigator.geolocation){
+                                                                                                                                                                                                                                              alert('GPS is not supported on this device.');
+                                                                                                                                                                                                                                                return;
+                                                                                                                                                                                                                                         }
+
+                                                                                                                                                                                                                                          navigator.geolocation.getCurrentPosition(
+                                                                                                                                                                                                                                              position=>{
+                                                                                                                                                                                                                                                   let lat=position.coords.latitude;
+                                                                                                                                                                                                                                                      let lon=position.coords.longitude;
+
+                                                                                                                                                                                                                                                         alert(
+                                                                                                                                                                                                                                                                '📍 Location found!\\n\\nLatitude: '+lat+
+                                                                                                                                                                                                                                                                    '\\nLongitude: '+lon
+                                                                                                                                                                                                                                                         );
+                                                                                                                                                                                                                                              },
+                                                                                                                                                                                                                                                ()=>{
+                                                                                                                                                                                                                                                       alert('Unable to get GPS location. Please allow location permission.');
+                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                          );
+                                                                                                                                                                                                                                    }
+
+                                                                                                                                                                                                                                    function takePhoto(){
+
+                                                                                                                                                                                                                                         let input=document.createElement('input');
+                                                                                                                                                                                                                                          input.type='file';
+                                                                                                                                                                                                                                           input.accept='image/*';
+                                                                                                                                                                                                                                            input.capture='environment';
+
+                                                                                                                                                                                                                                             input.onchange=function(){
+                                                                                                                                                                                                                                                  if(input.files.length){
+                                                                                                                                                                                                                                                       alert('📷 Photo selected successfully.');
+                                                                                                                                                                                                                                                  }
+                                                                                                                                                                                                                                             };
+
+                                                                                                                                                                                                                                              input.click();
+                                                                                                                                                                                                                                    }
+
+                                                                                                                                                                                                                                    loadHistory();
+
+                                                                                                                                                                                                                                    if('serviceWorker' in navigator){
+                                                                                                                                                                                                                                         window.addEventListener('load',()=>{
+                                                                                                                                                                                                                                              navigator.serviceWorker.register('sw.js')
+                                                                                                                                                                                                                                                 .catch(()=>console.log('Service worker not available'));
+                                                                                                                                                                                                                                         });
+                                                                                                                                                                                                                                    }
+
+                                                                                                                                                                                                                                    </script>
+
+                                                                                                                                                                                                                                    </body>
+                                                                                                                                                                                                                                    </html>
+                                                                                                                                                                                                                                    
+                                                                                                                                                                                                                                         })
+                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                  }
+                                                                                                                                                                                                                                             }
+                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                         )
+                                                                                                                                                                                                                                              }
+                                                                                                                                                                                                                                          )
+                                                                                                                                                                                                                                         }
+                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                             })
+                                                                                                                                                                                                                                           }
+                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                               })
+                                                                                                                                                                                                                                             }
+                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                         )
+                                                                                                                                                                                                                                    }
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
