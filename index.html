@@ -93,14 +93,32 @@ button{background:#062542;color:white;border:0;font-weight:bold}
 
 <script>
 function login(){
-let name=document.getElementById("technician").value.trim();
-if(!name){
-document.getElementById("message").innerText="Enter Technician Name";
-return;
-}
-document.getElementById("welcomeName").innerText=name;
-document.getElementById("loginScreen").classList.remove("active");
-document.getElementById("dashboardScreen").classList.add("active");
+          var name = document.getElementById("technician").value.trim();
+              var pin = document.getElementById("pin").value.trim();
+
+                  if(name === ""){
+                          alert("Please enter Technician Name");
+                                  return;
+                                      }
+
+                                          if(pin === ""){
+                                                  alert("Please enter PIN");
+                                                          return;
+                                                              }
+
+                                                                  if(pin !== "1234"){
+                                                                          alert("Invalid PIN. Use 1234 for testing.");
+                                                                                  return;
+                                                                                      }
+
+                                                                                          var welcome = document.getElementById("welcomeName");
+                                                                                              if(welcome){
+                                                                                                      welcome.innerText = "Welcome, " + name;
+                                                                                                          }
+
+                                                                                                              document.getElementById("loginScreen").classList.remove("active");
+                                                                                                                  document.getElementById("dashboardScreen").classList.add("active");
+                                                                                                                  }
 }
 
 function logout(){
