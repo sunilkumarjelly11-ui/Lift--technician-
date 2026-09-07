@@ -94,109 +94,87 @@ button{background:#062542;color:white;border:0;font-weight:bold}
 <script>
 function login() {
       const name = document.getElementById("technician").value.trim();
-        const pin = document.getElementById("pin").value.trim();
+          const pin = document.getElementById("pin").value.trim();
 
-          if (name === "") {
-              alert("Please enter Technician Name");
-                  return;
-                    }
-
-                      if (pin === "") {
-                          alert("Please enter PIN");
+              if (name === "") {
+                      alert("Please enter Technician Name");
                               return;
-                                }
+                                  }
 
-                                  document.getElementById("welcomeName").innerText = "Welcome, " + name;
-                                    document.getElementById("loginScreen").classList.remove("active");
-                                      document.getElementById("dashboardScreen").classList.add("active");
-                                      }
-}
-                          alert("Please enter Technician Name");
-                                  return;
-                                      }
+                                      if (pin === "") {
+                                              alert("Please enter PIN");
+                                                      return;
+                                                          }
 
-                                          if(pin === ""){
-                                                  alert("Please enter PIN");
-                                                          return;
-                                                              }
+                                                              if (pin !== "1234") {
+                                                                      alert("Invalid PIN. Use 1234 for testing.");
+                                                                              return;
+                                                                                  }
 
-                                                                  if(pin !== "1234"){
-                                                                          alert("Invalid PIN. Use 1234 for testing.");
-                                                                                  return;
-                                                                                      }
+                                                                                      const welcome = document.getElementById("welcomeName");
 
-                                                                                          var welcome = document.getElementById("welcomeName");
-                                                                                              if(welcome){
-                                                                                                      welcome.innerText = "Welcome, " + name;
-                                                                                                          }
+                                                                                          if (welcome) {
+                                                                                                  welcome.innerText = "Welcome, " + name;
+                                                                                                      }
 
-                                                                                                              document.getElementById("loginScreen").classList.remove("active");
-                                                                                                                  document.getElementById("dashboardScreen").classList.add("active");
-                                                                                                                  }
-}
+                                                                                                          document.getElementById("loginScreen").classList.remove("active");
+                                                                                                              document.getElementById("dashboardScreen").classList.add("active");
+                                                                                                              }
 
-function logout(){
-document.getElementById("dashboardScreen").classList.remove("active");
-document.getElementById("loginScreen").classList.add("active");
-document.getElementById("technician").value="";
-document.getElementById("pin").value="";
-}
+                                                                                                              function logout() {
+                                                                                                                  document.getElementById("dashboardScreen").classList.remove("active");
+                                                                                                                      document.getElementById("loginScreen").classList.add("active");
+                                                                                                                          document.getElementById("technician").value = "";
+                                                                                                                              document.getElementById("pin").value = "";
+                                                                                                                              }
 
-function showLift(){
-document.getElementById("dashboardScreen").classList.remove("active");
-document.getElementById("liftScreen").classList.add("active");
-}
+                                                                                                                              function showLift() {
+                                                                                                                                  document.getElementById("dashboardScreen").classList.remove("active");
+                                                                                                                                      document.getElementById("liftScreen").classList.add("active");
+                                                                                                                                      }
 
-function showChecklist(){
-document.getElementById("dashboardScreen").classList.remove("active");
-document.getElementById("checklistScreen").classList.add("active");
-}
-function saveChecklist(){
-alert("Maintenance Checklist saved successfully!");
-}
-function showBreakdown(){
-document.getElementById("dashboardScreen").classList.remove("active");
-document.getElementById("breakdownScreen").classList.add("active");
-}
+                                                                                                                                      function showChecklist() {
+                                                                                                                                          document.getElementById("dashboardScreen").classList.remove("active");
+                                                                                                                                              document.getElementById("checklistScreen").classList.add("active");
+                                                                                                                                              }
 
-function backDashboard(){
-document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));
-document.getElementById("dashboardScreen").classList.add("active");
-}
+                                                                                                                                              function saveChecklist() {
+                                                                                                                                                  alert("Maintenance Checklist saved successfully!");
+                                                                                                                                                  }
 
-function saveLift(){
-alert("Lift details saved");
-}
+                                                                                                                                                  function showBreakdown() {
+                                                                                                                                                      document.getElementById("dashboardScreen").classList.remove("active");
+                                                                                                                                                          document.getElementById("breakdownScreen").classList.add("active");
+                                                                                                                                                          }
 
-function saveBreakdown(){
-alert("Breakdown report saved");
-}
+                                                                                                                                                          function backDashboard() {
+                                                                                                                                                              document.querySelectorAll(".screen").forEach(x => x.classList.remove("active"));
+                                                                                                                                                                  document.getElementById("dashboardScreen").classList.add("active");
+                                                                                                                                                                  }
 
-function getLocation(){
-      if(!navigator.geolocation){
-          document.getElementById("location").innerText = "GPS not supported";
-              return;
-                }
+                                                                                                                                                                  function saveLift() {
+                                                                                                                                                                      alert("Lift details saved");
+                                                                                                                                                                      }
 
-                  navigator.geolocation.getCurrentPosition(
-                      function(p){
-                            var lat = p.coords.latitude.toFixed(5);
-                                  var lon = p.coords.longitude.toFixed(5);
+                                                                                                                                                                      function saveBreakdown() {
+                                                                                                                                                                          alert("Breakdown report saved");
+                                                                                                                                                                          }
 
-                                        document.getElementById("location").innerText =
-                                                "Location: " + lat + ", " + lon;
+                                                                                                                                                                          function getLocation() {
+                                                                                                                                                                              if (!navigator.geolocation) {
+                                                                                                                                                                                      document.getElementById("location").innerText = "GPS not supported";
+                                                                                                                                                                                              return;
+                                                                                                                                                                                                  }
 
-                                                      var liftLocation = document.getElementById("locationName");
-                                                            if(liftLocation){
-                                                                    liftLocation.value = lat + ", " + lon;
-                                                                          }
-                                                                              },
-                                                                                  function(){
-                                                                                        document.getElementById("location").innerText =
-                                                                                                "Location permission denied";
-                                                                                                    }
-                                                                                                      );
-                                                                                                      } 
+                                                                                                                                                                                                      navigator.geolocation.getCurrentPosition(function(p) {
+                                                                                                                                                                                                              const lat = p.coords.latitude.toFixed(5);
+                                                                                                                                                                                                                      const lon = p.coords.longitude.toFixed(5);
+
+                                                                                                                                                                                                                              document.getElementById("location").innerText =
+                                                                                                                                                                                                                                          "Location: " + lat + ", " + lon;
+                                                                                                                                                                                                                                              });
+                                                                                                                                                                                                                                              }
+                                                                                                                                                                                                                                              </script>
 }
 
 </script>
