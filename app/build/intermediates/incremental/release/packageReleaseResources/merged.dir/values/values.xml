@@ -26,7 +26,7 @@
     <string name="fullScopeUrl" translatable="false">https://sunilkumarjelly11-ui.github.io/Lift--technician-/</string>
     <string name="generatorApp" translatable="false">bubblewrap-cli</string>
     <string name="hostName" translatable="false">sunilkumarjelly11-ui.github.io/Lift--technician-/icon-512-1.png</string>
-    <string name="launchUrl" translatable="false">https://sunilkumarjelly11-ui.github.io/Lift--technician-/icon-512-1.png/Lift--technician-/index.html</string>
+    <string name="launchUrl" translatable="false">https://sunilkumarjelly11-ui.github.io/Lift--technician-/icon-512-1.pnghttps://sunilkumarjelly11-ui.github.io/Lift--technician-/</string>
     <string name="launcherName" translatable="false">Lift Tech</string>
     <string name="orientation" translatable="false">default</string>
     <string name="providerAuthority" translatable="false">io.github.sunilkumarjelly11_ui.twa.fileprovider</string>

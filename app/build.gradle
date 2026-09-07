@@ -23,7 +23,7 @@ plugins {
 def twaManifest = [
     applicationId: 'io.github.sunilkumarjelly11_ui.twa',
     hostName: 'sunilkumarjelly11-ui.github.io/Lift--technician-/icon-512-1.png', // The domain being opened in the TWA.
-    launchUrl: '/Lift--technician-/index.html', // The start path for the TWA. Must be relative to the domain.
+    launchUrl: 'https://sunilkumarjelly11-ui.github.io/Lift--technician-/', // The start path for the TWA. Must be relative to the domain.
     name: 'JSK ELEVATORS', // The application name.
     launcherName: 'Lift Tech', // The name shown on the Android Launcher.
     themeColor: '#062542', // The color used for the status bar.
@@ -57,8 +57,8 @@ android {
         applicationId "io.github.sunilkumarjelly11_ui.twa"
         minSdkVersion 21
         targetSdkVersion 36
-        versionCode 2
-        versionName "2"
+        versionCode 3
+        versionName "3"
 
         // The name for the application
         resValue "string", "appName", twaManifest.name

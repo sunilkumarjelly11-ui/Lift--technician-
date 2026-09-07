@@ -12,7 +12,7 @@
   "navigationDividerColorDark": "#000000",
   "backgroundColor": "#EEF3F8",
   "enableNotifications": true,
-  "startUrl": "/Lift--technician-/index.html",
+  "startUrl": "https://sunilkumarjelly11-ui.github.io/Lift--technician-/",
   "iconUrl": "https://sunilkumarjelly11-ui.github.io/Lift--technician-/icon-512-1.png",
   "maskableIconUrl": "https://sunilkumarjelly11-ui.github.io/Lift--technician-/icon-512-1.png",
   "splashScreenFadeOutDuration": 300,
@@ -20,8 +20,8 @@
     "path": "/workspaces/Lift--technician-/android.keystore",
     "alias": "jsk-elevators"
   },
-  "appVersionName": "2",
-  "appVersionCode": 2,
+  "appVersionName": "3",
+  "appVersionCode": 3,
   "shortcuts": [],
   "generatorApp": "bubblewrap-cli",
   "webManifestUrl": "https://sunilkumarjelly11-ui.github.io/Lift--technician-/manifest.json",
@@ -47,5 +47,5 @@
   "fileHandlers": [],
   "launchHandlerClientMode": "",
   "displayOverride": [],
-  "appVersion": "2"
+  "appVersion": "3"
 }
