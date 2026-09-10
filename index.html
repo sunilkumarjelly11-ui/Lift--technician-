@@ -113,42 +113,40 @@ body{
                                                                                                                                   </section>
 
                                                                                                                                   <!-- DASHBOARD -->
-                                                                                                                                  <section id="dashboardScreen" class="screen">
-                                                                                                                                    <div class="card">
-                                                                                                                                        <h2>Welcome, <span id="welcomeName"></span> 👷</h2>
-                                                                                                                                            <div class="status">Technician logged in successfully</div>
-                                                                                                                                              </div>
+<section id="dashboardScreen" class="screen">
+  <div class="card">
+    <h2>Welcome, <span id="welcomeName"></span> 👷</h2>
+    <div class="status">Technician logged in successfully</div>
+  </div>
 
-                                                                                                                                                <div class="grid">
-                                                                                                                                                    <div class="menu" onclick="showScreen('liftScreen')">
-                                                                                                                                                          🛗<br><b>Lift Details</b>
-                                                                                                                                                              </div>
+  <div class="grid">
+    <div class="menu" onclick="showScreen('liftScreen')">
+      🛗<br><b>Lift Details</b>
+    </div>
 
-                                                                                                                                                                  <div class="menu" onclick="showScreen('breakdownScreen')">
-                                                                                                                                                                        🔧<br><b>Breakdown</b>
-                                                                                                                                                                            </div>
+    <div class="menu" onclick="showScreen('breakdownScreen')">
+      🔧<br><b>Breakdown</b>
+    </div>
 
-                                                                                                                                                                                <div class="menu" onclick="showScreen('maintenanceScreen')">
-                                                                                                                                                                                      ✅<br><b>Maintenance</b>
-                                                                                                                                                                                          </div>
+    <div class="menu" onclick="showScreen('maintenanceScreen')">
+      ✅<br><b>Maintenance</b>
+    </div>
 
-                                                                                                                                                                                              <div class="menu" onclick="getGPS()">
-                                                                                                                                                                                                    📍<br><b>GPS Location</b>
-                                                                                                                                                                                                        </div>
+    <div class="menu" onclick="getGPS()">
+      📍<br><b>GPS Location</b>
+    </div>
 
+    <div class="menu" onclick="showScreen('recordsScreen')">
+      📋<br><b>Lift Records</b>
+    </div>
+  </div>
 
-<div class="menu" onclick="showScreen('recordsScreen')">
-                                                                                                                                                                                                            📋 <b>Lift Records</b>
-                                                                                                                                                                                                            </div>
-                                                                                                                                                                                                          
-                                                                                                                                                                                                            
-                                                                                                                                                                                                          </div>
+  <div class="card">
+    <p id="gpsStatus">GPS location not checked.</p>
+    <button class="danger" onclick="logout()">LOGOUT</button>
+  </div>
+</section>
 
-                                                                                                                                                                                                            <div class="card">
-                                                                                                                                                                                                                <p id="gpsStatus">GPS location not checked.</p>
-                                                                                                                                                                                                                    <button class="danger" onclick="logout()">LOGOUT</button>
-                                                                                                                                                                                                                      </div>
-                                                                                                                                                                                                                      </section>
 <!-- LIFT RECORDS -->
 <section id="recordsScreen" class="screen">
   <div class="card">
