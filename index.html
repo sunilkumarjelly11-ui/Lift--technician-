@@ -134,9 +134,11 @@ body{
 
                                                                                                                                                                                               <div class="menu" onclick="getGPS()">
                                                                                                                                                                                                     📍<br><b>GPS Location</b>
-                                                                                                                                                                                                        </div><div class="menu" onclick="alert('Lift Records module coming next')">
+                                                                                                                                                                                                        <div class="menu" onclick="showScreen('recordsScreen')">
                                                                                                                                                                                                             📋 <b>Lift Records</b>
                                                                                                                                                                                                             </div>
+                                                                                                                                                                                                          
+                                                                                                                                                                                                            
                                                                                                                                                                                                           </div>
 
                                                                                                                                                                                                             <div class="card">
@@ -144,7 +146,31 @@ body{
                                                                                                                                                                                                                     <button class="danger" onclick="logout()">LOGOUT</button>
                                                                                                                                                                                                                       </div>
                                                                                                                                                                                                                       </section>
-
+<!-- LIFT RECORDS -->
+<section id="recordsScreen" class="screen">
+  <div class="card">
+      <h2>📋 Lift Records</h2>
+      
+          <label>Customer Name</label>
+              <input id="recordCustomer" type="text" placeholder="Customer name">
+              
+                  <label>Lift Number</label>
+                      <input id="recordLiftNumber" type="text" placeholder="Lift number">
+                      
+                          <label>Lift Brand</label>
+                              <input id="recordBrand" type="text" placeholder="Lift brand">
+                              
+                                  <label>Service Date</label>
+                                      <input id="recordDate" type="date">
+                                      
+                                          <button onclick="saveLiftRecord()">💾 SAVE RECORD</button>
+                                          
+                                              <h3>Saved Lift Records</h3>
+                                                  <div id="recordsList"></div>
+                                                  
+                                                      <button onclick="showScreen('dashboardScreen')">⬅ BACK TO DASHBOARD</button>
+                                                        </div>
+                                                        </section-->
                                                                                                                                                                                                                       <!-- LIFT DETAILS -->
                                                                                                                                                                                                                       <section id="liftScreen" class="screen">
                                                                                                                                                                                                                         <div class="card">
@@ -366,7 +392,62 @@ body{
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           }
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           };
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          </script>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+
+function saveLiftRecord() {
+  const customer = document.getElementById("recordCustomer").value;
+  const liftNumber = document.getElementById("recordLiftNumber").value;
+  const brand = document.getElementById("recordBrand").value;
+  const date = document.getElementById("recordDate").value;
+
+  if (!customer || !liftNumber || !brand || !date) {
+    alert("Please fill all Lift Record details.");
+    return;
+  }
+
+  const records = JSON.parse(localStorage.getItem("liftRecords") || "[]");
+
+  records.push({
+    customer: customer,
+    liftNumber: liftNumber,
+    brand: brand,
+    date: date
+  });
+
+  localStorage.setItem("liftRecords", JSON.stringify(records));
+
+  alert("Lift Record saved successfully!");
+
+  document.getElementById("recordCustomer").value = "";
+  document.getElementById("recordLiftNumber").value = "";
+  document.getElementById("recordBrand").value = "";
+  document.getElementById("recordDate").value = "";
+
+  loadLiftRecords();
+}
+
+function loadLiftRecords() {
+  const records = JSON.parse(localStorage.getItem("liftRecords") || "[]");
+  const list = document.getElementById("recordsList");
+
+  if (!list) return;
+
+  if (records.length === 0) {
+    list.innerHTML = "<p>No lift records saved yet.</p>";
+    return;
+  }
+
+  list.innerHTML = records.map((record, index) => `
+    <div class="card">
+      <b>🛗 Lift ${index + 1}</b><br>
+      Customer: ${record.customer}<br>
+      Lift Number: ${record.liftNumber}<br>
+      Brand: ${record.brand}<br>
+      Service Date: ${record.date}
+    </div>
+  `).join("");
+}
+</script>
 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           </body>
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           </html>
