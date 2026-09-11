@@ -213,7 +213,12 @@ body{
                                                                                                                                                                                                                                                                                                                                     </select>
 
                                                                                                                                                                                                                                                                                                                                        <label>📷 Breakdown Photo</label>
-                                                                                                                                                                                                                                                                                                                                       <input type="file" id="breakdownPhoto" accept="image/*" capture="environment"> <button onclick="saveBreakdown()">SAVE REPORT</button>
+                                                                                                                                                                                                                                                                                                                                       <input type="file" id="breakdownPhoto" accept="image/*" capture="environment">
+
+<label>✍️ Customer Signature</label>
+<canvas id="signaturePad" width="500" height="200" style="width:100%;border:2px solid #062542;border-radius:10px;background:white;"></canvas>
+<button type="button" class="secondary" onclick="clearSignature()">Clear Signature</button>
+ <button onclick="saveBreakdown()">SAVE REPORT</button>
                                                                                                                                                                                                                                                                                                                                             <button class="secondary" onclick="showScreen('dashboardScreen')">BACK</button>
                                                                                                                                                                                                                                                                                                                                               </div>
                                                                                                                                                                                                                                                                                                                                               </section>
@@ -452,5 +457,34 @@ function loadLiftRecords() {
 </script>
 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           </div>
+
+<script>
+const pad=document.getElementById("signaturePad");
+if(pad){
+  const ctx=pad.getContext("2d");
+  let drawing=false;
+  function pos(e){
+    const r=pad.getBoundingClientRect();
+    const t=e.touches ? e.touches[0] : e;
+    return {x:(t.clientX-r.left)*pad.width/r.width,y:(t.clientY-r.top)*pad.height/r.height};
+  }
+  function start(e){drawing=true; const p=pos(e); ctx.beginPath(); ctx.moveTo(p.x,p.y); e.preventDefault();}
+  function move(e){if(!drawing)return; const p=pos(e); ctx.lineTo(p.x,p.y); ctx.stroke(); e.preventDefault();}
+  function stop(){drawing=false;}
+  pad.addEventListener("mousedown",start);
+  pad.addEventListener("mousemove",move);
+  pad.addEventListener("mouseup",stop);
+  pad.addEventListener("touchstart",start,{passive:false});
+  pad.addEventListener("touchmove",move,{passive:false});
+  pad.addEventListener("touchend",stop);
+  ctx.lineWidth=3;
+  ctx.lineCap="round";
+}
+function clearSignature(){
+  const p=document.getElementById("signaturePad");
+  if(p) p.getContext("2d").clearRect(0,0,p.width,p.height);
+}
+</script>
+
 </body>
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           </html>
