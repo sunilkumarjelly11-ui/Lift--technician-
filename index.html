@@ -414,6 +414,8 @@ function generateReport(){
   var customer=document.getElementById("reportCustomer").value;
   var lift=document.getElementById("reportLift").value;
   var summary=document.getElementById("reportSummary").value;
+    var apartment=localStorage.getItem("apartmentName") || "";
+    var location=localStorage.getItem("apartmentLocation") || "";
 
   document.getElementById("reportOutput").innerHTML =
     `<div class="card">
