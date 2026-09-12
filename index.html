@@ -86,7 +86,15 @@ body{
                                                                                                   margin-top:10px;
                                                                                                   }
                                                                                                   </style>
-                                                                                                  </head>
+                                                                                                  
+<style>
+@media print{
+  body *{visibility:hidden}
+  #reportOutput,#reportOutput *{visibility:visible}
+  #reportOutput{position:absolute;left:0;top:0;width:100%}
+}
+</style>
+</head>
 
                                                                                                   <body>
 
@@ -529,7 +537,7 @@ function generateReport(){
       <p><b>Lift:</b> ${lift}</p>
       <p><b>Service:</b> ${summary}</p>
       <p><b>Technician:</b> Sunil</p>
-      <button onclick="window.print()">🖨️ PRINT / SAVE PDF</button>
+      <button onclick="printReport()">🖨️ PRINT / SAVE PDF</button>
       <button class="secondary" onclick="shareReport()">📤 SHARE REPORT</button>
     </div>`;
 }
@@ -552,6 +560,12 @@ function shareReport(){
   }else{
     alert("Sharing is not supported on this device.");
   }
+}
+</script>
+
+<script>
+function printReport(){
+  window.print();
 }
 </script>
 </body>
