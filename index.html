@@ -523,11 +523,15 @@ function generateReport(){
   var summary=document.getElementById("reportSummary").value;
 
   document.getElementById("reportOutput").innerHTML =
-    "<div class='card'><h3>📄 Service Report</h3>" +
-    "<p><b>Customer:</b> "+customer+"</p>" +
-    "<p><b>Lift:</b> "+lift+"</p>" +
-    "<p><b>Service:</b> "+summary+"</p>" +
-    "<p><b>Technician:</b> Sunil</p>" +"<button onclick="window.print()">🖨️ PRINT / SAVE PDF</button>" +"<button class="secondary" onclick="shareReport()">📤 SHARE REPORT</button></div>";
+    `<div class="card">
+      <h3>📄 Service Report</h3>
+      <p><b>Customer:</b> ${customer}</p>
+      <p><b>Lift:</b> ${lift}</p>
+      <p><b>Service:</b> ${summary}</p>
+      <p><b>Technician:</b> Sunil</p>
+      <button onclick="window.print()">🖨️ PRINT / SAVE PDF</button>
+      <button class="secondary" onclick="shareReport()">📤 SHARE REPORT</button>
+    </div>`;
 }
 </script>
 
