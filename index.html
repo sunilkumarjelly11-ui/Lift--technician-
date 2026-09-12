@@ -194,7 +194,9 @@ body{
 <input id="apartmentName" type="text" placeholder="Apartment name">
 
 <label>📍 Apartment Location / Address</label>
-<input id="apartmentLocation" type="text" placeholder="Enter apartment address">
+<input id="apartmentLocation" type="text" placeholder="GPS location will appear here" readonly>
+<button type="button" class="secondary" onclick="getApartmentLocation()">📍 GET CURRENT GPS LOCATION</button>
+<p id="apartmentGPSStatus">Location not detected.</p>
 
                                                                                                                                                                                                                                         <label>Lift Number</label>
                                                                                                                                                                                                                                             <input id="liftNumber" placeholder="Lift number">
@@ -448,6 +450,38 @@ function shareReport(){
 <script>
 function printReport(){
   window.print();
+}
+</script>
+<script>
+function getApartmentLocation(){
+  var status=document.getElementById("apartmentGPSStatus");
+
+  if(!navigator.geolocation){
+    status.textContent="GPS is not supported on this phone.";
+    return;
+  }
+
+  status.textContent="📍 Detecting location...";
+
+  navigator.geolocation.getCurrentPosition(
+    function(position){
+      var lat=position.coords.latitude.toFixed(6);
+      var lon=position.coords.longitude.toFixed(6);
+
+      document.getElementById("apartmentLocation").value =
+        lat + ", " + lon;
+
+      status.textContent="✅ GPS location detected";
+    },
+    function(){
+      status.textContent="❌ Unable to get GPS location. Allow location permission.";
+    },
+    {
+      enableHighAccuracy:true,
+      timeout:15000,
+      maximumAge:0
+    }
+  );
 }
 </script>
 </body>
