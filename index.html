@@ -416,6 +416,7 @@ function generateReport(){
   var summary=document.getElementById("reportSummary").value || "";
   var apartment=localStorage.getItem("apartmentName") || "";
   var location=localStorage.getItem("apartmentLocation") || "";  var reportDate=new Date().toLocaleString();
+  var signature=localStorage.getItem("technicianSignature") || "";
 
   document.getElementById("reportOutput").innerHTML =
     `<div class="card">
@@ -426,7 +427,7 @@ function generateReport(){
       <p><b>GPS Location:</b> ${location}</p>
       <p><b>Google Maps:</b> <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location)}" target="_blank">Open Location</a></p>
       <p><b>Service:</b> ${summary}</p>
-      <p><b>Technician:</b> Sunil</p>
+      <p><b>Technician:</b> Sunil</p><p><b>Technician Signature:</b></p>${signature ? `<img src="${signature}" style="max-width:100%;height:100px;object-fit:contain;border:1px solid #ddd;border-radius:8px">` : "<p>Signature not provided</p>"}
       <button onclick="printReport()">🖨️ PRINT / SAVE PDF</button>
       <button class="secondary" onclick="shareReport()">📤 SHARE REPORT</button>
     </div>`;
@@ -497,5 +498,5 @@ function getApartmentLocation(){
   );
 }
 </script>
-</body>
+<script>document.addEventListener('DOMContentLoaded',setupSignaturePad);</script></body>
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           </html>
