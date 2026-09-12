@@ -413,24 +413,25 @@ function clearSignature(){
 function generateReport(){
   var customer=document.getElementById("reportCustomer").value || localStorage.getItem("liftCustomer") || "";
   var lift=document.getElementById("reportLift").value || localStorage.getItem("liftNumber") || "";
-  var summary=document.getElementById("reportSummary").value;
-    var apartment=localStorage.getItem("apartmentName") || "";
-    var location=localStorage.getItem("apartmentLocation") || "";
+  var summary=document.getElementById("reportSummary").value || "";
+  var apartment=localStorage.getItem("apartmentName") || "";
+  var location=localStorage.getItem("apartmentLocation") || "";
 
   document.getElementById("reportOutput").innerHTML =
     `<div class="card">
       <h3>📄 Service Report</h3>
       <p><b>Customer:</b> ${customer}</p>
       <p><b>Lift:</b> ${lift}</p>
+      <p><b>Apartment:</b> ${apartment}</p>
+      <p><b>GPS Location:</b> ${location}</p>
+      <p><b>Google Maps:</b> <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location)}" target="_blank">Open Location</a></p>
       <p><b>Service:</b> ${summary}</p>
       <p><b>Technician:</b> Sunil</p>
       <button onclick="printReport()">🖨️ PRINT / SAVE PDF</button>
       <button class="secondary" onclick="shareReport()">📤 SHARE REPORT</button>
     </div>`;
 }
-</script>
 
-<script>
 function shareReport(){
   var text =
     "JSK ELEVATORS - Service Report\n\n" +
