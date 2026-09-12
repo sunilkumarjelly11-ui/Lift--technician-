@@ -139,6 +139,8 @@ body{
     <div class="menu" onclick="showScreen('recordsScreen')">
       📋<br><b>Lift Records</b>
     </div>
+<div class="menu" onclick="showScreen('reportScreen')">📄<br><b>Service Report</b></div>
+
   </div>
 
   <div class="card">
@@ -491,5 +493,42 @@ function clearSignature(){
 }
 </script>
 
+
+
+<!-- SERVICE REPORT -->
+<section id="reportScreen" class="screen">
+  <div class="card">
+    <h2>📄 Service Report</h2>
+
+    <label>Customer Name</label>
+    <input id="reportCustomer" type="text" placeholder="Customer name">
+
+    <label>Lift Number</label>
+    <input id="reportLift" type="text" placeholder="Lift number">
+
+    <label>Service Summary</label>
+    <textarea id="reportSummary" rows="5" placeholder="Enter service details"></textarea>
+
+    <button onclick="generateReport()">GENERATE REPORT</button>
+    <button class="secondary" onclick="showScreen('dashboardScreen')">BACK</button>
+
+    <div id="reportOutput"></div>
+  </div>
+</section>
+
+<script>
+function generateReport(){
+  var customer=document.getElementById("reportCustomer").value;
+  var lift=document.getElementById("reportLift").value;
+  var summary=document.getElementById("reportSummary").value;
+
+  document.getElementById("reportOutput").innerHTML =
+    "<div class='card'><h3>📄 Service Report</h3>" +
+    "<p><b>Customer:</b> "+customer+"</p>" +
+    "<p><b>Lift:</b> "+lift+"</p>" +
+    "<p><b>Service:</b> "+summary+"</p>" +
+    "<p><b>Technician:</b> Sunil</p></div>";
+}
+</script>
 </body>
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           </html>
