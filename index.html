@@ -527,7 +527,27 @@ function generateReport(){
     "<p><b>Customer:</b> "+customer+"</p>" +
     "<p><b>Lift:</b> "+lift+"</p>" +
     "<p><b>Service:</b> "+summary+"</p>" +
-    "<p><b>Technician:</b> Sunil</p></div>";
+    "<p><b>Technician:</b> Sunil</p>" +"<button onclick="window.print()">🖨️ PRINT / SAVE PDF</button>" +"<button class="secondary" onclick="shareReport()">📤 SHARE REPORT</button></div>";
+}
+</script>
+
+<script>
+function shareReport(){
+  var text =
+    "JSK ELEVATORS - Service Report\n\n" +
+    "Customer: " + document.getElementById("reportCustomer").value + "\n" +
+    "Lift: " + document.getElementById("reportLift").value + "\n" +
+    "Service: " + document.getElementById("reportSummary").value + "\n" +
+    "Technician: Sunil";
+
+  if(navigator.share){
+    navigator.share({
+      title:"JSK ELEVATORS Service Report",
+      text:text
+    });
+  }else{
+    alert("Sharing is not supported on this device.");
+  }
 }
 </script>
 </body>
