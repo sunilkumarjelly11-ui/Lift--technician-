@@ -411,8 +411,8 @@ function clearSignature(){
 
 <script>
 function generateReport(){
-  var customer=document.getElementById("reportCustomer").value;
-  var lift=document.getElementById("reportLift").value;
+  var customer=document.getElementById("reportCustomer").value || localStorage.getItem("liftCustomer") || "";
+  var lift=document.getElementById("reportLift").value || localStorage.getItem("liftNumber") || "";
   var summary=document.getElementById("reportSummary").value;
     var apartment=localStorage.getItem("apartmentName") || "";
     var location=localStorage.getItem("apartmentLocation") || "";
