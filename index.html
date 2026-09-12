@@ -380,6 +380,19 @@ if(pad){
   ctx.lineWidth=3;
   ctx.lineCap="round";
 }
+
+function saveBreakdown(){
+  const signaturePad=document.getElementById("signaturePad");
+  const signature=signaturePad ? signaturePad.toDataURL("image/png") : "";
+
+  localStorage.setItem("breakdownStatus", document.getElementById("liftStatus")?.value || "");
+  localStorage.setItem("breakdownPriority", document.getElementById("breakdownPriority")?.value || "");
+  localStorage.setItem("breakdownPhotoSaved", document.getElementById("breakdownPhoto")?.files?.length ? "Photo attached" : "");
+  localStorage.setItem("technicianSignature", signature);
+
+  alert("Breakdown report saved successfully!");
+}
+
 function clearSignature(){
   const p=document.getElementById("signaturePad");
   if(p) p.getContext("2d").clearRect(0,0,p.width,p.height);
