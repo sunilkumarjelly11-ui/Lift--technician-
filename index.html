@@ -415,12 +415,12 @@ function generateReport(){
   var lift=document.getElementById("reportLift").value || localStorage.getItem("liftNumber") || "";
   var summary=document.getElementById("reportSummary").value || "";
   var apartment=localStorage.getItem("apartmentName") || "";
-  var location=localStorage.getItem("apartmentLocation") || "";
+  var location=localStorage.getItem("apartmentLocation") || "";  var reportDate=new Date().toLocaleString();
 
   document.getElementById("reportOutput").innerHTML =
     `<div class="card">
       <h3>📄 Service Report</h3>
-      <p><b>Customer:</b> ${customer}</p>
+      <p><b>Date & Time:</b> ${reportDate}</p><p><b>Customer:</b> ${customer}</p>
       <p><b>Lift:</b> ${lift}</p>
       <p><b>Apartment:</b> ${apartment}</p>
       <p><b>GPS Location:</b> ${location}</p>
