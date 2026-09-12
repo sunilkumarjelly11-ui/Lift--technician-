@@ -197,6 +197,7 @@ body{
 <input id="apartmentLocation" type="text" placeholder="GPS location will appear here" readonly>
 <button type="button" class="secondary" onclick="getApartmentLocation()">📍 GET CURRENT GPS LOCATION</button>
 <p id="apartmentGPSStatus">Location not detected.</p>
+<button type="button" class="secondary" onclick="openApartmentMap()">🗺️ OPEN LOCATION IN GOOGLE MAPS</button>
 
                                                                                                                                                                                                                                         <label>Lift Number</label>
                                                                                                                                                                                                                                             <input id="liftNumber" placeholder="Lift number">
@@ -453,6 +454,15 @@ function printReport(){
 }
 </script>
 <script>
+function openApartmentMap(){
+  var location=document.getElementById("apartmentLocation").value.trim();
+  if(!location){
+    alert("Please get the GPS location first.");
+    return;
+  }
+  window.open("https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(location),"_blank");
+}
+
 function getApartmentLocation(){
   var status=document.getElementById("apartmentGPSStatus");
 
