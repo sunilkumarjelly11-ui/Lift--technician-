@@ -834,7 +834,47 @@ window.scrollTo(0,0);
 
 }
 
+/* =========================
+   SUPABASE CONNECTION
+========================= */
 
+/* =========================
+   SUPABASE CONNECTION
+========================= */
+
+const SUPABASE_URL =
+"https://bszdhcodjwflhoqxjtqb.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+"sb_publishable__PKdDgacDELBVpspWJdHxg_w6_ZcWnN";
+
+let supabaseClient = null;
+
+try {
+
+if(!window.supabase){
+
+throw new Error(
+"Supabase library did not load."
+);
+
+}
+
+supabaseClient =
+window.supabase.createClient(
+SUPABASE_URL,
+SUPABASE_PUBLISHABLE_KEY
+);
+
+}
+catch(error){
+
+console.error(
+"Supabase connection error:",
+error
+);
+
+     }
 /* =========================
    REAL SUPABASE LOGIN
 ========================= */
