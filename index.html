@@ -502,6 +502,58 @@ function getGPS(){
     }
   );
 }
+  function findApartment(){
+
+  const searchName =
+    document.getElementById("findApartmentName").value.trim().toLowerCase();
+
+  const result =
+    document.getElementById("apartmentResult");
+
+  const lift =
+    JSON.parse(localStorage.getItem("liftDetails") || "null");
+
+  if(!searchName){
+    result.innerHTML="<p>Please enter an apartment name.</p>";
+    return;
+  }
+
+  if(!lift){
+    result.innerHTML="<p>No lift details saved yet.</p>";
+    return;
+  }
+
+  const apartment =
+    (lift.apartmentName || "").toLowerCase();
+
+  if(!apartment.includes(searchName)){
+    result.innerHTML="<p>❌ Apartment not found.</p>";
+    return;
+  }
+
+  const latitude = lift.latitude;
+  const longitude = lift.longitude;
+
+  result.innerHTML=`
+    <div class="record">
+      <h3>🏢 ${lift.apartmentName || "-"}</h3>
+      <b>Customer:</b> ${lift.customer || "-"}<br>
+      <b>Lift Number:</b> ${lift.liftNumber || "-"}<br>
+      <b>Brand:</b> ${lift.brand || "-"}<br>
+      <b>Lift Location:</b> ${lift.location || "-"}<br>
+      <b>Floors:</b> ${lift.floors || "-"}<br>
+      <b>GPS:</b> ${latitude || "-"} , ${longitude || "-"}<br><br>
+
+      ${
+        latitude && longitude
+        ? `<button onclick="window.open('https://www.google.com/maps?q=${latitude},${longitude}','_blank')">
+             🗺️ OPEN IN GOOGLE MAPS
+           </button>`
+        : `<p>📍 GPS location not available.</p>`
+      }
+    </div>
+  `;
+  }
 
 
 function loadLiftRecords(){
