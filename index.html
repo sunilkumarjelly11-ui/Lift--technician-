@@ -23,8 +23,14 @@ text-align:center;
 padding:18px;
 }
 
-header h1{margin:0;font-size:24px}
-header p{margin:5px 0 0}
+header h1{
+margin:0;
+font-size:24px;
+}
+
+header p{
+margin:5px 0 0;
+}
 
 .container{
 max-width:700px;
@@ -32,8 +38,13 @@ margin:auto;
 padding:15px;
 }
 
-.screen{display:none}
-.screen.active{display:block}
+.screen{
+display:none;
+}
+
+.screen.active{
+display:block;
+}
 
 .card{
 background:white;
@@ -43,7 +54,9 @@ border-radius:16px;
 box-shadow:0 3px 12px #0002;
 }
 
-h2{margin-top:0}
+h2{
+margin-top:0;
+}
 
 label{
 display:block;
@@ -51,7 +64,9 @@ font-weight:bold;
 margin-top:14px;
 }
 
-input,textarea,select{
+input,
+textarea,
+select{
 width:100%;
 padding:14px;
 margin-top:7px;
@@ -60,7 +75,9 @@ border-radius:10px;
 font-size:16px;
 }
 
-textarea{min-height:100px}
+textarea{
+min-height:100px;
+}
 
 button{
 width:100%;
@@ -74,8 +91,13 @@ font-size:16px;
 font-weight:bold;
 }
 
-button.secondary{background:#607080}
-button.danger{background:#b3261e}
+button.secondary{
+background:#607080;
+}
+
+button.danger{
+background:#b3261e;
+}
 
 .grid{
 display:grid;
@@ -124,16 +146,35 @@ color:#607080;
 }
 
 @media(max-width:500px){
-.grid{grid-template-columns:1fr}
+.grid{
+grid-template-columns:1fr;
+}
 }
 
 @media print{
-header,button{display:none!important}
-.screen{display:none!important}
-#reportScreen{display:block!important}
-body{background:white}
+
+header,
+button{
+display:none!important;
+}
+
+.screen{
+display:none!important;
+}
+
+#reportScreen{
+display:block!important;
+}
+
+body{
+background:white;
+}
 }
 </style>
+
+<!-- SUPABASE -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 </head>
 
 <body>
@@ -145,287 +186,586 @@ body{background:white}
 
 <div class="container">
 
-<!-- LOGIN -->
+<!-- =========================
+     LOGIN
+========================= -->
+
 <section id="loginScreen" class="screen active">
+
 <div class="card">
 
 <h2>Technician Login</h2>
 
 <label>Email Address</label>
-<input id="email" type="email" placeholder="Enter your email">
+
+<input
+id="email"
+type="email"
+placeholder="Enter your email"
+autocomplete="username"
+>
 
 <label>Password</label>
-<input id="password" type="password" placeholder="Enter your password">
 
-<button onclick="login()">LOGIN</button>
+<input
+id="password"
+type="password"
+placeholder="Enter your password"
+autocomplete="current-password"
+>
+
+<button onclick="login()">
+LOGIN
+</button>
 
 </div>
+
 </section>
 
 
-<!-- DASHBOARD -->
+<!-- =========================
+     DASHBOARD
+========================= -->
+
 <section id="dashboardScreen" class="screen">
 
 <div class="card">
-<h2>Welcome, <span id="welcomeName">Technician</span> 👷</h2>
+
+<h2>
+Welcome,
+<span id="welcomeName">Technician</span>
+👷
+</h2>
+
 <div class="status">
 Technician logged in successfully.
 </div>
+
 </div>
+
 
 <div class="grid">
 
-<div class="menu" onclick="showScreen('liftScreen')">
-🏢<br><b>Lift Details</b>
+<div
+class="menu"
+onclick="showScreen('liftScreen')"
+>
+🏢
+<br>
+<b>Lift Details</b>
 </div>
 
-<div class="menu" onclick="showScreen('breakdownScreen')">
-🔧<br><b>Breakdown</b>
+
+<div
+class="menu"
+onclick="showScreen('breakdownScreen')"
+>
+🔧
+<br>
+<b>Breakdown</b>
 </div>
 
-<div class="menu" onclick="showScreen('maintenanceScreen')">
-✅<br><b>Maintenance</b>
+
+<div
+class="menu"
+onclick="showScreen('maintenanceScreen')"
+>
+✅
+<br>
+<b>Maintenance</b>
 </div>
 
-<div class="menu" onclick="getGPS()">
-📍<br><b>GPS Location</b>
+
+<div
+class="menu"
+onclick="getGPS()"
+>
+📍
+<br>
+<b>GPS Location</b>
 </div>
 
-<div class="menu" onclick="showScreen('findApartmentScreen')">
-🏢<br><b>Find Apartment</b>
+
+<div
+class="menu"
+onclick="showScreen('findApartmentScreen')"
+>
+🏢
+<br>
+<b>Find Apartment</b>
 </div>
 
-<div class="menu" onclick="showScreen('recordsScreen')">
-📋<br><b>Lift Records</b>
+
+<div
+class="menu"
+onclick="showScreen('recordsScreen')"
+>
+📋
+<br>
+<b>Lift Records</b>
 </div>
 
-<div class="menu" onclick="showScreen('reportScreen')">
-📄<br><b>Service Report</b>
+
+<div
+class="menu"
+onclick="showScreen('reportScreen')"
+>
+📄
+<br>
+<b>Service Report</b>
 </div>
 
 </div>
+
 
 <div class="card">
-<p id="gpsStatus">GPS location not checked.</p>
-<button class="danger" onclick="logout()">LOGOUT</button>
+
+<p id="gpsStatus">
+GPS location not checked.
+</p>
+
+<button
+class="danger"
+onclick="logout()"
+>
+LOGOUT
+</button>
+
 </div>
 
 </section>
 
 
-<!-- LIFT DETAILS -->
+<!-- =========================
+     LIFT DETAILS
+========================= -->
+
 <section id="liftScreen" class="screen">
 
 <div class="card">
 
 <h2>🏢 Lift Details</h2>
 
-<label>Customer Name</label>
-<input id="liftCustomer" placeholder="Enter customer name">
 
-<label>Lift Number</label>
-<input id="liftNumber" placeholder="Enter lift number">
+<label>
+Customer Name
+</label>
 
-<label>Brand</label>
-<input id="liftBrand" placeholder="Enter lift brand">
+<input
+id="liftCustomer"
+placeholder="Enter customer name"
+>
 
-<label>Lift Location</label>
-<input id="liftLocation" placeholder="Enter lift location">
 
-<label>Number of Floors</label>
-<input id="liftFloors" type="number" placeholder="Enter number of floors">
+<label>
+Lift Number
+</label>
 
-<label>Apartment / Building Name</label>
-<input id="apartmentName" placeholder="Enter building name">
+<input
+id="liftNumber"
+placeholder="Enter lift number"
+>
 
-<label>Apartment / Building Location</label>
-<input id="apartmentLocation" placeholder="GPS location will appear here">
+
+<label>
+Brand
+</label>
+
+<input
+id="liftBrand"
+placeholder="Enter lift brand"
+>
+
+
+<label>
+Lift Location
+</label>
+
+<input
+id="liftLocation"
+placeholder="Enter lift location"
+>
+
+
+<label>
+Number of Floors
+</label>
+
+<input
+id="liftFloors"
+type="number"
+placeholder="Enter number of floors"
+>
+
+
+<label>
+Apartment / Building Name
+</label>
+
+<input
+id="apartmentName"
+placeholder="Enter building name"
+>
+
+
+<label>
+Apartment / Building Location
+</label>
+
+<input
+id="apartmentLocation"
+placeholder="GPS location will appear here"
+readonly
+>
+
 
 <button onclick="saveLiftDetails()">
 SAVE LIFT DETAILS
 </button>
 
-<button class="secondary"
-onclick="showScreen('dashboardScreen')">
+
+<button
+class="secondary"
+onclick="showScreen('dashboardScreen')"
+>
 BACK
 </button>
 
 </div>
+
 </section>
 
 
-<!-- BREAKDOWN -->
+<!-- =========================
+     BREAKDOWN
+========================= -->
+
 <section id="breakdownScreen" class="screen">
 
 <div class="card">
 
 <h2>🔧 Breakdown Report</h2>
 
-<label>Lift Status</label>
+
+<label>
+Lift Status
+</label>
 
 <select id="liftStatus">
-<option value="">Select status</option>
-<option>Lift stopped</option>
-<option>Door problem</option>
-<option>Lift making noise</option>
-<option>Lift not leveling</option>
-<option>Electrical problem</option>
-<option>Other</option>
+
+<option value="">
+Select status
+</option>
+
+<option>
+Lift stopped
+</option>
+
+<option>
+Door problem
+</option>
+
+<option>
+Lift making noise
+</option>
+
+<option>
+Lift not leveling
+</option>
+
+<option>
+Electrical problem
+</option>
+
+<option>
+Other
+</option>
+
 </select>
 
-<label>Problem Description</label>
 
-<textarea id="breakdownPriority"
-placeholder="Describe the problem"></textarea>
+<label>
+Problem Description
+</label>
 
-<label>Technician Notes</label>
+<textarea
+id="breakdownPriority"
+placeholder="Describe the problem"
+></textarea>
 
-<textarea id="breakdownNotes"
-placeholder="Enter technician notes"></textarea>
+
+<label>
+Technician Notes
+</label>
+
+<textarea
+id="breakdownNotes"
+placeholder="Enter technician notes"
+></textarea>
+
 
 <button onclick="saveBreakdown()">
 SAVE BREAKDOWN
 </button>
 
-<button class="secondary"
-onclick="showScreen('dashboardScreen')">
+
+<button
+class="secondary"
+onclick="showScreen('dashboardScreen')"
+>
 BACK
 </button>
 
 </div>
+
 </section>
 
 
-<!-- MAINTENANCE -->
+<!-- =========================
+     MAINTENANCE
+========================= -->
+
 <section id="maintenanceScreen" class="screen">
 
 <div class="card">
 
-<h2>✅ Maintenance Checklist</h2>
+<h2>
+✅ Maintenance Checklist
+</h2>
+
 
 <div class="check">
-<input type="checkbox" id="doorCheck">
-<span>Door operation checked</span>
+
+<input
+type="checkbox"
+id="doorCheck"
+>
+
+<span>
+Door operation checked
+</span>
+
 </div>
+
 
 <div class="check">
-<input type="checkbox" id="levelCheck">
-<span>Floor leveling checked</span>
+
+<input
+type="checkbox"
+id="levelCheck"
+>
+
+<span>
+Floor leveling checked
+</span>
+
 </div>
+
 
 <div class="check">
-<input type="checkbox" id="brakeCheck">
-<span>Brake checked</span>
+
+<input
+type="checkbox"
+id="brakeCheck"
+>
+
+<span>
+Brake checked
+</span>
+
 </div>
+
 
 <div class="check">
-<input type="checkbox" id="motorCheck">
-<span>Motor checked</span>
+
+<input
+type="checkbox"
+id="motorCheck"
+>
+
+<span>
+Motor checked
+</span>
+
 </div>
+
 
 <div class="check">
-<input type="checkbox" id="safetyCheck">
-<span>Safety devices checked</span>
+
+<input
+type="checkbox"
+id="safetyCheck"
+>
+
+<span>
+Safety devices checked
+</span>
+
 </div>
+
 
 <div class="check">
-<input type="checkbox" id="emergencyCheck">
-<span>Emergency alarm checked</span>
+
+<input
+type="checkbox"
+id="emergencyCheck"
+>
+
+<span>
+Emergency alarm checked
+</span>
+
 </div>
 
-<label>Maintenance Notes</label>
 
-<textarea id="maintenanceNotes"
-placeholder="Enter maintenance notes"></textarea>
+<label>
+Maintenance Notes
+</label>
+
+<textarea
+id="maintenanceNotes"
+placeholder="Enter maintenance notes"
+></textarea>
+
 
 <button onclick="saveMaintenance()">
 SAVE MAINTENANCE
 </button>
 
-<button class="secondary"
-onclick="showScreen('dashboardScreen')">
+
+<button
+class="secondary"
+onclick="showScreen('dashboardScreen')"
+>
 BACK
 </button>
 
 </div>
+
 </section>
 
 
-<!-- FIND APARTMENT -->
+<!-- =========================
+     FIND APARTMENT
+========================= -->
+
 <section id="findApartmentScreen" class="screen">
 
 <div class="card">
 
-<h2>🏢 Find Apartment</h2>
+<h2>
+🏢 Find Apartment
+</h2>
+
 
 <label>
 Apartment / Building / Customer / Lift Number
 </label>
 
-<input id="findApartmentName"
-placeholder="Enter apartment name">
+<input
+id="findApartmentName"
+placeholder="Enter apartment name"
+>
+
 
 <button onclick="findApartment()">
 🔍 SEARCH
 </button>
 
+
 <div id="apartmentResult">
-<p>Enter an apartment name to search.</p>
+
+<p>
+Enter an apartment name to search.
+</p>
+
 </div>
 
-<button class="secondary"
-onclick="showScreen('dashboardScreen')">
+
+<button
+class="secondary"
+onclick="showScreen('dashboardScreen')"
+>
 BACK
 </button>
 
 </div>
+
 </section>
 
 
-<!-- RECORDS -->
+<!-- =========================
+     LIFT RECORDS
+========================= -->
+
 <section id="recordsScreen" class="screen">
 
 <div class="card">
 
-<h2>📋 Lift Records</h2>
+<h2>
+📋 Lift Records
+</h2>
+
 
 <div id="recordsList"></div>
 
-<button class="secondary"
-onclick="showScreen('dashboardScreen')">
+
+<button
+class="secondary"
+onclick="showScreen('dashboardScreen')"
+>
 BACK
 </button>
 
 </div>
+
 </section>
 
 
-<!-- SERVICE REPORT -->
+<!-- =========================
+     SERVICE REPORT
+========================= -->
+
 <section id="reportScreen" class="screen">
 
 <div class="card">
 
-<h2>📄 Service Report</h2>
+<h2>
+📄 Service Report
+</h2>
+
 
 <div id="reportOutput">
-<p>No service report generated yet.</p>
+
+<p>
+No service report generated yet.
+</p>
+
 </div>
+
 
 <button onclick="generateReport()">
 GENERATE REPORT
 </button>
 
-<button class="secondary"
-onclick="window.print()">
+
+<button
+class="secondary"
+onclick="window.print()"
+>
 PRINT REPORT
 </button>
 
-<button class="secondary"
-onclick="showScreen('dashboardScreen')">
+
+<button
+class="secondary"
+onclick="showScreen('dashboardScreen')"
+>
 BACK
 </button>
 
 </div>
+
 </section>
 
 </div>
@@ -434,75 +774,150 @@ BACK
 <script>
 
 /* =========================
+   SUPABASE CONNECTION
+========================= */
+
+const SUPABASE_URL =
+"https://bszdhcodjwflhoqxjtqb.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+"sb_publishable__PKdDgacDELBVpspWJdHxg_w6_ZcWnN";
+
+const supabaseClient =
+window.supabase.createClient(
+SUPABASE_URL,
+SUPABASE_PUBLISHABLE_KEY
+);
+
+
+/* =========================
    SCREEN NAVIGATION
 ========================= */
 
 function showScreen(id){
 
-document.querySelectorAll(".screen")
+document
+.querySelectorAll(".screen")
 .forEach(function(screen){
+
 screen.classList.remove("active");
+
 });
 
-const screen=document.getElementById(id);
+
+const screen =
+document.getElementById(id);
+
 
 if(screen){
+
 screen.classList.add("active");
+
 }
 
-if(id==="recordsScreen"){
+
+if(id === "recordsScreen"){
+
 loadLiftRecords();
+
 }
 
-if(id==="reportScreen"){
+
+if(id === "reportScreen"){
+
 generateReport();
+
 }
+
 
 window.scrollTo(0,0);
+
 }
 
 
 /* =========================
-   LOGIN
+   REAL SUPABASE LOGIN
 ========================= */
 
-function login(){
+async function login(){
 
-const email=
-document.getElementById("email")
-.value.trim();
+const email =
+document
+.getElementById("email")
+.value
+.trim();
 
-const password=
-document.getElementById("password")
+
+const password =
+document
+.getElementById("password")
 .value;
+
 
 if(!email || !password){
 
-alert("Please enter your email and password.");
+alert(
+"Please enter your email and password."
+);
 
 return;
+
 }
 
-const name=
+
+const { data, error } =
+await supabaseClient.auth.signInWithPassword({
+
+email:email,
+
+password:password
+
+});
+
+
+if(error){
+
+alert(
+"Login failed: " +
+error.message
+);
+
+return;
+
+}
+
+
+const name =
 email.split("@")[0];
+
 
 localStorage.setItem(
 "technicianEmail",
 email
 );
 
+
 localStorage.setItem(
 "technicianName",
 name
 );
 
-document.getElementById(
-"welcomeName"
-).textContent=name;
 
-alert("Login successful!");
+document
+.getElementById("welcomeName")
+.textContent =
+name;
 
-showScreen("dashboardScreen");
+
+alert(
+"Login successful!"
+);
+
+
+showScreen(
+"dashboardScreen"
+);
+
 }
 
 
@@ -510,7 +925,10 @@ showScreen("dashboardScreen");
    LOGOUT
 ========================= */
 
-function logout(){
+async function logout(){
+
+await supabaseClient.auth.signOut();
+
 
 localStorage.removeItem(
 "technicianEmail"
@@ -520,7 +938,21 @@ localStorage.removeItem(
 "technicianName"
 );
 
-showScreen("loginScreen");
+
+document.getElementById(
+"email"
+).value="";
+
+
+document.getElementById(
+"password"
+).value="";
+
+
+showScreen(
+"loginScreen"
+);
+
 }
 
 
@@ -532,29 +964,38 @@ function getLiftRecords(){
 
 let records=[];
 
+
 try{
 
-records=JSON.parse(
-localStorage.getItem("liftRecords") || "[]"
+records =
+JSON.parse(
+localStorage.getItem(
+"liftRecords"
+) || "[]"
 );
 
-}catch(error){
+}
+catch(error){
 
 records=[];
 
 }
+
 
 if(!Array.isArray(records)){
+
 records=[];
+
 }
 
+
 return records;
+
 }
 
 
 /* =========================
    SAVE LIFT DETAILS
-   MULTIPLE RECORDS
 ========================= */
 
 function saveLiftDetails(){
@@ -566,135 +1007,102 @@ alert(
 );
 
 return;
+
 }
+
 
 navigator.geolocation.getCurrentPosition(
 
 function(position){
 
-const latitude=
-position.coords.latitude.toFixed(6);
+const latitude =
+position.coords.latitude
+.toFixed(6);
 
-const longitude=
-position.coords.longitude.toFixed(6);
+
+const longitude =
+position.coords.longitude
+.toFixed(6);
 
 
 document.getElementById(
 "apartmentLocation"
-).value=
-"Latitude: "+latitude+
-" | Longitude: "+longitude;
+).value =
+
+"Latitude: " +
+latitude +
+" | Longitude: " +
+longitude;
 
 
-const newLift={
+const newLift = {
 
 id:Date.now(),
 
 customer:
-document.getElementById(
-"liftCustomer"
-).value.trim(),
+document
+.getElementById("liftCustomer")
+.value
+.trim(),
 
 liftNumber:
-document.getElementById(
-"liftNumber"
-).value.trim(),
+document
+.getElementById("liftNumber")
+.value
+.trim(),
 
 brand:
-document.getElementById(
-"liftBrand"
-).value.trim(),
+document
+.getElementById("liftBrand")
+.value
+.trim(),
 
 location:
-document.getElementById(
-"liftLocation"
-).value.trim(),
+document
+.getElementById("liftLocation")
+.value
+.trim(),
 
 floors:
-document.getElementById(
-"liftFloors"
-).value.trim(),
+document
+.getElementById("liftFloors")
+.value
+.trim(),
 
 apartmentName:
-document.getElementById(
-"apartmentName"
-).value.trim(),
+document
+.getElementById("apartmentName")
+.value
+.trim(),
 
 apartmentLocation:
-document.getElementById(
-"apartmentLocation"
-).value,
+document
+.getElementById("apartmentLocation")
+.value,
 
 latitude:latitude,
 
 longitude:longitude,
 
-date:new Date().toLocaleString()
+date:
+new Date()
+.toLocaleString()
 
 };
 
 
-/* Existing records */
+let records =
+getLiftRecords();
 
-let records=getLiftRecords();
-
-
-/*
-IMPORTANT:
-If the old single record exists and is not already
-inside liftRecords, keep it.
-*/
-
-const oldLift=
-JSON.parse(
-localStorage.getItem(
-"liftDetails"
-) || "null"
-);
-
-
-if(oldLift){
-
-const alreadyExists=
-records.some(function(record){
-
-return(
-(record.apartmentName || "") ===
-(oldLift.apartmentName || "") &&
-
-(record.liftNumber || "") ===
-(oldLift.liftNumber || "") &&
-
-(record.date || "") ===
-(oldLift.date || "")
-);
-
-});
-
-
-if(!alreadyExists){
-
-records.unshift(oldLift);
-
-}
-
-}
-
-
-/* ADD NEW LIFT */
 
 records.push(newLift);
 
-
-/* SAVE ALL LIFTS */
 
 localStorage.setItem(
 "liftRecords",
 JSON.stringify(records)
 );
 
-
-/* KEEP LATEST LIFT */
 
 localStorage.setItem(
 "liftDetails",
@@ -703,27 +1111,30 @@ JSON.stringify(newLift)
 
 
 alert(
-"Lift details and GPS location saved successfully!\n\n"+
-"Total lift records: "+records.length
+"Lift details and GPS location saved successfully!\n\n" +
+"Total lift records: " +
+records.length
 );
 
 },
 
-
 function(){
 
 alert(
-"GPS location could not be captured. "+
+"GPS location could not be captured. " +
 "Please allow location permission and try again."
 );
 
 },
 
-
 {
+
 enableHighAccuracy:true,
+
 timeout:15000,
+
 maximumAge:0
+
 }
 
 );
@@ -740,32 +1151,37 @@ function saveBreakdown(){
 const data={
 
 status:
-document.getElementById(
-"liftStatus"
-).value,
+document
+.getElementById("liftStatus")
+.value,
 
 problem:
-document.getElementById(
-"breakdownPriority"
-).value,
+document
+.getElementById("breakdownPriority")
+.value,
 
 notes:
-document.getElementById(
-"breakdownNotes"
-).value,
+document
+.getElementById("breakdownNotes")
+.value,
 
-date:new Date().toLocaleString()
+date:
+new Date()
+.toLocaleString()
 
 };
+
 
 localStorage.setItem(
 "breakdownData",
 JSON.stringify(data)
 );
 
+
 alert(
 "Breakdown report saved successfully!"
 );
+
 }
 
 
@@ -778,52 +1194,57 @@ function saveMaintenance(){
 const data={
 
 door:
-document.getElementById(
-"doorCheck"
-).checked,
+document
+.getElementById("doorCheck")
+.checked,
 
 leveling:
-document.getElementById(
-"levelCheck"
-).checked,
+document
+.getElementById("levelCheck")
+.checked,
 
 brake:
-document.getElementById(
-"brakeCheck"
-).checked,
+document
+.getElementById("brakeCheck")
+.checked,
 
 motor:
-document.getElementById(
-"motorCheck"
-).checked,
+document
+.getElementById("motorCheck")
+.checked,
 
 safety:
-document.getElementById(
-"safetyCheck"
-).checked,
+document
+.getElementById("safetyCheck")
+.checked,
 
 emergency:
-document.getElementById(
-"emergencyCheck"
-).checked,
+document
+.getElementById("emergencyCheck")
+.checked,
 
 notes:
-document.getElementById(
-"maintenanceNotes"
-).value,
+document
+.getElementById("maintenanceNotes")
+.value,
 
-date:new Date().toLocaleString()
+date:
+new Date()
+.toLocaleString()
 
 };
+
 
 localStorage.setItem(
 "maintenanceData",
 JSON.stringify(data)
 );
 
+
 alert(
 "Maintenance saved successfully!"
 );
+
 }
 
 
@@ -833,20 +1254,23 @@ alert(
 
 function getGPS(){
 
-const status=
+const status =
 document.getElementById(
 "gpsStatus"
 );
 
+
 if(!navigator.geolocation){
 
-status.textContent=
+status.textContent =
 "GPS is not supported on this device.";
 
 return;
+
 }
 
-status.textContent=
+
+status.textContent =
 "Getting GPS location...";
 
 
@@ -854,18 +1278,22 @@ navigator.geolocation.getCurrentPosition(
 
 function(position){
 
-const lat=
+const lat =
 position.coords.latitude;
 
-const lon=
+const lon =
 position.coords.longitude;
 
 
 const location={
 
 latitude:lat,
+
 longitude:lon,
-date:new Date().toLocaleString()
+
+date:
+new Date()
+.toLocaleString()
 
 };
 
@@ -876,25 +1304,30 @@ JSON.stringify(location)
 );
 
 
-status.textContent=
-"Latitude: "+lat+
-" | Longitude: "+lon;
+status.textContent =
+
+"Latitude: " +
+lat +
+" | Longitude: " +
+lon;
 
 },
 
-
 function(){
 
-status.textContent=
+status.textContent =
 "Unable to get GPS location. Please allow location permission.";
 
 },
 
-
 {
+
 enableHighAccuracy:true,
+
 timeout:15000,
+
 maximumAge:0
+
 }
 
 );
@@ -904,17 +1337,22 @@ maximumAge:0
 
 /* =========================
    FIND APARTMENT
+   SEARCH KEPT UNCHANGED
 ========================= */
 
 function findApartment(){
 
-const searchName=
-document.getElementById(
+const searchName =
+document
+.getElementById(
 "findApartmentName"
-).value.trim().toLowerCase();
+)
+.value
+.trim()
+.toLowerCase();
 
 
-const result=
+const result =
 document.getElementById(
 "apartmentResult"
 );
@@ -922,26 +1360,27 @@ document.getElementById(
 
 if(!searchName){
 
-result.innerHTML=
+result.innerHTML =
 "<p>Please enter an apartment, customer or lift number.</p>";
 
 return;
+
 }
 
 
-let records=getLiftRecords();
+let records =
+getLiftRecords();
 
 
-/* OLD RECORD MIGRATION */
+if(records.length === 0){
 
-if(records.length===0){
-
-const oldLift=
+const oldLift =
 JSON.parse(
 localStorage.getItem(
 "liftDetails"
 ) || "null"
 );
+
 
 if(oldLift){
 
@@ -952,64 +1391,75 @@ records.push(oldLift);
 }
 
 
-if(records.length===0){
+if(records.length === 0){
 
-result.innerHTML=
+result.innerHTML =
 "<p>No lift records saved yet.</p>";
 
 return;
+
 }
 
 
-/* SEARCH */
-
-const matches=
+const matches =
 records.filter(function(lift){
 
-const apartment=
-(lift.apartmentName || "")
-.toLowerCase();
+const apartment =
+(
+lift.apartmentName ||
+""
+).toLowerCase();
 
-const customer=
-(lift.customer || "")
-.toLowerCase();
 
-const number=
-(lift.liftNumber || "")
-.toLowerCase();
+const customer =
+(
+lift.customer ||
+""
+).toLowerCase();
+
+
+const number =
+(
+lift.liftNumber ||
+""
+).toLowerCase();
+
 
 return(
+
 apartment.includes(searchName) ||
+
 customer.includes(searchName) ||
+
 number.includes(searchName)
+
 );
 
 });
 
 
-if(matches.length===0){
+if(matches.length === 0){
 
-result.innerHTML=
+result.innerHTML =
 "<p>❌ No matching lift found.</p>";
 
 return;
+
 }
 
 
-/* DISPLAY RESULTS */
+result.innerHTML =
 
-result.innerHTML=
-
-"<p><b>Found "+
-matches.length+
-" lift record(s)</b></p>"+
+"<p><b>Found " +
+matches.length +
+" lift record(s)</b></p>" +
 
 matches.map(function(lift){
 
-const latitude=
+const latitude =
 lift.latitude;
 
-const longitude=
+const longitude =
 lift.longitude;
 
 
@@ -1022,23 +1472,29 @@ return `
 </h3>
 
 <b>Customer:</b>
-${lift.customer || "-"}<br>
+${lift.customer || "-"}
+<br>
 
 <b>Lift Number:</b>
-${lift.liftNumber || "-"}<br>
+${lift.liftNumber || "-"}
+<br>
 
 <b>Brand:</b>
-${lift.brand || "-"}<br>
+${lift.brand || "-"}
+<br>
 
 <b>Lift Location:</b>
-${lift.location || "-"}<br>
+${lift.location || "-"}
+<br>
 
 <b>Floors:</b>
-${lift.floors || "-"}<br>
+${lift.floors || "-"}
+<br>
 
 <b>GPS:</b>
 ${latitude || "-"} ,
-${longitude || "-"}<br>
+${longitude || "-"}
+<br>
 
 <span class="small">
 Saved: ${lift.date || "-"}
@@ -1049,10 +1505,12 @@ latitude && longitude
 
 ?
 
-`<button onclick="window.open(
+`<button
+onclick="window.open(
 'https://www.google.com/maps?q=${latitude},${longitude}',
 '_blank'
-)">
+)"
+>
 🗺️ OPEN IN GOOGLE MAPS
 </button>`
 
@@ -1074,34 +1532,35 @@ latitude && longitude
 
 
 /* =========================
-   LOAD ALL LIFT RECORDS
+   LOAD LIFT RECORDS
 ========================= */
 
 function loadLiftRecords(){
 
-const list=
+const list =
 document.getElementById(
 "recordsList"
 );
 
 
-let records=getLiftRecords();
+let records =
+getLiftRecords();
 
 
-/* OLD RECORD */
+if(records.length === 0){
 
-if(records.length===0){
-
-const oldLift=
+const oldLift =
 JSON.parse(
 localStorage.getItem(
 "liftDetails"
 ) || "null"
 );
 
+
 if(oldLift){
 
 records.push(oldLift);
+
 
 localStorage.setItem(
 "liftRecords",
@@ -1113,21 +1572,21 @@ JSON.stringify(records)
 }
 
 
-if(records.length===0){
+if(records.length === 0){
 
-list.innerHTML=
+list.innerHTML =
 "<p>No lift records saved yet.</p>";
 
 return;
+
 }
 
 
-list.innerHTML=
+list.innerHTML =
 
-"<p><b>Total Lift Records: "+
-records.length+
-"</b></p>"+
-
+"<p><b>Total Lift Records: " +
+records.length +
+"</b></p>" +
 
 records.map(function(lift){
 
@@ -1140,262 +1599,11 @@ return `
 </h3>
 
 <b>Customer:</b>
-${lift.customer || "-"}<br>
+${lift.customer || "-"}
+<br>
 
 <b>Lift Number:</b>
-${lift.liftNumber || "-"}<br>
+${lift.liftNumber || "-"}
+<br>
 
-<b>Brand:</b>
-${lift.brand || "-"}<br>
-
-<b>Location:</b>
-${lift.location || "-"}<br>
-
-<b>Floors:</b>
-${lift.floors || "-"}<br>
-
-<b>GPS:</b>
-${lift.latitude || "-"} ,
-${lift.longitude || "-"}<br>
-
-<span class="small">
-Saved: ${lift.date || "-"}
-</span>
-
-${
-lift.latitude &&
-lift.longitude
-
-?
-
-`<button onclick="window.open(
-'https://www.google.com/maps?q=${lift.latitude},${lift.longitude}',
-'_blank'
-)">
-🗺️ OPEN IN GOOGLE MAPS
-</button>`
-
-:
-
-""
-
-}
-
-</div>
-
-`;
-
-}).join("");
-
-}
-
-
-/* =========================
-   SERVICE REPORT
-========================= */
-
-function generateReport(){
-
-const output=
-document.getElementById(
-"reportOutput"
-);
-
-
-let records=
-getLiftRecords();
-
-
-let lift=null;
-
-
-if(records.length>0){
-
-/* Latest saved lift */
-
-lift=
-records[records.length-1];
-
-}else{
-
-lift=
-JSON.parse(
-localStorage.getItem(
-"liftDetails"
-) || "null"
-);
-
-}
-
-
-const breakdown=
-JSON.parse(
-localStorage.getItem(
-"breakdownData"
-) || "null"
-);
-
-
-const maintenance=
-JSON.parse(
-localStorage.getItem(
-"maintenanceData"
-) || "null"
-);
-
-
-const gps=
-JSON.parse(
-localStorage.getItem(
-"gpsLocation"
-) || "null"
-);
-
-
-if(
-!lift &&
-!breakdown &&
-!maintenance
-){
-
-output.innerHTML=
-"<p>No service information available.</p>";
-
-return;
-}
-
-
-output.innerHTML=`
-
-<div class="record">
-
-<h3>🏢 Lift Details</h3>
-
-<b>Customer:</b>
-${lift?.customer || "-"}<br>
-
-<b>Lift Number:</b>
-${lift?.liftNumber || "-"}<br>
-
-<b>Brand:</b>
-${lift?.brand || "-"}<br>
-
-<b>Location:</b>
-${lift?.location || "-"}<br>
-
-<b>Floors:</b>
-${lift?.floors || "-"}<br>
-
-<b>Building:</b>
-${lift?.apartmentName || "-"}<br>
-
-<b>GPS:</b>
-${lift?.latitude || "-"} ,
-${lift?.longitude || "-"}
-
-</div>
-
-
-<div class="record">
-
-<h3>🔧 Breakdown</h3>
-
-<b>Status:</b>
-${breakdown?.status || "-"}<br>
-
-<b>Problem:</b>
-${breakdown?.problem || "-"}<br>
-
-<b>Notes:</b>
-${breakdown?.notes || "-"}
-
-</div>
-
-
-<div class="record">
-
-<h3>✅ Maintenance</h3>
-
-<b>Door:</b>
-${maintenance?.door ? "Checked":"Not checked"}<br>
-
-<b>Leveling:</b>
-${maintenance?.leveling ? "Checked":"Not checked"}<br>
-
-<b>Brake:</b>
-${maintenance?.brake ? "Checked":"Not checked"}<br>
-
-<b>Motor:</b>
-${maintenance?.motor ? "Checked":"Not checked"}<br>
-
-<b>Safety:</b>
-${maintenance?.safety ? "Checked":"Not checked"}<br>
-
-<b>Emergency:</b>
-${maintenance?.emergency ? "Checked":"Not checked"}<br>
-
-<b>Notes:</b>
-${maintenance?.notes || "-"}
-
-</div>
-
-
-<div class="record">
-
-<h3>📍 GPS Location</h3>
-
-<b>Latitude:</b>
-${gps?.latitude || lift?.latitude || "-"}<br>
-
-<b>Longitude:</b>
-${gps?.longitude || lift?.longitude || "-"}
-
-</div>
-
-
-<p class="small">
-Generated:
-${new Date().toLocaleString()}
-</p>
-
-`;
-
-}
-
-
-/* =========================
-   LOAD LOGIN
-========================= */
-
-window.onload=function(){
-
-const email=
-localStorage.getItem(
-"technicianEmail"
-);
-
-const name=
-localStorage.getItem(
-"technicianName"
-);
-
-
-if(email){
-
-document.getElementById(
-"welcomeName"
-).textContent=
-name || "Technician";
-
-showScreen(
-"dashboardScreen"
-);
-
-}
-
-};
-
-</script>
-
-</body>
-</html>
+<b>Brand
