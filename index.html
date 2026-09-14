@@ -386,31 +386,50 @@ function login(){
 }
 
 
-function logout(){
-
-  localStorage.removeItem("technicianEmail");
-  localStorage.removeItem("technicianName");
-
-  showScreen("loginScreen");
-}
-
-
 function saveLiftDetails(){
 
-  const data={
-    customer:document.getElementById("liftCustomer").value,
-    liftNumber:document.getElementById("liftNumber").value,
-    brand:document.getElementById("liftBrand").value,
-    location:document.getElementById("liftLocation").value,
-    floors:document.getElementById("liftFloors").value,
-    apartmentName:document.getElementById("apartmentName").value,
-    apartmentLocation:document.getElementById("apartmentLocation").value,
-    date:new Date().toLocaleString()
-  };
+  if(!navigator.geolocation){
+    alert("GPS is not supported on this phone.");
+    return;
+  }
 
-  localStorage.setItem("liftDetails",JSON.stringify(data));
+  navigator.geolocation.getCurrentPosition(
+    function(position){
 
-  alert("Lift details saved successfully!");
+      const latitude = position.coords.latitude.toFixed(6);
+      const longitude = position.coords.longitude.toFixed(6);
+
+      document.getElementById("apartmentLocation").value =
+        "Latitude: " + latitude + " | Longitude: " + longitude;
+
+      const data={
+        customer:document.getElementById("liftCustomer").value,
+        liftNumber:document.getElementById("liftNumber").value,
+        brand:document.getElementById("liftBrand").value,
+        location:document.getElementById("liftLocation").value,
+        floors:document.getElementById("liftFloors").value,
+        apartmentName:document.getElementById("apartmentName").value,
+        apartmentLocation:document.getElementById("apartmentLocation").value,
+        latitude:latitude,
+        longitude:longitude,
+        date:new Date().toLocaleString()
+      };
+
+      localStorage.setItem("liftDetails",JSON.stringify(data));
+
+      alert("Lift details and GPS location saved successfully!");
+    },
+
+    function(error){
+      alert("GPS location could not be captured. Please allow location permission and try again.");
+    },
+
+    {
+      enableHighAccuracy:true,
+      timeout:15000,
+      maximumAge:0
+    }
+  );
 }
 
 
