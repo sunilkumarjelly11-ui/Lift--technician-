@@ -10,121 +10,128 @@
 *{box-sizing:border-box}
 
 body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:#eef3f8;
-  color:#062542;
+margin:0;
+font-family:Arial,sans-serif;
+background:#eef3f8;
+color:#062542;
 }
 
 header{
-  background:#062542;
-  color:white;
-  text-align:center;
-  padding:18px;
+background:#062542;
+color:white;
+text-align:center;
+padding:18px;
 }
 
 header h1{margin:0;font-size:24px}
 header p{margin:5px 0 0}
 
 .container{
-  max-width:700px;
-  margin:auto;
-  padding:15px;
+max-width:700px;
+margin:auto;
+padding:15px;
 }
 
 .screen{display:none}
 .screen.active{display:block}
 
 .card{
-  background:white;
-  padding:20px;
-  margin:15px 0;
-  border-radius:16px;
-  box-shadow:0 3px 12px #0002;
+background:white;
+padding:20px;
+margin:15px 0;
+border-radius:16px;
+box-shadow:0 3px 12px #0002;
 }
 
 h2{margin-top:0}
 
 label{
-  display:block;
-  font-weight:bold;
-  margin-top:14px;
+display:block;
+font-weight:bold;
+margin-top:14px;
 }
 
 input,textarea,select{
-  width:100%;
-  padding:14px;
-  margin-top:7px;
-  border:1px solid #bbb;
-  border-radius:10px;
-  font-size:16px;
+width:100%;
+padding:14px;
+margin-top:7px;
+border:1px solid #bbb;
+border-radius:10px;
+font-size:16px;
 }
 
 textarea{min-height:100px}
 
 button{
-  width:100%;
-  padding:15px;
-  margin-top:15px;
-  border:0;
-  border-radius:10px;
-  background:#062542;
-  color:white;
-  font-size:16px;
-  font-weight:bold;
+width:100%;
+padding:15px;
+margin-top:15px;
+border:0;
+border-radius:10px;
+background:#062542;
+color:white;
+font-size:16px;
+font-weight:bold;
 }
 
 button.secondary{background:#607080}
 button.danger{background:#b3261e}
 
 .grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
 }
 
 .menu{
-  padding:18px;
-  border-radius:14px;
-  background:white;
-  box-shadow:0 3px 10px #0002;
-  text-align:center;
-  font-weight:bold;
+padding:18px;
+border-radius:14px;
+background:white;
+box-shadow:0 3px 10px #0002;
+text-align:center;
+font-weight:bold;
 }
 
 .status{
-  padding:12px;
-  background:#e8f5e9;
-  border-radius:10px;
-  margin-top:10px;
+padding:12px;
+background:#e8f5e9;
+border-radius:10px;
+margin-top:10px;
 }
 
 .check{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  margin:14px 0;
+display:flex;
+align-items:center;
+gap:10px;
+margin:14px 0;
 }
 
 .check input{
-  width:auto;
-  margin:0;
+width:auto;
+margin:0;
 }
 
 .record{
-  background:#f7f9fb;
-  padding:14px;
-  margin:10px 0;
-  border-radius:10px;
+background:#f7f9fb;
+padding:14px;
+margin:10px 0;
+border-radius:10px;
 }
 
 .small{
-  font-size:13px;
-  color:#607080;
+font-size:13px;
+color:#607080;
 }
 
 @media(max-width:500px){
-  .grid{grid-template-columns:1fr}
+.grid{grid-template-columns:1fr}
+}
+
+@media print{
+header,button{display:none!important}
+.screen{display:none!important}
+#reportScreen{display:block!important}
+body{background:white}
 }
 </style>
 </head>
@@ -161,7 +168,9 @@ button.danger{background:#b3261e}
 
 <div class="card">
 <h2>Welcome, <span id="welcomeName">Technician</span> 👷</h2>
-<div class="status">Technician logged in successfully.</div>
+<div class="status">
+Technician logged in successfully.
+</div>
 </div>
 
 <div class="grid">
@@ -182,7 +191,6 @@ button.danger{background:#b3261e}
 📍<br><b>GPS Location</b>
 </div>
 
-<!-- FIND APARTMENT -->
 <div class="menu" onclick="showScreen('findApartmentScreen')">
 🏢<br><b>Find Apartment</b>
 </div>
@@ -233,7 +241,9 @@ button.danger{background:#b3261e}
 <label>Apartment / Building Location</label>
 <input id="apartmentLocation" placeholder="GPS location will appear here">
 
-<button onclick="saveLiftDetails()">SAVE LIFT DETAILS</button>
+<button onclick="saveLiftDetails()">
+SAVE LIFT DETAILS
+</button>
 
 <button class="secondary"
 onclick="showScreen('dashboardScreen')">
@@ -348,7 +358,9 @@ BACK
 
 <h2>🏢 Find Apartment</h2>
 
-<label>Apartment / Building Name</label>
+<label>
+Apartment / Building / Customer / Lift Number
+</label>
 
 <input id="findApartmentName"
 placeholder="Enter apartment name">
@@ -367,7 +379,6 @@ BACK
 </button>
 
 </div>
-
 </section>
 
 
@@ -386,7 +397,6 @@ BACK
 </button>
 
 </div>
-
 </section>
 
 
@@ -416,13 +426,16 @@ BACK
 </button>
 
 </div>
-
 </section>
 
 </div>
 
 
 <script>
+
+/* =========================
+   SCREEN NAVIGATION
+========================= */
 
 function showScreen(id){
 
@@ -449,14 +462,18 @@ window.scrollTo(0,0);
 }
 
 
-/* LOGIN */
+/* =========================
+   LOGIN
+========================= */
 
 function login(){
 
-const email=document.getElementById("email")
+const email=
+document.getElementById("email")
 .value.trim();
 
-const password=document.getElementById("password")
+const password=
+document.getElementById("password")
 .value;
 
 if(!email || !password){
@@ -466,20 +483,88 @@ alert("Please enter your email and password.");
 return;
 }
 
-const name=email.split("@")[0];
+const name=
+email.split("@")[0];
 
-localStorage.setItem("technicianEmail",email);
-localStorage.setItem("technicianName",name);
+localStorage.setItem(
+"technicianEmail",
+email
+);
 
-document.getElementById("welcomeName")
-.textContent=name;
+localStorage.setItem(
+"technicianName",
+name
+);
+
+document.getElementById(
+"welcomeName"
+).textContent=name;
 
 alert("Login successful!");
+
+showScreen("dashboardScreen");
+}
+
+
+/* =========================
+   LOGOUT
+========================= */
+
+function logout(){
+
+localStorage.removeItem(
+"technicianEmail"
+);
+
+localStorage.removeItem(
+"technicianName"
+);
+
+showScreen("loginScreen");
+}
+
+
+/* =========================
+   GET LIFT RECORDS
+========================= */
+
+function getLiftRecords(){
+
+let records=[];
+
+try{
+
+records=JSON.parse(
+localStorage.getItem("liftRecords") || "[]"
+);
+
+}catch(error){
+
+records=[];
+
+}
+
+if(!Array.isArray(records)){
+records=[];
+}
+
+return records;
+}
+
+
+/* =========================
+   SAVE LIFT DETAILS
+   MULTIPLE RECORDS
+========================= */
 
 function saveLiftDetails(){
 
 if(!navigator.geolocation){
-alert("GPS is not supported on this phone.");
+
+alert(
+"GPS is not supported on this phone."
+);
+
 return;
 }
 
@@ -487,103 +572,153 @@ navigator.geolocation.getCurrentPosition(
 
 function(position){
 
-const latitude=position.coords.latitude.toFixed(6);
-const longitude=position.coords.longitude.toFixed(6);
+const latitude=
+position.coords.latitude.toFixed(6);
 
-document.getElementById("apartmentLocation").value=
-"Latitude: "+latitude+" | Longitude: "+longitude;
+const longitude=
+position.coords.longitude.toFixed(6);
 
-const data={
+
+document.getElementById(
+"apartmentLocation"
+).value=
+"Latitude: "+latitude+
+" | Longitude: "+longitude;
+
+
+const newLift={
+
 id:Date.now(),
 
-customer:document.getElementById("liftCustomer").value,
-liftNumber:document.getElementById("liftNumber").value,
-brand:document.getElementById("liftBrand").value,
-location:document.getElementById("liftLocation").value,
-floors:document.getElementById("liftFloors").value,
-apartmentName:document.getElementById("apartmentName").value,
-apartmentLocation:document.getElementById("apartmentLocation").value,
+customer:
+document.getElementById(
+"liftCustomer"
+).value.trim(),
+
+liftNumber:
+document.getElementById(
+"liftNumber"
+).value.trim(),
+
+brand:
+document.getElementById(
+"liftBrand"
+).value.trim(),
+
+location:
+document.getElementById(
+"liftLocation"
+).value.trim(),
+
+floors:
+document.getElementById(
+"liftFloors"
+).value.trim(),
+
+apartmentName:
+document.getElementById(
+"apartmentName"
+).value.trim(),
+
+apartmentLocation:
+document.getElementById(
+"apartmentLocation"
+).value,
 
 latitude:latitude,
+
 longitude:longitude,
 
 date:new Date().toLocaleString()
+
 };
 
-/* Get existing records */
 
-let records=JSON.parse(
-localStorage.getItem("liftRecords") || "[]"
+/* Existing records */
+
+let records=getLiftRecords();
+
+
+/*
+IMPORTANT:
+If the old single record exists and is not already
+inside liftRecords, keep it.
+*/
+
+const oldLift=
+JSON.parse(
+localStorage.getItem(
+"liftDetails"
+) || "null"
 );
 
-/* Convert old single record to multiple records */
-
-if(!Array.isArray(records)){
-records=[];
-}
-
-if(records.length===0){
-
-const oldLift=JSON.parse(
-localStorage.getItem("liftDetails") || "null"
-);
 
 if(oldLift){
-oldLift.id=Date.now()-1;
-records.push(oldLift);
-}
+
+const alreadyExists=
+records.some(function(record){
+
+return(
+(record.apartmentName || "") ===
+(oldLift.apartmentName || "") &&
+
+(record.liftNumber || "") ===
+(oldLift.liftNumber || "") &&
+
+(record.date || "") ===
+(oldLift.date || "")
+);
+
+});
+
+
+if(!alreadyExists){
+
+records.unshift(oldLift);
 
 }
 
-/* Save new lift */
+}
 
-records.push(data);
+
+/* ADD NEW LIFT */
+
+records.push(newLift);
+
+
+/* SAVE ALL LIFTS */
 
 localStorage.setItem(
 "liftRecords",
 JSON.stringify(records)
 );
 
-/* Keep latest record for compatibility */
+
+/* KEEP LATEST LIFT */
 
 localStorage.setItem(
 "liftDetails",
-JSON.stringify(data)
+JSON.stringify(newLift)
 );
 
+
 alert(
-"Lift details and GPS location saved successfully!"
+"Lift details and GPS location saved successfully!\n\n"+
+"Total lift records: "+records.length
 );
 
 },
+
 
 function(){
 
 alert(
-"GPS location could not be captured. Please allow location permission and try again."
+"GPS location could not be captured. "+
+"Please allow location permission and try again."
 );
 
 },
 
-{
-enableHighAccuracy:true,
-timeout:15000,
-maximumAge:0
-}
-
-);
-
-}
-
-},
-
-function(){
-
-alert(
-"GPS location could not be captured. Please allow location permission and try again."
-);
-
-},
 
 {
 enableHighAccuracy:true,
@@ -596,20 +731,28 @@ maximumAge:0
 }
 
 
-/* BREAKDOWN */
+/* =========================
+   BREAKDOWN
+========================= */
 
 function saveBreakdown(){
 
 const data={
 
 status:
-document.getElementById("liftStatus").value,
+document.getElementById(
+"liftStatus"
+).value,
 
 problem:
-document.getElementById("breakdownPriority").value,
+document.getElementById(
+"breakdownPriority"
+).value,
 
 notes:
-document.getElementById("breakdownNotes").value,
+document.getElementById(
+"breakdownNotes"
+).value,
 
 date:new Date().toLocaleString()
 
@@ -620,36 +763,54 @@ localStorage.setItem(
 JSON.stringify(data)
 );
 
-alert("Breakdown report saved successfully!");
+alert(
+"Breakdown report saved successfully!"
+);
 }
 
 
-/* MAINTENANCE */
+/* =========================
+   MAINTENANCE
+========================= */
 
 function saveMaintenance(){
 
 const data={
 
 door:
-document.getElementById("doorCheck").checked,
+document.getElementById(
+"doorCheck"
+).checked,
 
 leveling:
-document.getElementById("levelCheck").checked,
+document.getElementById(
+"levelCheck"
+).checked,
 
 brake:
-document.getElementById("brakeCheck").checked,
+document.getElementById(
+"brakeCheck"
+).checked,
 
 motor:
-document.getElementById("motorCheck").checked,
+document.getElementById(
+"motorCheck"
+).checked,
 
 safety:
-document.getElementById("safetyCheck").checked,
+document.getElementById(
+"safetyCheck"
+).checked,
 
 emergency:
-document.getElementById("emergencyCheck").checked,
+document.getElementById(
+"emergencyCheck"
+).checked,
 
 notes:
-document.getElementById("maintenanceNotes").value,
+document.getElementById(
+"maintenanceNotes"
+).value,
 
 date:new Date().toLocaleString()
 
@@ -660,16 +821,22 @@ localStorage.setItem(
 JSON.stringify(data)
 );
 
-alert("Maintenance saved successfully!");
+alert(
+"Maintenance saved successfully!"
+);
 }
 
 
-/* GPS */
+/* =========================
+   GPS LOCATION
+========================= */
 
 function getGPS(){
 
 const status=
-document.getElementById("gpsStatus");
+document.getElementById(
+"gpsStatus"
+);
 
 if(!navigator.geolocation){
 
@@ -682,48 +849,108 @@ return;
 status.textContent=
 "Getting GPS location...";
 
+
 navigator.geolocation.getCurrentPosition(
 
 function(position){
 
+const lat=
+position.coords.latitude;
+
+const lon=
+position.coords.longitude;
+
+
+const location={
+
+latitude:lat,
+longitude:lon,
+date:new Date().toLocaleString()
+
+};
+
+
+localStorage.setItem(
+"gpsLocation",
+JSON.stringify(location)
+);
+
+
+status.textContent=
+"Latitude: "+lat+
+" | Longitude: "+lon;
+
+},
+
+
+function(){
+
+status.textContent=
+"Unable to get GPS location. Please allow location permission.";
+
+},
+
+
+{
+enableHighAccuracy:true,
+timeout:15000,
+maximumAge:0
+}
+
+);
+
+}
+
+
+/* =========================
+   FIND APARTMENT
+========================= */
+
 function findApartment(){
 
 const searchName=
-document.getElementById("findApartmentName")
-.value.trim().toLowerCase();
+document.getElementById(
+"findApartmentName"
+).value.trim().toLowerCase();
+
 
 const result=
-document.getElementById("apartmentResult");
-
-let records=JSON.parse(
-localStorage.getItem("liftRecords") || "[]"
+document.getElementById(
+"apartmentResult"
 );
 
-/* Migrate old record if necessary */
-
-if(!Array.isArray(records)){
-records=[];
-}
-
-if(records.length===0){
-
-const oldLift=JSON.parse(
-localStorage.getItem("liftDetails") || "null"
-);
-
-if(oldLift){
-records.push(oldLift);
-}
-
-}
 
 if(!searchName){
 
 result.innerHTML=
-"<p>Please enter an apartment name.</p>";
+"<p>Please enter an apartment, customer or lift number.</p>";
 
 return;
 }
+
+
+let records=getLiftRecords();
+
+
+/* OLD RECORD MIGRATION */
+
+if(records.length===0){
+
+const oldLift=
+JSON.parse(
+localStorage.getItem(
+"liftDetails"
+) || "null"
+);
+
+if(oldLift){
+
+records.push(oldLift);
+
+}
+
+}
+
 
 if(records.length===0){
 
@@ -733,32 +960,66 @@ result.innerHTML=
 return;
 }
 
-const matches=records.filter(function(lift){
 
-return (lift.apartmentName || "")
-.toLowerCase()
-.includes(searchName);
+/* SEARCH */
+
+const matches=
+records.filter(function(lift){
+
+const apartment=
+(lift.apartmentName || "")
+.toLowerCase();
+
+const customer=
+(lift.customer || "")
+.toLowerCase();
+
+const number=
+(lift.liftNumber || "")
+.toLowerCase();
+
+return(
+apartment.includes(searchName) ||
+customer.includes(searchName) ||
+number.includes(searchName)
+);
 
 });
+
 
 if(matches.length===0){
 
 result.innerHTML=
-"<p>❌ Apartment not found.</p>";
+"<p>❌ No matching lift found.</p>";
 
 return;
 }
 
-result.innerHTML=matches.map(function(lift){
 
-const latitude=lift.latitude;
-const longitude=lift.longitude;
+/* DISPLAY RESULTS */
+
+result.innerHTML=
+
+"<p><b>Found "+
+matches.length+
+" lift record(s)</b></p>"+
+
+matches.map(function(lift){
+
+const latitude=
+lift.latitude;
+
+const longitude=
+lift.longitude;
+
 
 return `
 
 <div class="record">
 
-<h3>🏢 ${lift.apartmentName || "-"}</h3>
+<h3>
+🏢 ${lift.apartmentName || "-"}
+</h3>
 
 <b>Customer:</b>
 ${lift.customer || "-"}<br>
@@ -783,37 +1044,74 @@ ${longitude || "-"}<br>
 Saved: ${lift.date || "-"}
 </span>
 
+${
+latitude && longitude
+
+?
+
+`<button onclick="window.open(
+'https://www.google.com/maps?q=${latitude},${longitude}',
+'_blank'
+)">
+🗺️ OPEN IN GOOGLE MAPS
+</button>`
+
+:
+
+`<p>
+📍 GPS location not available.
+</p>`
+
+}
+
+</div>
+
+`;
+
+}).join("");
+
+}
+
+
+/* =========================
+   LOAD ALL LIFT RECORDS
+========================= */
 
 function loadLiftRecords(){
 
 const list=
-document.getElementById("recordsList");
-
-let records=JSON.parse(
-localStorage.getItem("liftRecords") || "[]"
+document.getElementById(
+"recordsList"
 );
 
-/* Migrate old record */
 
-if(!Array.isArray(records)){
-records=[];
-}
+let records=getLiftRecords();
+
+
+/* OLD RECORD */
 
 if(records.length===0){
 
-const oldLift=JSON.parse(
-localStorage.getItem("liftDetails") || "null"
+const oldLift=
+JSON.parse(
+localStorage.getItem(
+"liftDetails"
+) || "null"
 );
 
 if(oldLift){
+
 records.push(oldLift);
+
 localStorage.setItem(
 "liftRecords",
 JSON.stringify(records)
 );
+
 }
 
 }
+
 
 if(records.length===0){
 
@@ -823,13 +1121,23 @@ list.innerHTML=
 return;
 }
 
-list.innerHTML=records.map(function(lift,index){
+
+list.innerHTML=
+
+"<p><b>Total Lift Records: "+
+records.length+
+"</b></p>"+
+
+
+records.map(function(lift){
 
 return `
 
 <div class="record">
 
-<h3>🏢 ${lift.apartmentName || "-"}</h3>
+<h3>
+🏢 ${lift.apartmentName || "-"}
+</h3>
 
 <b>Customer:</b>
 ${lift.customer || "-"}<br>
@@ -840,45 +1148,115 @@ ${lift.liftNumber || "-"}<br>
 <b>Brand:</b>
 ${lift.brand || "-"}<br>
 
+<b>Location:</b>
+${lift.location || "-"}<br>
+
+<b>Floors:</b>
+${lift.floors || "-"}<br>
+
+<b>GPS:</b>
+${lift.latitude || "-"} ,
+${lift.longitude || "-"}<br>
+
+<span class="small">
+Saved: ${lift.date || "-"}
+</span>
+
+${
+lift.latitude &&
+lift.longitude
+
+?
+
+`<button onclick="window.open(
+'https://www.google.com/maps?q=${lift.latitude},${lift.longitude}',
+'_blank'
+)">
+🗺️ OPEN IN GOOGLE MAPS
+</button>`
+
+:
+
+""
+
+}
+
+</div>
+
+`;
+
+}).join("");
+
+}
+
+
+/* =========================
+   SERVICE REPORT
+========================= */
+
 function generateReport(){
 
 const output=
-document.getElementById("reportOutput");
-
-let liftRecords=JSON.parse(
-localStorage.getItem("liftRecords") || "[]"
+document.getElementById(
+"reportOutput"
 );
+
+
+let records=
+getLiftRecords();
+
 
 let lift=null;
 
-if(Array.isArray(liftRecords) && liftRecords.length>0){
 
-lift=liftRecords[liftRecords.length-1];
+if(records.length>0){
+
+/* Latest saved lift */
+
+lift=
+records[records.length-1];
 
 }else{
 
-lift=JSON.parse(
-localStorage.getItem("liftDetails") || "null"
+lift=
+JSON.parse(
+localStorage.getItem(
+"liftDetails"
+) || "null"
 );
 
 }
 
+
 const breakdown=
 JSON.parse(
-localStorage.getItem("breakdownData") || "null"
+localStorage.getItem(
+"breakdownData"
+) || "null"
 );
+
 
 const maintenance=
 JSON.parse(
-localStorage.getItem("maintenanceData") || "null"
+localStorage.getItem(
+"maintenanceData"
+) || "null"
 );
+
 
 const gps=
 JSON.parse(
-localStorage.getItem("gpsLocation") || "null"
+localStorage.getItem(
+"gpsLocation"
+) || "null"
 );
 
-if(!lift && !breakdown && !maintenance){
+
+if(
+!lift &&
+!breakdown &&
+!maintenance
+){
 
 output.innerHTML=
 "<p>No service information available.</p>";
@@ -886,135 +1264,6 @@ output.innerHTML=
 return;
 }
 
-output.innerHTML=`
-
-<div class="record">
-
-<h3>🏢 Lift Details</h3>
-
-<b>Customer:</b>
-${lift?.customer || "-"}<br>
-
-<b>Lift Number:</b>
-${lift?.liftNumber || "-"}<br>
-
-<b>Brand:</b>
-${lift?.brand || "-"}<br>
-
-<b>Location:</b>
-${lift?.location || "-"}<br>
-
-<b>Floors:</b>
-${lift?.floors || "-"}<br>
-
-<b>Building:</b>
-${lift?.apartmentName || "-"}<br>
-
-<b>GPS:</b>
-${lift?.latitude || "-"} ,
-${lift?.longitude || "-"}
-
-</div>
-
-<div class="record">
-
-<h3>🔧 Breakdown</h3>
-
-<b>Status:</b>
-${breakdown?.status || "-"}<br>
-
-<b>Problem:</b>
-${breakdown?.problem || "-"}<br>
-
-<b>Notes:</b>
-${breakdown?.notes || "-"}
-
-</div>
-
-<div class="record">
-
-<h3>✅ Maintenance</h3>
-
-<b>Door:</b>
-${maintenance?.door ? "Checked":"Not checked"}<br>
-
-<b>Leveling:</b>
-${maintenance?.leveling ? "Checked":"Not checked"}<br>
-
-<b>Brake:</b>
-${maintenance?.brake ? "Checked":"Not checked"}<br>
-
-<b>Motor:</b>
-${maintenance?.motor ? "Checked":"Not checked"}<br>
-
-<b>Safety:</b>
-${maintenance?.safety ? "Checked":"Not checked"}<br>
-
-<b>Emergency:</b>
-${maintenance?.emergency ? "Checked":"Not checked"}<br>
-
-<b>Notes:</b>
-${maintenance?.notes || "-"}
-
-</div>
-
-<div class="record">
-
-<h3>📍 GPS Location</h3>
-
-<b>Latitude:</b>
-${gps?.latitude || lift?.latitude || "-"}<br>
-
-<b>Longitude:</b>
-${gps?.longitude || lift?.longitude || "-"}
-
-</div>
-
-<p class="small">
-Generated: ${new Date().toLocaleString()}
-</p>
-
-`;
-
-}
-
-}
-
-
-/* SERVICE REPORT */
-
-function generateReport(){
-
-const output=
-document.getElementById("reportOutput");
-
-const lift=
-JSON.parse(
-localStorage.getItem("liftDetails") || "null"
-);
-
-const breakdown=
-JSON.parse(
-localStorage.getItem("breakdownData") || "null"
-);
-
-const maintenance=
-JSON.parse(
-localStorage.getItem("maintenanceData") || "null"
-);
-
-const gps=
-JSON.parse(
-localStorage.getItem("gpsLocation") || "null"
-);
-
-if(!lift && !breakdown && !maintenance){
-
-output.innerHTML=
-"<p>No service information available.</p>";
-
-return;
-}
 
 output.innerHTML=`
 
@@ -1105,7 +1354,8 @@ ${gps?.longitude || lift?.longitude || "-"}
 
 
 <p class="small">
-Generated: ${new Date().toLocaleString()}
+Generated:
+${new Date().toLocaleString()}
 </p>
 
 `;
@@ -1113,22 +1363,33 @@ Generated: ${new Date().toLocaleString()}
 }
 
 
-/* LOAD LOGIN */
+/* =========================
+   LOAD LOGIN
+========================= */
 
 window.onload=function(){
 
 const email=
-localStorage.getItem("technicianEmail");
+localStorage.getItem(
+"technicianEmail"
+);
 
 const name=
-localStorage.getItem("technicianName");
+localStorage.getItem(
+"technicianName"
+);
+
 
 if(email){
 
-document.getElementById("welcomeName")
-.textContent=name || "Technician";
+document.getElementById(
+"welcomeName"
+).textContent=
+name || "Technician";
 
-showScreen("dashboardScreen");
+showScreen(
+"dashboardScreen"
+);
 
 }
 
@@ -1137,4 +1398,4 @@ showScreen("dashboardScreen");
 </script>
 
 </body>
-  </html>
+</html>
