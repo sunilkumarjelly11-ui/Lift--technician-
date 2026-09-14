@@ -476,29 +476,10 @@ document.getElementById("welcomeName")
 
 alert("Login successful!");
 
-showScreen("dashboardScreen");
-}
-
-
-/* LOGOUT */
-
-function logout(){
-
-localStorage.removeItem("technicianEmail");
-localStorage.removeItem("technicianName");
-
-showScreen("loginScreen");
-}
-
-
-/* SAVE LIFT DETAILS + GPS */
-
 function saveLiftDetails(){
 
 if(!navigator.geolocation){
-
 alert("GPS is not supported on this phone.");
-
 return;
 }
 
@@ -506,47 +487,64 @@ navigator.geolocation.getCurrentPosition(
 
 function(position){
 
-const latitude=
-position.coords.latitude.toFixed(6);
+const latitude=position.coords.latitude.toFixed(6);
+const longitude=position.coords.longitude.toFixed(6);
 
-const longitude=
-position.coords.longitude.toFixed(6);
-
-document.getElementById("apartmentLocation")
-.value=
-"Latitude: "+latitude+
-" | Longitude: "+longitude;
+document.getElementById("apartmentLocation").value=
+"Latitude: "+latitude+" | Longitude: "+longitude;
 
 const data={
+id:Date.now(),
 
-customer:
-document.getElementById("liftCustomer").value,
-
-liftNumber:
-document.getElementById("liftNumber").value,
-
-brand:
-document.getElementById("liftBrand").value,
-
-location:
-document.getElementById("liftLocation").value,
-
-floors:
-document.getElementById("liftFloors").value,
-
-apartmentName:
-document.getElementById("apartmentName").value,
-
-apartmentLocation:
-document.getElementById("apartmentLocation").value,
+customer:document.getElementById("liftCustomer").value,
+liftNumber:document.getElementById("liftNumber").value,
+brand:document.getElementById("liftBrand").value,
+location:document.getElementById("liftLocation").value,
+floors:document.getElementById("liftFloors").value,
+apartmentName:document.getElementById("apartmentName").value,
+apartmentLocation:document.getElementById("apartmentLocation").value,
 
 latitude:latitude,
-
 longitude:longitude,
 
 date:new Date().toLocaleString()
-
 };
+
+/* Get existing records */
+
+let records=JSON.parse(
+localStorage.getItem("liftRecords") || "[]"
+);
+
+/* Convert old single record to multiple records */
+
+if(!Array.isArray(records)){
+records=[];
+}
+
+if(records.length===0){
+
+const oldLift=JSON.parse(
+localStorage.getItem("liftDetails") || "null"
+);
+
+if(oldLift){
+oldLift.id=Date.now()-1;
+records.push(oldLift);
+}
+
+}
+
+/* Save new lift */
+
+records.push(data);
+
+localStorage.setItem(
+"liftRecords",
+JSON.stringify(records)
+);
+
+/* Keep latest record for compatibility */
 
 localStorage.setItem(
 "liftDetails",
@@ -556,6 +554,26 @@ JSON.stringify(data)
 alert(
 "Lift details and GPS location saved successfully!"
 );
+
+},
+
+function(){
+
+alert(
+"GPS location could not be captured. Please allow location permission and try again."
+);
+
+},
+
+{
+enableHighAccuracy:true,
+timeout:15000,
+maximumAge:0
+}
+
+);
+
+}
 
 },
 
@@ -668,63 +686,36 @@ navigator.geolocation.getCurrentPosition(
 
 function(position){
 
-const lat=
-position.coords.latitude;
-
-const lon=
-position.coords.longitude;
-
-const location={
-
-latitude:lat,
-
-longitude:lon,
-
-date:new Date().toLocaleString()
-
-};
-
-localStorage.setItem(
-"gpsLocation",
-JSON.stringify(location)
-);
-
-status.textContent=
-"Latitude: "+lat+
-" | Longitude: "+lon;
-
-},
-
-function(){
-
-status.textContent=
-"Unable to get GPS location. Please allow location permission.";
-
-}
-
-);
-
-}
-
-
-/* FIND APARTMENT */
-
 function findApartment(){
 
 const searchName=
-document.getElementById(
-"findApartmentName"
-).value.trim().toLowerCase();
+document.getElementById("findApartmentName")
+.value.trim().toLowerCase();
 
 const result=
-document.getElementById(
-"apartmentResult"
+document.getElementById("apartmentResult");
+
+let records=JSON.parse(
+localStorage.getItem("liftRecords") || "[]"
 );
 
-const lift=
-JSON.parse(
+/* Migrate old record if necessary */
+
+if(!Array.isArray(records)){
+records=[];
+}
+
+if(records.length===0){
+
+const oldLift=JSON.parse(
 localStorage.getItem("liftDetails") || "null"
 );
+
+if(oldLift){
+records.push(oldLift);
+}
+
+}
 
 if(!searchName){
 
@@ -734,19 +725,23 @@ result.innerHTML=
 return;
 }
 
-if(!lift){
+if(records.length===0){
 
 result.innerHTML=
-"<p>No lift details saved yet.</p>";
+"<p>No lift records saved yet.</p>";
 
 return;
 }
 
-const apartment=
-(lift.apartmentName || "")
-.toLowerCase();
+const matches=records.filter(function(lift){
 
-if(!apartment.includes(searchName)){
+return (lift.apartmentName || "")
+.toLowerCase()
+.includes(searchName);
+
+});
+
+if(matches.length===0){
 
 result.innerHTML=
 "<p>❌ Apartment not found.</p>";
@@ -754,10 +749,12 @@ result.innerHTML=
 return;
 }
 
+result.innerHTML=matches.map(function(lift){
+
 const latitude=lift.latitude;
 const longitude=lift.longitude;
 
-result.innerHTML=`
+return `
 
 <div class="record">
 
@@ -782,45 +779,43 @@ ${lift.floors || "-"}<br>
 ${latitude || "-"} ,
 ${longitude || "-"}<br>
 
-${
-latitude && longitude
+<span class="small">
+Saved: ${lift.date || "-"}
+</span>
 
-?
-
-`<button
-onclick="window.open(
-'https://www.google.com/maps?q=${latitude},${longitude}',
-'_blank'
-)">
-🗺️ OPEN IN GOOGLE MAPS
-</button>`
-
-:
-
-`<p>📍 GPS location not available.</p>`
-
-}
-
-</div>
-
-`;
-
-}
-
-
-/* LIFT RECORDS */
 
 function loadLiftRecords(){
 
 const list=
 document.getElementById("recordsList");
 
-const lift=
-JSON.parse(
+let records=JSON.parse(
+localStorage.getItem("liftRecords") || "[]"
+);
+
+/* Migrate old record */
+
+if(!Array.isArray(records)){
+records=[];
+}
+
+if(records.length===0){
+
+const oldLift=JSON.parse(
 localStorage.getItem("liftDetails") || "null"
 );
 
-if(!lift){
+if(oldLift){
+records.push(oldLift);
+localStorage.setItem(
+"liftRecords",
+JSON.stringify(records)
+);
+}
+
+}
+
+if(records.length===0){
 
 list.innerHTML=
 "<p>No lift records saved yet.</p>";
@@ -828,9 +823,13 @@ list.innerHTML=
 return;
 }
 
-list.innerHTML=`
+list.innerHTML=records.map(function(lift,index){
+
+return `
 
 <div class="record">
+
+<h3>🏢 ${lift.apartmentName || "-"}</h3>
 
 <b>Customer:</b>
 ${lift.customer || "-"}<br>
@@ -841,26 +840,143 @@ ${lift.liftNumber || "-"}<br>
 <b>Brand:</b>
 ${lift.brand || "-"}<br>
 
+function generateReport(){
+
+const output=
+document.getElementById("reportOutput");
+
+let liftRecords=JSON.parse(
+localStorage.getItem("liftRecords") || "[]"
+);
+
+let lift=null;
+
+if(Array.isArray(liftRecords) && liftRecords.length>0){
+
+lift=liftRecords[liftRecords.length-1];
+
+}else{
+
+lift=JSON.parse(
+localStorage.getItem("liftDetails") || "null"
+);
+
+}
+
+const breakdown=
+JSON.parse(
+localStorage.getItem("breakdownData") || "null"
+);
+
+const maintenance=
+JSON.parse(
+localStorage.getItem("maintenanceData") || "null"
+);
+
+const gps=
+JSON.parse(
+localStorage.getItem("gpsLocation") || "null"
+);
+
+if(!lift && !breakdown && !maintenance){
+
+output.innerHTML=
+"<p>No service information available.</p>";
+
+return;
+}
+
+output.innerHTML=`
+
+<div class="record">
+
+<h3>🏢 Lift Details</h3>
+
+<b>Customer:</b>
+${lift?.customer || "-"}<br>
+
+<b>Lift Number:</b>
+${lift?.liftNumber || "-"}<br>
+
+<b>Brand:</b>
+${lift?.brand || "-"}<br>
+
 <b>Location:</b>
-${lift.location || "-"}<br>
+${lift?.location || "-"}<br>
 
 <b>Floors:</b>
-${lift.floors || "-"}<br>
+${lift?.floors || "-"}<br>
 
 <b>Building:</b>
-${lift.apartmentName || "-"}<br>
+${lift?.apartmentName || "-"}<br>
 
 <b>GPS:</b>
-${lift.latitude || "-"} ,
-${lift.longitude || "-"}<br>
-
-<span class="small">
-Saved: ${lift.date}
-</span>
+${lift?.latitude || "-"} ,
+${lift?.longitude || "-"}
 
 </div>
 
+<div class="record">
+
+<h3>🔧 Breakdown</h3>
+
+<b>Status:</b>
+${breakdown?.status || "-"}<br>
+
+<b>Problem:</b>
+${breakdown?.problem || "-"}<br>
+
+<b>Notes:</b>
+${breakdown?.notes || "-"}
+
+</div>
+
+<div class="record">
+
+<h3>✅ Maintenance</h3>
+
+<b>Door:</b>
+${maintenance?.door ? "Checked":"Not checked"}<br>
+
+<b>Leveling:</b>
+${maintenance?.leveling ? "Checked":"Not checked"}<br>
+
+<b>Brake:</b>
+${maintenance?.brake ? "Checked":"Not checked"}<br>
+
+<b>Motor:</b>
+${maintenance?.motor ? "Checked":"Not checked"}<br>
+
+<b>Safety:</b>
+${maintenance?.safety ? "Checked":"Not checked"}<br>
+
+<b>Emergency:</b>
+${maintenance?.emergency ? "Checked":"Not checked"}<br>
+
+<b>Notes:</b>
+${maintenance?.notes || "-"}
+
+</div>
+
+<div class="record">
+
+<h3>📍 GPS Location</h3>
+
+<b>Latitude:</b>
+${gps?.latitude || lift?.latitude || "-"}<br>
+
+<b>Longitude:</b>
+${gps?.longitude || lift?.longitude || "-"}
+
+</div>
+
+<p class="small">
+Generated: ${new Date().toLocaleString()}
+</p>
+
 `;
+
+}
 
 }
 
