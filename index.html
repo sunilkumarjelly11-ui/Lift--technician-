@@ -2,230 +2,175 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0,
-      maximum-scale=1.0,user-scalable=no">
-
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
 <title>JSK Elevators - Lift Technician</title>
 
 <link rel="manifest" href="manifest.json">
-
 <meta name="theme-color" content="#062542">
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-
-*{
-  box-sizing:border-box;
-  -webkit-tap-highlight-color:transparent;
-}
+*{box-sizing:border-box}
 
 body{
-  margin:0;
-  font-family:Arial,Helvetica,sans-serif;
-  background:#eef3f8;
-  color:#162536;
+margin:0;
+font-family:Arial,sans-serif;
+background:#eef3f8;
+color:#162536
 }
 
 header{
-  background:#062542;
-  color:white;
-  padding:18px;
-  text-align:center;
-  font-size:21px;
-  font-weight:bold;
+background:#062542;
+color:#fff;
+padding:18px;
+text-align:center;
+font-size:21px;
+font-weight:bold
 }
 
 .container{
-  width:100%;
-  max-width:520px;
-  margin:auto;
-  padding:18px;
+max-width:520px;
+margin:auto;
+padding:18px
 }
 
 .card{
-  background:white;
-  border-radius:16px;
-  padding:18px;
-  margin-bottom:16px;
-  box-shadow:0 4px 14px rgba(0,0,0,.08);
+background:#fff;
+border-radius:16px;
+padding:18px;
+margin-bottom:16px;
+box-shadow:0 4px 14px #00000014
 }
 
 .logo{
-  text-align:center;
-  margin:20px 0;
+text-align:center;
+margin:55px 0 35px
 }
 
 .logo h1{
-  margin:0;
-  color:#062542;
-  font-size:27px;
+color:#062542;
+font-size:38px;
+margin:0
 }
 
 .logo p{
-  margin-top:7px;
-  color:#607080;
+color:#607080;
+font-size:25px
+}
+
+.screen{
+display:none
+}
+
+.screen.active{
+display:block
 }
 
 input,
 select,
 textarea{
-  width:100%;
-  padding:14px;
-  margin:7px 0 13px;
-  border:1px solid #ccd5df;
-  border-radius:10px;
-  font-size:16px;
-  background:white;
+width:100%;
+padding:14px;
+margin:7px 0 13px;
+border:1px solid #ccd5df;
+border-radius:10px;
+font-size:16px
 }
 
 textarea{
-  min-height:100px;
-  resize:vertical;
+min-height:100px
 }
 
 button{
-  width:100%;
-  border:0;
-  border-radius:10px;
-  padding:14px;
-  margin:6px 0;
-  font-size:16px;
-  font-weight:bold;
-  cursor:pointer;
+width:100%;
+border:0;
+border-radius:10px;
+padding:14px;
+margin:6px 0;
+font-size:16px;
+font-weight:bold
 }
 
 .primary{
-  background:#062542;
-  color:white;
+background:#062542;
+color:#fff
 }
 
 .secondary{
-  background:#dfeaf4;
-  color:#062542;
+background:#dfeaf4;
+color:#062542
 }
 
 .success{
-  background:#16794b;
-  color:white;
-}
-
-.danger{
-  background:#b42318;
-  color:white;
-}
-
-.screen{
-  display:none;
-}
-
-.screen.active{
-  display:block;
+background:#16794b;
+color:#fff
 }
 
 .menu-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px
 }
 
 .menu-btn{
-  min-height:95px;
-  background:white;
-  border-radius:15px;
-  box-shadow:0 4px 12px rgba(0,0,0,.08);
-  color:#062542;
+min-height:95px;
+background:#fff;
+color:#062542;
+box-shadow:0 4px 12px #00000014
 }
 
 .menu-btn span{
-  display:block;
-  font-size:28px;
-  margin-bottom:7px;
+display:block;
+font-size:28px
 }
 
 .title{
-  font-size:22px;
-  font-weight:bold;
-  margin-bottom:15px;
-  color:#062542;
-}
-
-.back{
-  margin-bottom:15px;
+font-size:22px;
+font-weight:bold;
+color:#062542;
+margin-bottom:15px
 }
 
 .record{
-  border:1px solid #d9e1e8;
-  border-radius:12px;
-  padding:14px;
-  margin:10px 0;
-  background:#fafcfe;
+border:1px solid #d9e1e8;
+border-radius:12px;
+padding:14px;
+margin:10px 0;
+background:#fafcfe
 }
 
-.record strong{
-  color:#062542;
-}
-
-.small{
-  font-size:13px;
-  color:#657586;
-}
-
+.stat,
 .status{
-  padding:10px;
-  border-radius:8px;
-  background:#edf5ff;
-  margin:10px 0;
-  font-size:14px;
+background:#f3f7fb;
+padding:12px;
+border-radius:10px;
+margin:8px 0
 }
 
 .check{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  padding:10px 0;
-  border-bottom:1px solid #edf0f3;
+display:flex;
+gap:10px;
+padding:10px 0;
+border-bottom:1px solid #edf0f3
 }
 
 .check input{
-  width:22px;
-  height:22px;
-  margin:0;
-}
-
-.stat{
-  background:#f3f7fb;
-  padding:14px;
-  border-radius:10px;
-  margin:8px 0;
+width:22px;
+margin:0
 }
 
 .empty{
-  text-align:center;
-  padding:25px;
-  color:#748292;
-}
-
-hr{
-  border:0;
-  border-top:1px solid #e4e9ee;
-  margin:18px 0;
+text-align:center;
+padding:25px;
+color:#748292
 }
 
 #loginStatus{
-  text-align:center;
-  font-size:14px;
-  color:#b42318;
-  min-height:20px;
+min-height:24px;
+text-align:center;
+color:#b42318
 }
-
-@media(max-width:380px){
-  .menu-grid{
-    grid-template-columns:1fr;
-  }
-}
-
 </style>
 </head>
 
@@ -251,22 +196,25 @@ JSK ELEVATORS
 <label>Email</label>
 
 <input
-  type="email"
-  id="email"
-  placeholder="Technician email"
-  autocomplete="email">
+id="email"
+type="email"
+placeholder="Technician email"
+autocomplete="email">
 
 <label>Password</label>
 
 <input
-  type="password"
-  id="password"
-  placeholder="Password"
-  autocomplete="current-password">
+id="password"
+type="password"
+placeholder="Password"
+autocomplete="current-password">
 
 <div id="loginStatus"></div>
 
-<button class="primary" onclick="login()">
+<button
+id="loginButton"
+type="button"
+class="primary">
 LOGIN
 </button>
 
@@ -312,50 +260,59 @@ Breakdown Reports:
 
 <div class="menu-grid">
 
-<button class="menu-btn"
-onclick="showScreen('liftDetailsScreen')">
+<button
+class="menu-btn"
+data-screen="liftDetailsScreen">
 <span>🏢</span>
 Lift Details
 </button>
 
-<button class="menu-btn"
-onclick="showScreen('breakdownScreen')">
+<button
+class="menu-btn"
+data-screen="breakdownScreen">
 <span>🔧</span>
 Breakdown
 </button>
 
-<button class="menu-btn"
-onclick="showScreen('maintenanceScreen')">
+<button
+class="menu-btn"
+data-screen="maintenanceScreen">
 <span>✅</span>
 Maintenance
 </button>
 
-<button class="menu-btn"
-onclick="showScreen('recordsScreen')">
+<button
+class="menu-btn"
+data-screen="recordsScreen">
 <span>📋</span>
 Lift Records
 </button>
 
-<button class="menu-btn"
-onclick="showScreen('searchScreen')">
+<button
+class="menu-btn"
+data-screen="searchScreen">
 <span>🔎</span>
 Search
 </button>
 
-<button class="menu-btn"
-onclick="showScreen('serviceScreen')">
+<button
+class="menu-btn"
+data-screen="serviceScreen">
 <span>📄</span>
 Service Report
 </button>
 
-<button class="menu-btn"
-onclick="showScreen('apartmentScreen')">
+<button
+class="menu-btn"
+data-screen="apartmentScreen">
 <span>🏠</span>
 Find Apartment
 </button>
 
-<button class="menu-btn"
-onclick="logout()">
+<button
+id="logoutButton"
+class="menu-btn"
+type="button">
 <span>🚪</span>
 Logout
 </button>
@@ -371,12 +328,15 @@ Logout
 
 <section id="liftDetailsScreen" class="screen">
 
-<header>Lift Details</header>
+<header>
+Lift Details
+</header>
 
 <div class="container">
 
-<button class="secondary back"
-onclick="showScreen('dashboardScreen')">
+<button
+class="secondary"
+data-screen="dashboardScreen">
 ← Back
 </button>
 
@@ -388,37 +348,44 @@ Lift Information
 
 <label>Lift Number</label>
 
-<input id="liftNumber"
+<input
+id="liftNumber"
 placeholder="Example: 1">
 
 <label>Customer / Apartment</label>
 
-<input id="customerName"
+<input
+id="customerName"
 placeholder="Apartment / Building / Customer">
 
 <label>Lift Brand</label>
 
-<input id="liftBrand"
+<input
+id="liftBrand"
 placeholder="Example: Collapsible">
 
 <label>Lift Location</label>
 
-<input id="liftLocation"
+<input
+id="liftLocation"
 placeholder="Lift location">
 
 <label>Number of Floors</label>
 
 <input
-type="number"
 id="floors"
+type="number"
 placeholder="Example: 3">
 
-<button class="primary"
-onclick="captureGPSAndSave()">
+<button
+id="gpsSaveButton"
+class="primary">
 📍 Capture GPS & Save Lift
 </button>
 
-<div id="gpsStatus" class="status">
+<div
+id="gpsStatus"
+class="status">
 GPS not captured yet.
 </div>
 
@@ -433,12 +400,15 @@ GPS not captured yet.
 
 <section id="breakdownScreen" class="screen">
 
-<header>Breakdown Report</header>
+<header>
+Breakdown Report
+</header>
 
 <div class="container">
 
-<button class="secondary back"
-onclick="showScreen('dashboardScreen')">
+<button
+class="secondary"
+data-screen="dashboardScreen">
 ← Back
 </button>
 
@@ -450,25 +420,19 @@ Breakdown Report
 
 <label>Lift Number</label>
 
-<input id="breakLiftNumber"
-placeholder="Lift number">
+<input id="breakLiftNumber">
 
 <label>Customer / Apartment</label>
 
-<input id="breakCustomer"
-placeholder="Customer / Apartment">
+<input id="breakCustomer">
 
 <label>Problem</label>
 
-<textarea
-id="breakProblem"
-placeholder="Describe the breakdown"></textarea>
+<textarea id="breakProblem"></textarea>
 
 <label>Action Taken</label>
 
-<textarea
-id="breakAction"
-placeholder="Describe repair / action taken"></textarea>
+<textarea id="breakAction"></textarea>
 
 <label>Priority</label>
 
@@ -478,8 +442,9 @@ placeholder="Describe repair / action taken"></textarea>
 <option>Emergency</option>
 </select>
 
-<button class="primary"
-onclick="saveBreakdown()">
+<button
+id="breakdownSaveButton"
+class="primary">
 SAVE BREAKDOWN
 </button>
 
@@ -494,12 +459,15 @@ SAVE BREAKDOWN
 
 <section id="maintenanceScreen" class="screen">
 
-<header>Maintenance Checklist</header>
+<header>
+Maintenance Checklist
+</header>
 
 <div class="container">
 
-<button class="secondary back"
-onclick="showScreen('dashboardScreen')">
+<button
+class="secondary"
+data-screen="dashboardScreen">
 ← Back
 </button>
 
@@ -511,8 +479,7 @@ Maintenance Checklist
 
 <label>Lift Number</label>
 
-<input id="maintLiftNumber"
-placeholder="Lift number">
+<input id="maintLiftNumber">
 
 <div class="check">
 <input type="checkbox" id="check1">
@@ -564,16 +531,15 @@ placeholder="Lift number">
 <label>General cleaning completed</label>
 </div>
 
-<br>
+<label>
+Technician Remarks
+</label>
 
-<label>Technician Remarks</label>
+<textarea id="maintRemarks"></textarea>
 
-<textarea
-id="maintRemarks"
-placeholder="Maintenance remarks"></textarea>
-
-<button class="success"
-onclick="saveMaintenance()">
+<button
+id="maintenanceSaveButton"
+class="success">
 SAVE MAINTENANCE
 </button>
 
@@ -588,12 +554,15 @@ SAVE MAINTENANCE
 
 <section id="recordsScreen" class="screen">
 
-<header>Lift Records</header>
+<header>
+Lift Records
+</header>
 
 <div class="container">
 
-<button class="secondary back"
-onclick="showScreen('dashboardScreen')">
+<button
+class="secondary"
+data-screen="dashboardScreen">
 ← Back
 </button>
 
@@ -616,12 +585,15 @@ Saved Lift Records
 
 <section id="searchScreen" class="screen">
 
-<header>Search</header>
+<header>
+Search
+</header>
 
 <div class="container">
 
-<button class="secondary back"
-onclick="showScreen('dashboardScreen')">
+<button
+class="secondary"
+data-screen="dashboardScreen">
 ← Back
 </button>
 
@@ -633,7 +605,6 @@ Search Lift
 
 <input
 id="searchInput"
-oninput="searchRecords()"
 placeholder="Apartment / Building / Customer / Lift Number">
 
 </div>
@@ -649,12 +620,15 @@ placeholder="Apartment / Building / Customer / Lift Number">
 
 <section id="serviceScreen" class="screen">
 
-<header>Service Report</header>
+<header>
+Service Report
+</header>
 
 <div class="container">
 
-<button class="secondary back"
-onclick="showScreen('dashboardScreen')">
+<button
+class="secondary"
+data-screen="dashboardScreen">
 ← Back
 </button>
 
@@ -666,34 +640,27 @@ Service Report
 
 <label>Lift Number</label>
 
-<input id="serviceLiftNumber"
-placeholder="Lift number">
+<input id="serviceLiftNumber">
 
 <label>Customer / Apartment</label>
 
-<input id="serviceCustomer"
-placeholder="Customer / Apartment">
+<input id="serviceCustomer">
 
 <label>Service Description</label>
 
-<textarea
-id="serviceDescription"
-placeholder="Describe service performed"></textarea>
+<textarea id="serviceDescription"></textarea>
 
 <label>Parts Used</label>
 
-<textarea
-id="serviceParts"
-placeholder="Parts used"></textarea>
+<textarea id="serviceParts"></textarea>
 
 <label>Technician Remarks</label>
 
-<textarea
-id="serviceRemarks"
-placeholder="Remarks"></textarea>
+<textarea id="serviceRemarks"></textarea>
 
-<button class="primary"
-onclick="saveServiceReport()">
+<button
+id="serviceSaveButton"
+class="primary">
 SAVE SERVICE REPORT
 </button>
 
@@ -708,12 +675,15 @@ SAVE SERVICE REPORT
 
 <section id="apartmentScreen" class="screen">
 
-<header>Find Apartment</header>
+<header>
+Find Apartment
+</header>
 
 <div class="container">
 
-<button class="secondary back"
-onclick="showScreen('dashboardScreen')">
+<button
+class="secondary"
+data-screen="dashboardScreen">
 ← Back
 </button>
 
@@ -725,7 +695,6 @@ Find Apartment
 
 <input
 id="apartmentSearch"
-oninput="findApartment()"
 placeholder="Enter apartment / building name">
 
 </div>
@@ -739,9 +708,12 @@ placeholder="Enter apartment / building name">
 
 <script>
 
-/* =====================================================
-   SUPABASE CONNECTION
-   ===================================================== */
+"use strict";
+
+
+/* ==========================================
+   SUPABASE
+========================================== */
 
 const SUPABASE_URL =
 "https://bszdhcodjwflhoqxjtqb.supabase.co";
@@ -751,619 +723,1503 @@ const SUPABASE_PUBLISHABLE_KEY =
 
 let supabaseClient = null;
 
-try{
 
-  if(!window.supabase){
-
-    throw new Error(
-      "Supabase library did not load."
-    );
-
-  }
-
-  supabaseClient =
-    window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_PUBLISHABLE_KEY
-    );
-
-}catch(error){
-
-  console.error(
-    "Supabase connection error:",
-    error
-  );
-
-}
-
-
-/* =====================================================
+/* ==========================================
    LOCAL DATA
-   ===================================================== */
+========================================== */
 
 let liftRecords =
 JSON.parse(
-  localStorage.getItem("liftRecords") || "[]"
+localStorage.getItem("liftRecords") || "[]"
 );
 
 let breakdownRecords =
 JSON.parse(
-  localStorage.getItem("breakdownRecords") || "[]"
+localStorage.getItem("breakdownRecords") || "[]"
 );
 
 let maintenanceRecords =
 JSON.parse(
-  localStorage.getItem("maintenanceRecords") || "[]"
+localStorage.getItem("maintenanceRecords") || "[]"
 );
 
 let serviceRecords =
 JSON.parse(
-  localStorage.getItem("serviceRecords") || "[]"
+localStorage.getItem("serviceRecords") || "[]"
 );
 
 
-/* =====================================================
-   SCREEN NAVIGATION
-   ===================================================== */
+/* ==========================================
+   LOGIN STATUS
+========================================== */
 
-function showScreen(id){
+function status(message){
 
-  document
-    .querySelectorAll(".screen")
-    .forEach(screen => {
+const el =
+document.getElementById("loginStatus");
 
-      screen.classList.remove("active");
+if(el){
 
-    });
+el.textContent =
+message || "";
 
-  const target =
-    document.getElementById(id);
+}
 
-  if(target){
-
-    target.classList.add("active");
-
-  }
-
-  if(id === "recordsScreen"){
-    renderRecords();
-  }
-
-  if(id === "searchScreen"){
-    searchRecords();
-  }
-
-  if(id === "apartmentScreen"){
-    findApartment();
-  }
-
-  updateDashboard();
-
-  window.scrollTo(0,0);
 }
 
 
-/* =====================================================
+/* ==========================================
+   SUPABASE INITIALIZATION
+========================================== */
+
+function initSupabase(){
+
+try{
+
+if(!window.supabase){
+
+status(
+"Supabase library did not load."
+);
+
+return false;
+
+}
+
+supabaseClient =
+window.supabase.createClient(
+SUPABASE_URL,
+SUPABASE_PUBLISHABLE_KEY
+);
+
+return true;
+
+}
+
+catch(error){
+
+console.error(
+"Supabase error:",
+error
+);
+
+status(
+"Supabase connection error: " +
+(error.message || error)
+);
+
+return false;
+
+}
+
+}
+
+
+/* ==========================================
    LOGIN
-   ===================================================== */
+========================================== */
 
 async function login(){
 
-  const status =
-    document.getElementById("loginStatus");
+status("");
 
-  status.textContent = "";
+const button =
+document.getElementById(
+"loginButton"
+);
 
-  try{
+try{
 
-    const email =
-      document
-      .getElementById("email")
-      .value
-      .trim();
+const email =
+document
+.getElementById("email")
+.value
+.trim();
 
-    const password =
-      document
-      .getElementById("password")
-      .value;
+const password =
+document
+.getElementById("password")
+.value;
 
-    if(!email || !password){
 
-      status.textContent =
-        "Please enter your email and password.";
+if(!email || !password){
 
-      return;
+status(
+"Please enter your email and password."
+);
 
-    }
-
-    if(!window.supabase){
-
-      status.textContent =
-        "Supabase library did not load.";
-
-      return;
-
-    }
-
-    if(!supabaseClient){
-
-      status.textContent =
-        "Supabase client is not available.";
-
-      return;
-
-    }
-
-    status.textContent =
-      "Signing in...";
-
-    const result =
-      await supabaseClient.auth.signInWithPassword({
-        email:email,
-        password:password
-      });
-
-    const data = result.data;
-    const error = result.error;
-
-    if(error){
-
-      status.textContent =
-        "Login failed: " +
-        error.message;
-
-      return;
-
-    }
-
-    const name =
-      email.split("@")[0];
-
-    localStorage.setItem(
-      "technicianEmail",
-      email
-    );
-
-    localStorage.setItem(
-      "technicianName",
-      name
-    );
-
-    document
-      .getElementById("welcomeName")
-      .textContent = name;
-
-    status.textContent = "";
-
-    alert("Login successful!");
-
-    showScreen("dashboardScreen");
-
-  }catch(error){
-
-    console.error(error);
-
-    status.textContent =
-      "LOGIN ERROR: " +
-      (error.message || error);
-
-  }
+return;
 
 }
 
 
-/* =====================================================
+if(!supabaseClient){
+
+if(!initSupabase()){
+
+return;
+
+}
+
+}
+
+
+button.disabled = true;
+
+button.textContent =
+"SIGNING IN...";
+
+status(
+"Connecting to Supabase..."
+);
+
+
+const result =
+await supabaseClient.auth.signInWithPassword({
+
+email:email,
+
+password:password
+
+});
+
+
+const error =
+result.error;
+
+
+if(error){
+
+status(
+"Login failed: " +
+error.message
+);
+
+return;
+
+}
+
+
+const name =
+email.split("@")[0];
+
+
+localStorage.setItem(
+"technicianEmail",
+email
+);
+
+localStorage.setItem(
+"technicianName",
+name
+);
+
+
+document
+.getElementById(
+"welcomeName"
+)
+.textContent =
+name;
+
+
+showScreen(
+"dashboardScreen"
+);
+
+alert(
+"Login successful!"
+);
+
+}
+
+catch(error){
+
+console.error(
+"LOGIN ERROR:",
+error
+);
+
+status(
+"Login error: " +
+(error.message || error)
+);
+
+}
+
+finally{
+
+button.disabled = false;
+
+button.textContent =
+"LOGIN";
+
+}
+
+}
+
+
+/* ==========================================
    LOGOUT
-   ===================================================== */
+========================================== */
 
 async function logout(){
 
-  try{
-
-    if(supabaseClient){
-
-      await supabaseClient.auth.signOut();
-
-    }
-
-  }catch(error){
-
-    console.error(error);
-
-  }
-
-  localStorage.removeItem(
-    "technicianEmail"
-  );
-
-  localStorage.removeItem(
-    "technicianName"
-  );
-
-  document
-    .getElementById("email")
-    .value = "";
-
-  document
-    .getElementById("password")
-    .value = "";
-
-  showScreen("loginScreen");
-
-}
-
-
-/* =====================================================
-   SESSION CHECK
-   ===================================================== */
-
-async function checkSession(){
-
-  try{
-
-    if(!supabaseClient){
-      return;
-    }
-
-    const {
-      data
-    } =
-      await supabaseClient.auth.getSession();
-
-    if(data && data.session){
-
-      const email =
-        data.session.user.email || "";
-
-      const name =
-        email.split("@")[0];
-
-      localStorage.setItem(
-        "technicianEmail",
-        email
-      );
-
-      localStorage.setItem(
-        "technicianName",
-        name
-      );
-
-      document
-        .getElementById("welcomeName")
-        .textContent = name;
-
-      showScreen("dashboardScreen");
-
-    }
-
-  }catch(error){
-
-    console.error(
-      "Session error:",
-      error
-    );
-
-  }
-
-}
-
-
-/* =====================================================
-   AUTH STATE
-   ===================================================== */
+try{
 
 if(supabaseClient){
 
-  supabaseClient.auth.onAuthStateChange(
-    function(event, session){
+await supabaseClient.auth.signOut();
 
-      if(session){
+}
 
-        const email =
-          session.user.email || "";
+}
+catch(error){
 
-        const name =
-          email.split("@")[0];
-
-        localStorage.setItem(
-          "technicianEmail",
-          email
-        );
-
-        localStorage.setItem(
-          "technicianName",
-          name
-        );
-
-      }
-
-    }
-  );
+console.error(error);
 
 }
 
 
-/* =====================================================
-   GPS + LIFT SAVE
-   ===================================================== */
+localStorage.removeItem(
+"technicianEmail"
+);
+
+localStorage.removeItem(
+"technicianName"
+);
+
+
+document
+.getElementById("email")
+.value = "";
+
+document
+.getElementById("password")
+.value = "";
+
+
+showScreen(
+"loginScreen"
+);
+
+}
+
+
+/* ==========================================
+   SESSION
+========================================== */
+
+async function checkSession(){
+
+try{
+
+if(!supabaseClient){
+
+return;
+
+}
+
+
+const result =
+await supabaseClient.auth.getSession();
+
+const data =
+result.data;
+
+
+if(
+data &&
+data.session
+){
+
+const email =
+data.session.user.email || "";
+
+const name =
+email.split("@")[0];
+
+
+localStorage.setItem(
+"technicianEmail",
+email
+);
+
+localStorage.setItem(
+"technicianName",
+name
+);
+
+
+document
+.getElementById(
+"welcomeName"
+)
+.textContent =
+name;
+
+
+showScreen(
+"dashboardScreen"
+);
+
+}
+
+}
+catch(error){
+
+console.error(
+"Session error:",
+error
+);
+
+}
+
+}
+
+
+/* ==========================================
+   SCREEN NAVIGATION
+========================================== */
+
+function showScreen(id){
+
+document
+.querySelectorAll(".screen")
+.forEach(
+function(screen){
+
+screen.classList.remove(
+"active"
+);
+
+});
+
+
+const target =
+document.getElementById(id);
+
+
+if(target){
+
+target.classList.add(
+"active"
+);
+
+}
+
+
+if(id === "recordsScreen"){
+
+renderRecords();
+
+}
+
+
+if(id === "searchScreen"){
+
+searchRecords();
+
+}
+
+
+if(id === "apartmentScreen"){
+
+findApartment();
+
+}
+
+
+updateDashboard();
+
+window.scrollTo(
+0,
+0
+);
+
+}
+
+
+/* ==========================================
+   GPS
+========================================== */
 
 function captureGPSAndSave(){
 
-  const gpsStatus =
-    document.getElementById("gpsStatus");
+const gpsStatus =
+document.getElementById(
+"gpsStatus"
+);
 
-  if(!navigator.geolocation){
 
-    gpsStatus.textContent =
-      "GPS is not supported on this device.";
+if(!navigator.geolocation){
 
-    return;
+gpsStatus.textContent =
+"GPS is not supported.";
 
-  }
+saveLift(
+"",
+""
+);
 
-  gpsStatus.textContent =
-    "Getting GPS location...";
-
-  navigator.geolocation.getCurrentPosition(
-
-    function(position){
-
-      const latitude =
-        position.coords.latitude;
-
-      const longitude =
-        position.coords.longitude;
-
-      gpsStatus.textContent =
-        "Latitude: " +
-        latitude.toFixed(6) +
-        " | Longitude: " +
-        longitude.toFixed(6);
-
-      saveLift(
-        latitude,
-        longitude
-      );
-
-    },
-
-    function(error){
-
-      gpsStatus.textContent =
-        "GPS error: " +
-        error.message;
-
-      saveLift(
-        "",
-        ""
-      );
-
-    },
-
-    {
-      enableHighAccuracy:true,
-      timeout:15000,
-      maximumAge:0
-    }
-
-  );
+return;
 
 }
 
 
-/* =====================================================
+gpsStatus.textContent =
+"Getting GPS location...";
+
+
+navigator.geolocation.getCurrentPosition(
+
+function(position){
+
+const latitude =
+position.coords.latitude;
+
+const longitude =
+position.coords.longitude;
+
+
+gpsStatus.textContent =
+"Latitude: " +
+latitude.toFixed(6) +
+" | Longitude: " +
+longitude.toFixed(6);
+
+
+saveLift(
+latitude,
+longitude
+);
+
+},
+
+function(error){
+
+gpsStatus.textContent =
+"GPS error: " +
+error.message;
+
+
+saveLift(
+"",
+""
+);
+
+},
+
+{
+
+enableHighAccuracy:true,
+
+timeout:15000,
+
+maximumAge:0
+
+}
+
+);
+
+}
+
+
+/* ==========================================
    SAVE LIFT
-   ===================================================== */
+========================================== */
 
 function saveLift(
-  latitude,
-  longitude
+latitude,
+longitude
 ){
 
-  const liftNumber =
-    document
-    .getElementById("liftNumber")
-    .value
-    .trim();
+const liftNumber =
+document
+.getElementById("liftNumber")
+.value
+.trim();
 
-  const customer =
-    document
-    .getElementById("customerName")
-    .value
-    .trim();
 
-  const brand =
-    document
-    .getElementById("liftBrand")
-    .value
-    .trim();
+const customer =
+document
+.getElementById("customerName")
+.value
+.trim();
 
-  const location =
-    document
-    .getElementById("liftLocation")
-    .value
-    .trim();
 
-  const floors =
-    document
-    .getElementById("floors")
-    .value
-    .trim();
+const brand =
+document
+.getElementById("liftBrand")
+.value
+.trim();
 
-  if(!liftNumber || !customer){
 
-    alert(
-      "Please enter Lift Number and Customer / Apartment."
-    );
+const location =
+document
+.getElementById("liftLocation")
+.value
+.trim();
 
-    return;
 
-  }
+const floors =
+document
+.getElementById("floors")
+.value
+.trim();
 
-  const record = {
 
-    id:Date.now(),
+if(
+!liftNumber ||
+!customer
+){
 
-    liftNumber:liftNumber,
+alert(
+"Please enter Lift Number and Customer / Apartment."
+);
 
-    customer:customer,
-
-    brand:brand,
-
-    location:location,
-
-    floors:floors,
-
-    latitude:latitude,
-
-    longitude:longitude,
-
-    technician:
-      localStorage.getItem(
-        "technicianEmail"
-      ) || "",
-
-    date:
-      new Date().toLocaleString()
-
-  };
-
-  liftRecords.push(record);
-
-  localStorage.setItem(
-    "liftRecords",
-    JSON.stringify(liftRecords)
-  );
-
-  alert("Lift details saved!");
-
-  clearLiftForm();
-
-  updateDashboard();
+return;
 
 }
 
 
-/* =====================================================
-   CLEAR LIFT FORM
-   ===================================================== */
+liftRecords.push({
 
-function clearLiftForm(){
+id:Date.now(),
 
-  document.getElementById(
-    "liftNumber"
-  ).value = "";
+liftNumber:liftNumber,
 
-  document.getElementById(
-    "customerName"
-  ).value = "";
+customer:customer,
 
-  document.getElementById(
-    "liftBrand"
-  ).value = "";
+brand:brand,
 
-  document.getElementById(
-    "liftLocation"
-  ).value = "";
+location:location,
 
-  document.getElementById(
-    "floors"
-  ).value = "";
+floors:floors,
+
+latitude:latitude,
+
+longitude:longitude,
+
+technician:
+localStorage.getItem(
+"technicianEmail"
+) || "",
+
+date:
+new Date()
+.toLocaleString()
+
+});
+
+
+localStorage.setItem(
+"liftRecords",
+JSON.stringify(
+liftRecords
+)
+);
+
+
+alert(
+"Lift details saved!"
+);
+
+
+[
+"liftNumber",
+"customerName",
+"liftBrand",
+"liftLocation",
+"floors"
+]
+.forEach(
+function(id){
+
+document
+.getElementById(id)
+.value = "";
+
+});
+
+
+updateDashboard();
 
 }
 
 
-/* =====================================================
-   BREAKDOWN SAVE
-   ===================================================== */
+/* ==========================================
+   BREAKDOWN
+========================================== */
 
 function saveBreakdown(){
 
-  const liftNumber =
-    document
-    .getElementById("breakLiftNumber")
-    .value
-    .trim();
+const liftNumber =
+document
+.getElementById(
+"breakLiftNumber"
+)
+.value
+.trim();
 
-  const customer =
-    document
-    .getElementById("breakCustomer")
-    .value
-    .trim();
 
-  const problem =
-    document
-    .getElementById("breakProblem")
-    .value
-    .trim();
+const customer =
+document
+.getElementById(
+"breakCustomer"
+)
+.value
+.trim();
 
-  const action =
-    document
-    .getElementById("breakAction")
-    .value
-    .trim();
 
-  const priority =
-    document
-    .getElementById("breakPriority")
-    .value;
+const problem =
+document
+.getElementById(
+"breakProblem"
+)
+.value
+.trim();
 
-  if(!liftNumber || !problem){
 
-    alert(
-      "Please enter Lift Number and Problem."
-    );
+const action =
+document
+.getElementById(
+"breakAction"
+)
+.value
+.trim();
 
-    return;
 
-  }
+const priority =
+document
+.getElementById(
+"breakPriority"
+)
+.value;
 
-  const record = {
 
-    id:Date.now(),
+if(
+!liftNumber ||
+!problem
+){
 
-    liftNumber:liftNumber,
+alert(
+"Please enter Lift Number and Problem."
+);
 
-    customer:customer,
+return;
 
-    problem:problem,
+}
 
-    action:action,
 
-    priority:priority,
+breakdownRecords.push({
 
-    technician:
-      localStorage.getItem(
-        "technicianEmail"
-      ) || "",
+id:Date.now(),
 
-    date:
-      new Date().toLocaleString()
+liftNumber:liftNumber,
 
-  };
+customer:customer,
 
-  breakdownRecords.push(record);
+problem:problem,
 
-  localStorage.setItem(
-    "breakdownRecords",
-    JSON.stringify(
-      breakdownRecords
-    )
-  );
+action:action,
 
-  alert("Breakdown saved!");
+priority:priority,
 
-  document.getElementById(
-    "breakLiftNumber"
-  ).value = "";
+technician:
+localStorage.getItem(
+"technicianEmail"
+) || "",
 
-  document.getElementById(
-    "breakCustomer"
-  ).value = "";
+date:
+new Date()
+.toLocaleString()
 
-  document.getElementById(
-    "breakProblem"
-  ).value = "";
+});
 
-  document.getElementById(
- 
+
+localStorage.setItem(
+"breakdownRecords",
+JSON.stringify(
+breakdownRecords
+)
+);
+
+
+alert(
+"Breakdown saved!"
+);
+
+
+[
+"breakLiftNumber",
+"breakCustomer",
+"breakProblem",
+"breakAction"
+]
+.forEach(
+function(id){
+
+document
+.getElementById(id)
+.value = "";
+
+});
+
+
+updateDashboard();
+
+}
+
+
+/* ==========================================
+   MAINTENANCE
+========================================== */
+
+function saveMaintenance(){
+
+const liftNumber =
+document
+.getElementById(
+"maintLiftNumber"
+)
+.value
+.trim();
+
+
+if(!liftNumber){
+
+alert(
+"Please enter Lift Number."
+);
+
+return;
+
+}
+
+
+const checks = {};
+
+
+for(
+let i = 1;
+i <= 10;
+i++
+){
+
+checks[
+"check" + i
+] =
+document
+.getElementById(
+"check" + i
+)
+.checked;
+
+}
+
+
+maintenanceRecords.push({
+
+id:Date.now(),
+
+liftNumber:liftNumber,
+
+checks:checks,
+
+remarks:
+document
+.getElementById(
+"maintRemarks"
+)
+.value
+.trim(),
+
+technician:
+localStorage.getItem(
+"technicianEmail"
+) || "",
+
+date:
+new Date()
+.toLocaleString()
+
+});
+
+
+localStorage.setItem(
+"maintenanceRecords",
+JSON.stringify(
+maintenanceRecords
+)
+);
+
+
+alert(
+"Maintenance saved!"
+);
+
+
+document
+.getElementById(
+"maintLiftNumber"
+)
+.value = "";
+
+
+document
+.getElementById(
+"maintRemarks"
+)
+.value = "";
+
+
+for(
+let i = 1;
+i <= 10;
+i++
+){
+
+document
+.getElementById(
+"check" + i
+)
+.checked = false;
+
+}
+
+}
+
+
+/* ==========================================
+   SERVICE REPORT
+========================================== */
+
+function saveServiceReport(){
+
+const liftNumber =
+document
+.getElementById(
+"serviceLiftNumber"
+)
+.value
+.trim();
+
+
+if(!liftNumber){
+
+alert(
+"Please enter Lift Number."
+);
+
+return;
+
+}
+
+
+serviceRecords.push({
+
+id:Date.now(),
+
+liftNumber:liftNumber,
+
+customer:
+document
+.getElementById(
+"serviceCustomer"
+)
+.value
+.trim(),
+
+description:
+document
+.getElementById(
+"serviceDescription"
+)
+.value
+.trim(),
+
+parts:
+document
+.getElementById(
+"serviceParts"
+)
+.value
+.trim(),
+
+remarks:
+document
+.getElementById(
+"serviceRemarks"
+)
+.value
+.trim(),
+
+technician:
+localStorage.getItem(
+"technicianEmail"
+) || "",
+
+date:
+new Date()
+.toLocaleString()
+
+});
+
+
+localStorage.setItem(
+"serviceRecords",
+JSON.stringify(
+serviceRecords
+)
+);
+
+
+alert(
+"Service report saved!"
+);
+
+
+[
+"serviceLiftNumber",
+"serviceCustomer",
+"serviceDescription",
+"serviceParts",
+"serviceRemarks"
+]
+.forEach(
+function(id){
+
+document
+.getElementById(id)
+.value = "";
+
+});
+
+}
+
+
+/* ==========================================
+   RECORDS
+========================================== */
+
+function renderRecords(){
+
+const container =
+document.getElementById(
+"recordsList"
+);
+
+
+if(!liftRecords.length){
+
+container.innerHTML =
+'<div class="empty">No lift records found.</div>';
+
+return;
+
+}
+
+
+container.innerHTML = "";
+
+
+liftRecords
+.slice()
+.reverse()
+.forEach(
+function(record){
+
+const div =
+document.createElement(
+"div"
+);
+
+div.className =
+"record";
+
+
+const gps =
+record.latitude !== "" &&
+record.longitude !== ""
+?
+record.latitude +
+", " +
+record.longitude
+:
+"Not captured";
+
+
+div.innerHTML =
+
+"<strong>" +
+escapeHTML(
+record.customer
+) +
+"</strong>" +
+
+"<br>Lift Number: " +
+escapeHTML(
+record.liftNumber
+) +
+
+"<br>Brand: " +
+escapeHTML(
+record.brand || "-"
+) +
+
+"<br>Location: " +
+escapeHTML(
+record.location || "-"
+) +
+
+"<br>Floors: " +
+escapeHTML(
+record.floors || "-"
+) +
+
+"<br>GPS: " +
+escapeHTML(
+gps
+) +
+
+"<br>" +
+escapeHTML(
+record.date
+);
+
+
+container.appendChild(
+div
+);
+
+});
+
+}
+
+
+/* ==========================================
+   SEARCH
+========================================== */
+
+function searchRecords(){
+
+const input =
+document
+.getElementById(
+"searchInput"
+)
+.value
+.trim()
+.toLowerCase();
+
+
+const container =
+document.getElementById(
+"searchResults"
+);
+
+
+if(!input){
+
+container.innerHTML = "";
+
+return;
+
+}
+const results =
+liftRecords.filter(
+function(record){
+
+return [
+
+record.customer,
+record.liftNumber,
+record.location,
+record.brand
+
+].some(
+function(value){
+
+return String(
+value || ""
+)
+.toLowerCase()
+.includes(input);
+
+});
+
+}
+);
+
+if(!results.length){
+
+container.innerHTML =
+'<div class="card empty">No matching lift found.</div>';
+
+return;
+
+}
+
+container.innerHTML = "";
+
+results
+.slice()
+.reverse()
+.forEach(
+function(record){
+
+const div =
+document.createElement(
+"div"
+);
+
+div.className =
+"card record";
+
+div.innerHTML =
+
+"<strong>" +
+escapeHTML(
+record.customer
+) +
+"</strong>" +
+
+"<br>Lift Number: " +
+escapeHTML(
+record.liftNumber
+) +
+
+"<br>Location: " +
+escapeHTML(
+record.location || "-"
+) +
+
+"<br>Brand: " +
+escapeHTML(
+record.brand || "-"
+);
+
+container.appendChild(
+div
+);
+
+});
+
+}
+
+
+/* ==========================================
+   FIND APARTMENT
+========================================== */
+
+function findApartment(){
+
+const input =
+document
+.getElementById(
+"apartmentSearch"
+)
+.value
+.trim()
+.toLowerCase();
+
+const container =
+document.getElementById(
+"apartmentResults"
+);
+
+if(!input){
+
+container.innerHTML = "";
+
+return;
+
+}
+
+const results =
+liftRecords.filter(
+function(record){
+
+return String(
+record.customer || ""
+)
+.toLowerCase()
+.includes(input);
+
+});
+
+if(!results.length){
+
+container.innerHTML =
+'<div class="card empty">Apartment not found.</div>';
+
+return;
+
+}
+
+container.innerHTML = "";
+
+results
+.slice()
+.reverse()
+.forEach(
+function(record){
+
+const div =
+document.createElement(
+"div"
+);
+
+div.className =
+"card record";
+
+div.innerHTML =
+
+"<strong>" +
+escapeHTML(
+record.customer
+) +
+"</strong>" +
+
+"<br>Lift: " +
+escapeHTML(
+record.liftNumber
+) +
+
+"<br>Location: " +
+escapeHTML(
+record.location || "-"
+) +
+
+"<br>Brand: " +
+escapeHTML(
+record.brand || "-"
+) +
+
+"<br>Floors: " +
+escapeHTML(
+record.floors || "-"
+);
+
+container.appendChild(
+div
+);
+
+});
+
+}
+
+
+/* ==========================================
+   DASHBOARD
+========================================== */
+
+function updateDashboard(){
+
+const total =
+document.getElementById(
+"totalRecords"
+);
+
+const breakdown =
+document.getElementById(
+"totalBreakdowns"
+);
+
+if(total){
+
+total.textContent =
+liftRecords.length;
+
+}
+
+if(breakdown){
+
+breakdown.textContent =
+breakdownRecords.length;
+
+}
+
+}
+
+
+/* ==========================================
+   HTML ESCAPE
+========================================== */
+
+function escapeHTML(value){
+
+return String(
+value ?? ""
+)
+
+.replace(
+/&/g,
+"&amp;"
+)
+
+.replace(
+/</g,
+"&lt;"
+)
+
+.replace(
+/>/g,
+"&gt;"
+)
+
+.replace(
+/"/g,
+"&quot;"
+)
+
+.replace(
+/'/g,
+"&#039;"
+);
+
+}
+
+
+/* ==========================================
+   BUTTON EVENTS
+========================================== */
+
+document.addEventListener(
+"DOMContentLoaded",
+async function(){
+
+document
+.getElementById(
+"loginButton"
+)
+.addEventListener(
+"click",
+login
+);
+
+document
+.getElementById(
+"logoutButton"
+)
+.addEventListener(
+"click",
+logout
+);
+
+document
+.getElementById(
+"gpsSaveButton"
+)
+.addEventListener(
+"click",
+captureGPSAndSave
+);
+
+document
+.getElementById(
+"breakdownSaveButton"
+)
+.addEventListener(
+"click",
+saveBreakdown
+);
+
+document
+.getElementById(
+"maintenanceSaveButton"
+)
+.addEventListener(
+"click",
+saveMaintenance
+);
+
+document
+.getElementById(
+"serviceSaveButton"
+)
+.addEventListener(
+"click",
+saveServiceReport
+);
+
+document
+.getElementById(
+"searchInput"
+)
+.addEventListener(
+"input",
+searchRecords
+);
+
+document
+.getElementById(
+"apartmentSearch"
+)
+.addEventListener(
+"input",
+findApartment
+);
+
+document
+.querySelectorAll(
+"[data-screen]"
+)
+.forEach(
+function(button){
+
+button.addEventListener(
+"click",
+function(){
+
+showScreen(
+button.dataset.screen
+);
+
+});
+
+});
+
+initSupabase();
+
+updateDashboard();
+
+await checkSession();
+
+});
+
+
+/* ==========================================
+   SERVICE WORKER
+========================================== */
+
+if(
+"serviceWorker" in navigator
+){
+
+window.addEventListener(
+"load",
+function(){
+
+navigator.serviceWorker
+.register("./sw.js")
+.catch(
+function(error){
+
+console.log(
+"Service worker:",
+error
+);
+
+});
+
+});
+
+}
+
+</script>
+
+</body>
+</html>
+
