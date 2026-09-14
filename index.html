@@ -4,132 +4,168 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#062542">
-<title>JSK ELEVATORS</title>
+
+<title>JSK Elevators - Lift Technician</title>
 
 <style>
 *{box-sizing:border-box}
+
 body{
   margin:0;
-    font-family:Arial,sans-serif;
-      background:#eef3f8;
-        color:#062542;
-        }
-        header{
-          background:#062542;
-            color:white;
-              padding:20px;
-                text-align:center;
-                }
-                .container{
-                  max-width:600px;
-                    margin:auto;
-                      padding:20px;
-                      }
-                      .card{
-                        background:white;
-                          padding:20px;
-                            margin:15px 0;
-                              border-radius:16px;
-                                box-shadow:0 4px 15px #0002;
-                                }
-                                h1,h2{margin-top:0}
-                                label{
-                                  display:block;
-                                    font-weight:bold;
-                                      margin-top:15px;
-                                      }
-                                      input,textarea,select{
-                                        width:100%;
-                                          padding:14px;
-                                            margin-top:7px;
-                                              border:1px solid #bbb;
-                                                border-radius:10px;
-                                                  font-size:16px;
-                                                  }
-                                                  button{
-                                                    width:100%;
-                                                      padding:15px;
-                                                        margin-top:15px;
-                                                          border:0;
-                                                            border-radius:10px;
-                                                              background:#062542;
-                                                                color:white;
-                                                                  font-size:16px;
-                                                                    font-weight:bold;
-                                                                    }
-                                                                    button.secondary{background:#607080}
-                                                                    button.danger{background:#b3261e}
-                                                                    .screen{display:none}
-                                                                    .screen.active{display:block}
-                                                                    .grid{
-                                                                      display:grid;
-                                                                        grid-template-columns:1fr 1fr;
-                                                                          gap:12px;
-                                                                          }
-                                                                          .menu{
-                                                                            padding:18px;
-                                                                              border-radius:14px;
-                                                                                background:white;
-                                                                                  box-shadow:0 3px 10px #0002;
-                                                                                  }
-                                                                                  .check{
-                                                                                    display:flex;
-                                                                                      align-items:center;
-                                                                                        gap:10px;
-                                                                                          margin:14px 0;
-                                                                                          }
-                                                                                          .check input{width:auto}
-                                                                                          .status{
-                                                                                            padding:12px;
-                                                                                              background:#e8f5e9;
-                                                                                                border-radius:10px;
-                                                                                                  margin-top:10px;
-                                                                                                  }
-                                                                                                  </style>
-                                                                                                  
-<style>
-@media print{
-  body *{visibility:hidden}
-  #reportOutput,#reportOutput *{visibility:visible}
-  #reportOutput{position:absolute;left:0;top:0;width:100%}
+  font-family:Arial,sans-serif;
+  background:#eef3f8;
+  color:#062542;
+}
+
+header{
+  background:#062542;
+  color:white;
+  text-align:center;
+  padding:18px;
+}
+
+header h1{margin:0;font-size:24px}
+header p{margin:5px 0 0}
+
+.container{
+  max-width:700px;
+  margin:auto;
+  padding:15px;
+}
+
+.screen{display:none}
+.screen.active{display:block}
+
+.card{
+  background:white;
+  padding:20px;
+  margin:15px 0;
+  border-radius:16px;
+  box-shadow:0 3px 12px #0002;
+}
+
+h2{margin-top:0}
+
+label{
+  display:block;
+  font-weight:bold;
+  margin-top:14px;
+}
+
+input,textarea,select{
+  width:100%;
+  padding:14px;
+  margin-top:7px;
+  border:1px solid #bbb;
+  border-radius:10px;
+  font-size:16px;
+}
+
+textarea{min-height:100px}
+
+button{
+  width:100%;
+  padding:15px;
+  margin-top:15px;
+  border:0;
+  border-radius:10px;
+  background:#062542;
+  color:white;
+  font-size:16px;
+  font-weight:bold;
+}
+
+button.secondary{background:#607080}
+button.danger{background:#b3261e}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.menu{
+  padding:18px;
+  border-radius:14px;
+  background:white;
+  box-shadow:0 3px 10px #0002;
+  text-align:center;
+  font-weight:bold;
+}
+
+.status{
+  padding:12px;
+  background:#e8f5e9;
+  border-radius:10px;
+  margin-top:10px;
+}
+
+.check{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin:14px 0;
+}
+
+.check input{
+  width:auto;
+  margin:0;
+}
+
+.record{
+  background:#f7f9fb;
+  padding:14px;
+  margin:10px 0;
+  border-radius:10px;
+}
+
+.small{
+  font-size:13px;
+  color:#607080;
+}
+
+@media(max-width:500px){
+  .grid{grid-template-columns:1fr}
 }
 </style>
 </head>
 
-                                                                                                  <body>
+<body>
 
-                                                                                                  <header>
-                                                                                                    <h1>🛗 JSK ELEVATORS</h1>
-                                                                                                      <p>Technician Service App</p>
-                                                                                                      </header>
+<header>
+  <h1>🏢 JSK ELEVATORS</h1>
+  <p>Lift Technician Service App</p>
+</header>
 
-                                                                                                      <div class="container">
+<div class="container">
 
-                                                                                                      <!-- LOGIN -->
-                                                                                                      <section id="loginScreen" class="screen active">
-                                                                                                        <div class="card">
-                                                                                                            <h2>Technician Login</h2>
+<!-- LOGIN -->
+<section id="loginScreen" class="screen active">
+  <div class="card">
+    <h2>Technician Login</h2>
 
-                                                                                                                <label>Technician Name</label>
-                                                                                                                    <input id="technicianName" type="text" placeholder="Enter your name">
+    <label>Email Address</label>
+    <input id="email" type="email" placeholder="Enter your email">
 
-                                                                                                                        <label>PIN</label>
-                                                                                                                            <input id="pin" type="password" placeholder="Enter PIN">
+    <label>Password</label>
+    <input id="password" type="password" placeholder="Enter your password">
 
-                                                                                                                                <button onclick="login()">LOGIN</button>
-                                                                                                                                  </div>
-                                                                                                                                  </section>
+    <button onclick="login()">LOGIN</button>
+  </div>
+</section>
 
-                                                                                                                                  <!-- DASHBOARD -->
+
+<!-- DASHBOARD -->
 <section id="dashboardScreen" class="screen">
   <div class="card">
-    <h2>Welcome, <span id="welcomeName"></span> 👷</h2>
-    <div class="status">Technician logged in successfully</div>
+    <h2>Welcome, <span id="welcomeName">Technician</span> 👷</h2>
+    <div class="status">Technician logged in successfully.</div>
   </div>
 
   <div class="grid">
+
     <div class="menu" onclick="showScreen('liftScreen')">
-      🛗<br><b>Lift Details</b>
+      🏢<br><b>Lift Details</b>
     </div>
 
     <div class="menu" onclick="showScreen('breakdownScreen')">
@@ -147,7 +183,10 @@ body{
     <div class="menu" onclick="showScreen('recordsScreen')">
       📋<br><b>Lift Records</b>
     </div>
-<div class="menu" onclick="showScreen('reportScreen')">📄<br><b>Service Report</b></div>
+
+    <div class="menu" onclick="showScreen('reportScreen')">
+      📄<br><b>Service Report</b>
+    </div>
 
   </div>
 
@@ -157,248 +196,126 @@ body{
   </div>
 </section>
 
-<!-- LIFT RECORDS -->
+
+<!-- LIFT DETAILS -->
+<section id="liftScreen" class="screen">
+  <div class="card">
+    <h2>🏢 Lift Details</h2>
+
+    <label>Customer Name</label>
+    <input id="liftCustomer" placeholder="Enter customer name">
+
+    <label>Lift Number</label>
+    <input id="liftNumber" placeholder="Enter lift number">
+
+    <label>Brand</label>
+    <input id="liftBrand" placeholder="Enter lift brand">
+
+    <label>Lift Location</label>
+    <input id="liftLocation" placeholder="Enter lift location">
+
+    <label>Number of Floors</label>
+    <input id="liftFloors" type="number" placeholder="Enter number of floors">
+
+    <label>Apartment / Building Name</label>
+    <input id="apartmentName" placeholder="Enter building name">
+
+    <label>Apartment / Building Location</label>
+    <input id="apartmentLocation" placeholder="Enter location">
+
+    <button onclick="saveLiftDetails()">SAVE LIFT DETAILS</button>
+    <button class="secondary" onclick="showScreen('dashboardScreen')">BACK</button>
+  </div>
+</section>
+
+
+<!-- BREAKDOWN -->
+<section id="breakdownScreen" class="screen">
+  <div class="card">
+    <h2>🔧 Breakdown Report</h2>
+
+    <label>Lift Status</label>
+    <select id="liftStatus">
+      <option value="">Select status</option>
+      <option>Lift stopped</option>
+      <option>Door problem</option>
+      <option>Lift making noise</option>
+      <option>Lift not leveling</option>
+      <option>Electrical problem</option>
+      <option>Other</option>
+    </select>
+
+    <label>Problem Description</label>
+    <textarea id="breakdownPriority"
+      placeholder="Describe the problem"></textarea>
+
+    <label>Technician Notes</label>
+    <textarea id="breakdownNotes"
+      placeholder="Enter technician notes"></textarea>
+
+    <button onclick="saveBreakdown()">SAVE BREAKDOWN</button>
+    <button class="secondary" onclick="showScreen('dashboardScreen')">BACK</button>
+  </div>
+</section>
+
+
+<!-- MAINTENANCE -->
+<section id="maintenanceScreen" class="screen">
+  <div class="card">
+    <h2>✅ Maintenance Checklist</h2>
+
+    <div class="check">
+      <input type="checkbox" id="doorCheck">
+      <span>Door operation checked</span>
+    </div>
+
+    <div class="check">
+      <input type="checkbox" id="levelCheck">
+      <span>Floor leveling checked</span>
+    </div>
+
+    <div class="check">
+      <input type="checkbox" id="brakeCheck">
+      <span>Brake checked</span>
+    </div>
+
+    <div class="check">
+      <input type="checkbox" id="motorCheck">
+      <span>Motor checked</span>
+    </div>
+
+    <div class="check">
+      <input type="checkbox" id="safetyCheck">
+      <span>Safety devices checked</span>
+    </div>
+
+    <div class="check">
+      <input type="checkbox" id="emergencyCheck">
+      <span>Emergency alarm checked</span>
+    </div>
+
+    <label>Maintenance Notes</label>
+    <textarea id="maintenanceNotes"
+      placeholder="Enter maintenance notes"></textarea>
+
+    <button onclick="saveMaintenance()">SAVE MAINTENANCE</button>
+    <button class="secondary" onclick="showScreen('dashboardScreen')">BACK</button>
+  </div>
+</section>
+
+
+<!-- RECORDS -->
 <section id="recordsScreen" class="screen">
   <div class="card">
-      <h2>📋 Lift Records</h2>
-      
-          <label>Customer Name</label>
-              <input id="recordCustomer" type="text" placeholder="Customer name">
-              
-                  <label>Lift Number</label>
-                      <input id="recordLiftNumber" type="text" placeholder="Lift number">
-                      
-                          <label>Lift Brand</label>
-                              <input id="recordBrand" type="text" placeholder="Lift brand">
-                              
-                                  <label>Service Date</label>
-                                      <input id="recordDate" type="date">
-                                      
-                                          <button onclick="saveLiftRecord()">💾 SAVE RECORD</button>
-                                          
-                                              <h3>Saved Lift Records</h3>
-                                                  <div id="recordsList"></div>
-                                                  
-                                                      <button onclick="showScreen('dashboardScreen')">⬅ BACK TO DASHBOARD</button>
-                                                        </div>
-                                                        </section>
-                                                                                                                                                                                                                      <!-- LIFT DETAILS -->
-                                                                                                                                                                                                                      <section id="liftScreen" class="screen">
-                                                                                                                                                                                                                        <div class="card">
-                                                                                                                                                                                                                            <h2>🛗 Lift Details</h2>
+    <h2>📋 Lift Records</h2>
 
-                                                                                                                                                                                                                                <label>Customer</label>
-                                                                                                                                                                                                                                    <input id="customer" placeholder="Customer name">
+    <div id="recordsList"></div>
 
-<label>🏢 Apartment / Building Name</label>
-<input id="apartmentName" type="text" placeholder="Apartment name">
-
-<label>📍 Apartment Location / Address</label>
-<input id="apartmentLocation" type="text" placeholder="GPS location will appear here" readonly>
-<button type="button" class="secondary" onclick="getApartmentLocation()">📍 GET CURRENT GPS LOCATION</button>
-<p id="apartmentGPSStatus">Location not detected.</p>
-<button type="button" class="secondary" onclick="openApartmentMap()">🗺️ OPEN LOCATION IN GOOGLE MAPS</button>
-
-                                                                                                                                                                                                                                        <label>Lift Number</label>
-                                                                                                                                                                                                                                            <input id="liftNumber" placeholder="Lift number">
-
-                                                                                                                                                                                                                                                <label>Lift Brand</label>
-                                                                                                                                                                                                                                                    <input id="liftBrand" placeholder="Lift brand">
-
-                                                                                                                                                                                                                                                        <label>Floors</label>
-                                                                                                                                                                                                                                                            <input id="liftFloors" type="number" placeholder="Number of floors">
-
-                                                                                                                                                                                                                                                                <button onclick="saveLift()">SAVE LIFT</button>
-                                                                                                                                                                                                                                                                    <button class="secondary" onclick="showScreen('dashboardScreen')">BACK</button>
-                                                                                                                                                                                                                                                                      </div>
-                                                                                                                                                                                                                                                                      </section>
-
-                                                                                                                                                                                                                                                                      <!-- BREAKDOWN -->
-                                                                                                                                                                                                                                                                      <section id="breakdownScreen" class="screen">
-                                                                                                                                                                                                                                                                        <div class="card">
-                                                                                                                                                                                                                                                                            <h2>🔧 Breakdown Report</h2>
-
-                                                                                                                                                                                                                                                                                <label>Problem Description</label>
-                                                                                                                                                                                                                                                                                    <textarea id="problem" rows="5"
-                                                                                                                                                                                                                                                                                          placeholder="Describe the lift problem"></textarea>
-
-                                                                                                                                                                                                                                                                                              <label>Lift Status</label>
-                                                                                                                                                                                                                                                                                                  <select id="liftStatus">
-                                                                                                                                                                                                                                                                                                        <option>Lift stopped</option>
-                                                                                                                                                                                                                                                                                                              <option>Door problem</option>
-                                                                                                                                                                                                                                                                                                                    <option>Lift not moving</option>
-                                                                                                                                                                                                                                                                                                                          <option>Noise / vibration</option>
-                                                                                                                                                                                                                                                                                                                                <option>Other</option>
-                                                                                                                                                                                                                                                                                                                                    </select>
-<label>🚨 Breakdown Priority</label>
-<select id="breakdownPriority">
-  <option value="Normal">🟢 Normal</option>
-    <option value="High">🟠 High</option>
-      <option value="Emergency">🔴 Emergency</option>
-      </select>
-                                                                                                                                                                                                                                                                                                                                       <label>📷 Breakdown Photo</label>
-                                                                                                                                                                                                                                                                                                                                       <input type="file" id="breakdownPhoto" accept="image/*" capture="environment">
-
-<label>✍️ Customer Signature</label>
-<canvas id="signaturePad" width="500" height="200" style="width:100%;border:2px solid #062542;border-radius:10px;background:white;"></canvas>
-<button type="button" class="secondary" onclick="clearSignature()">Clear Signature</button>
- <button onclick="saveBreakdown()">SAVE REPORT</button>
-                                                                                                                                                                                                                                                                                                                                            <button class="secondary" onclick="showScreen('dashboardScreen')">BACK</button>
-                                                                                                                                                                                                                                                                                                                                              </div>
-                                                                                                                                                                                                                                                                                                                                              </section>
-
-                                                                                                                                                                                                                                                                                                                                              <!-- MAINTENANCE -->
-                                                                                                                                                                                                                                                                                                                                              <section id="maintenanceScreen" class="screen">
-                                                                                                                                                                                                                                                                                                                                                <div class="card">
-                                                                                                                                                                                                                                                                                                                                                    <h2>✅ Maintenance Checklist</h2>
-
-                                                                                                                                                                                                                                                                                                                                                        <div class="check">
-                                                                                                                                                                                                                                                                                                                                                              <input type="checkbox" id="door">
-                                                                                                                                                                                                                                                                                                                                                                    <label for="door">Door operation checked</label>
-                                                                                                                                                                                                                                                                                                                                                                        </div>
-
-                                                                                                                                                                                                                                                                                                                                                                            <div class="check">
-                                                                                                                                                                                                                                                                                                                                                                                  <input type="checkbox" id="motor">
-                                                                                                                                                                                                                                                                                                                                                                                        <label for="motor">Motor checked</label>
-                                                                                                                                                                                                                                                                                                                                                                                            </div>
-
-                                                                                                                                                                                                                                                                                                                                                                                                <div class="check">
-                                                                                                                                                                                                                                                                                                                                                                                                      <input type="checkbox" id="brake">
-                                                                                                                                                                                                                                                                                                                                                                                                            <label for="brake">Brake checked</label>
-                                                                                                                                                                                                                                                                                                                                                                                                                </div>
-
-                                                                                                                                                                                                                                                                                                                                                                                                                    <div class="check">
-                                                                                                                                                                                                                                                                                                                                                                                                                          <input type="checkbox" id="sensor">
-                                                                                                                                                                                                                                                                                                                                                                                                                                <label for="sensor">Door sensor checked</label>
-                                                                                                                                                                                                                                                                                                                                                                                                                                    </div>
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                        <div class="check">
-                                                                                                                                                                                                                                                                                                                                                                                                                                              <input type="checkbox" id="alarm">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                    <label for="alarm">Emergency alarm checked</label>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                            <button onclick="completeMaintenance()">COMPLETE INSPECTION</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                <button class="secondary" onclick="showScreen('dashboardScreen')">BACK</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                  </div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                  </section>
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                  </div>
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                  <script>
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                  function showScreen(screenId){
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                    document.querySelectorAll(".screen").forEach(function(screen){
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                        screen.classList.remove("active");
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                          });
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            var screen=document.getElementById(screenId);
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                              if(screen){
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  screen.classList.add("active");
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    }
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    }
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    function login(){
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      var name=document.getElementById("technicianName").value.trim();
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        var pin=document.getElementById("pin").value.trim();
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          if(name===""){
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              alert("Please enter Technician Name");
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  return;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    }
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      if(pin===""){
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          alert("Please enter PIN");
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              return;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                }
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  localStorage.setItem("technicianName",name);
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    document.getElementById("welcomeName").textContent=name;
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      showScreen("dashboardScreen");
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      }
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      function logout(){
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        showScreen("loginScreen");
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        }
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        function saveLift(){
-  localStorage.setItem("liftCustomer",document.getElementById("customer").value);
-  localStorage.setItem("liftNumber",document.getElementById("liftNumber").value);
-  localStorage.setItem("liftBrand",document.getElementById("liftBrand").value);
-  localStorage.setItem("liftFloors",document.getElementById("liftFloors").value);
-  localStorage.setItem("apartmentName",document.getElementById("apartmentName").value);
-  localStorage.setItem("apartmentLocation",document.getElementById("apartmentLocation").value);
-
-  alert("Lift details saved successfully!");
-}
-
-function loadLiftRecords() {
-  const records = JSON.parse(localStorage.getItem("liftRecords") || "[]");
-  const list = document.getElementById("recordsList");
-
-  if (!list) return;
-
-  if (records.length === 0) {
-    list.innerHTML = "<p>No lift records saved yet.</p>";
-    return;
-  }
-
-  list.innerHTML = records.map((record, index) => `
-    <div class="card">
-      <b>🛗 Lift ${index + 1}</b><br>
-      Customer: ${record.customer}<br>
-      Lift Number: ${record.liftNumber}<br>
-      Brand: ${record.brand}<br>
-      Service Date: ${record.date}
-    </div>
-  `).join("");
-}
-</script>
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          </div>
-
-<script>
-const pad=document.getElementById("signaturePad");
-if(pad){
-  const ctx=pad.getContext("2d");
-  let drawing=false;
-  function pos(e){
-    const r=pad.getBoundingClientRect();
-    const t=e.touches ? e.touches[0] : e;
-    return {x:(t.clientX-r.left)*pad.width/r.width,y:(t.clientY-r.top)*pad.height/r.height};
-  }
-  function start(e){drawing=true; const p=pos(e); ctx.beginPath(); ctx.moveTo(p.x,p.y); e.preventDefault();}
-  function move(e){if(!drawing)return; const p=pos(e); ctx.lineTo(p.x,p.y); ctx.stroke(); e.preventDefault();}
-  function stop(){drawing=false;}
-  pad.addEventListener("mousedown",start);
-  pad.addEventListener("mousemove",move);
-  pad.addEventListener("mouseup",stop);
-  pad.addEventListener("touchstart",start,{passive:false});
-  pad.addEventListener("touchmove",move,{passive:false});
-  pad.addEventListener("touchend",stop);
-  ctx.lineWidth=3;
-  ctx.lineCap="round";
-}
-
-function saveBreakdown(){
-  const signaturePad=document.getElementById("signaturePad");
-  const signature=signaturePad ? signaturePad.toDataURL("image/png") : "";
-
-  localStorage.setItem("breakdownStatus", document.getElementById("liftStatus")?.value || "");
-  localStorage.setItem("breakdownPriority", document.getElementById("breakdownPriority")?.value || "");
-  localStorage.setItem("breakdownPhotoSaved", document.getElementById("breakdownPhoto")?.files?.length ? "Photo attached" : "");
-  localStorage.setItem("technicianSignature", signature);
-
-  alert("Breakdown report saved successfully!");
-}
-
-function clearSignature(){
-  const p=document.getElementById("signaturePad");
-  if(p) p.getContext("2d").clearRect(0,0,p.width,p.height);
-}
-</script>
-
+    <button class="secondary" onclick="showScreen('dashboardScreen')">
+      BACK
+    </button>
+  </div>
+</section>
 
 
 <!-- SERVICE REPORT -->
@@ -406,110 +323,261 @@ function clearSignature(){
   <div class="card">
     <h2>📄 Service Report</h2>
 
-    <label>Customer Name</label>
-    <input id="reportCustomer" type="text" placeholder="Customer name">
-
-    <label>Lift Number</label>
-    <input id="reportLift" type="text" placeholder="Lift number">
-
-    <label>Service Summary</label>
-    <textarea id="reportSummary" rows="5" placeholder="Enter service details"></textarea>
+    <div id="reportOutput">
+      <p>No service report generated yet.</p>
+    </div>
 
     <button onclick="generateReport()">GENERATE REPORT</button>
-    <button class="secondary" onclick="showScreen('dashboardScreen')">BACK</button>
-
-    <div id="reportOutput"></div>
+    <button class="secondary" onclick="window.print()">PRINT REPORT</button>
+    <button class="secondary" onclick="showScreen('dashboardScreen')">
+      BACK
+    </button>
   </div>
 </section>
 
+</div>
+
+
 <script>
-function generateReport(){
-  var customer=document.getElementById("reportCustomer").value || localStorage.getItem("liftCustomer") || "";
-  var lift=document.getElementById("reportLift").value || localStorage.getItem("liftNumber") || "";
-  var summary=document.getElementById("reportSummary").value || "";
-  var apartment=localStorage.getItem("apartmentName") || "";
-  var location=localStorage.getItem("apartmentLocation") || "";  var reportDate=new Date().toLocaleString();
-  var signature=localStorage.getItem("technicianSignature") || "";
 
-  document.getElementById("reportOutput").innerHTML =
-    `<div class="card">
-      <h3>📄 Service Report</h3>
-      <p><b>Date & Time:</b> ${reportDate}</p><p><b>Customer:</b> ${customer}</p>
-      <p><b>Lift:</b> ${lift}</p>
-      <p><b>Apartment:</b> ${apartment}</p>
-      <p><b>GPS Location:</b> ${location}</p>
-      <p><b>Google Maps:</b> <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location)}" target="_blank">Open Location</a></p>
-      <p><b>Service:</b> ${summary}</p>
-      <p><b>Technician:</b> Sunil</p><p><b>Technician Signature:</b></p>${signature ? `<img src="${signature}" style="max-width:100%;height:100px;object-fit:contain;border:1px solid #ddd;border-radius:8px">` : "<p>Signature not provided</p>"}
-      <button onclick="printReport()">🖨️ PRINT / SAVE PDF</button>
-      <button class="secondary" onclick="shareReport()">📤 SHARE REPORT</button>
-    </div>`;
-}
+function showScreen(id){
+  document.querySelectorAll(".screen").forEach(function(screen){
+    screen.classList.remove("active");
+  });
 
-function shareReport(){
-  var text =
-    "JSK ELEVATORS - Service Report\n\n" +
-    "Customer: " + document.getElementById("reportCustomer").value + "\n" +
-    "Lift: " + document.getElementById("reportLift").value + "\n" +
-    "Service: " + document.getElementById("reportSummary").value + "\n" +
-    "Technician: Sunil";
+  const screen=document.getElementById(id);
 
-  if(navigator.share){
-    navigator.share({
-      title:"JSK ELEVATORS Service Report",
-      text:text
-    });
-  }else{
-    alert("Sharing is not supported on this device.");
+  if(screen){
+    screen.classList.add("active");
   }
-}
-</script>
 
-<script>
-function printReport(){
-  window.print();
+  if(id==="recordsScreen"){
+    loadLiftRecords();
+  }
+
+  if(id==="reportScreen"){
+    generateReport();
+  }
+
+  window.scrollTo(0,0);
 }
-</script>
-<script>
-function openApartmentMap(){
-  var location=document.getElementById("apartmentLocation").value.trim();
-  if(!location){
-    alert("Please get the GPS location first.");
+
+
+function login(){
+
+  const email=document.getElementById("email").value.trim();
+  const password=document.getElementById("password").value;
+
+  if(!email || !password){
+    alert("Please enter your email and password.");
     return;
   }
-  window.open("https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(location),"_blank");
+
+  const name=email.split("@")[0];
+
+  localStorage.setItem("technicianEmail",email);
+  localStorage.setItem("technicianName",name);
+
+  document.getElementById("welcomeName").textContent=name;
+
+  alert("Login successful!");
+
+  showScreen("dashboardScreen");
 }
 
-function getApartmentLocation(){
-  var status=document.getElementById("apartmentGPSStatus");
+
+function logout(){
+
+  localStorage.removeItem("technicianEmail");
+  localStorage.removeItem("technicianName");
+
+  showScreen("loginScreen");
+}
+
+
+function saveLiftDetails(){
+
+  const data={
+    customer:document.getElementById("liftCustomer").value,
+    liftNumber:document.getElementById("liftNumber").value,
+    brand:document.getElementById("liftBrand").value,
+    location:document.getElementById("liftLocation").value,
+    floors:document.getElementById("liftFloors").value,
+    apartmentName:document.getElementById("apartmentName").value,
+    apartmentLocation:document.getElementById("apartmentLocation").value,
+    date:new Date().toLocaleString()
+  };
+
+  localStorage.setItem("liftDetails",JSON.stringify(data));
+
+  alert("Lift details saved successfully!");
+}
+
+
+function saveBreakdown(){
+
+  const data={
+    status:document.getElementById("liftStatus").value,
+    problem:document.getElementById("breakdownPriority").value,
+    notes:document.getElementById("breakdownNotes").value,
+    date:new Date().toLocaleString()
+  };
+
+  localStorage.setItem("breakdownData",JSON.stringify(data));
+
+  alert("Breakdown report saved successfully!");
+}
+
+
+function saveMaintenance(){
+
+  const data={
+    door:document.getElementById("doorCheck").checked,
+    leveling:document.getElementById("levelCheck").checked,
+    brake:document.getElementById("brakeCheck").checked,
+    motor:document.getElementById("motorCheck").checked,
+    safety:document.getElementById("safetyCheck").checked,
+    emergency:document.getElementById("emergencyCheck").checked,
+    notes:document.getElementById("maintenanceNotes").value,
+    date:new Date().toLocaleString()
+  };
+
+  localStorage.setItem("maintenanceData",JSON.stringify(data));
+
+  alert("Maintenance saved successfully!");
+}
+
+
+function getGPS(){
+
+  const status=document.getElementById("gpsStatus");
 
   if(!navigator.geolocation){
-    status.textContent="GPS is not supported on this phone.";
+    status.textContent="GPS is not supported on this device.";
     return;
   }
 
-  status.textContent="📍 Detecting location...";
+  status.textContent="Getting GPS location...";
 
   navigator.geolocation.getCurrentPosition(
     function(position){
-      var lat=position.coords.latitude.toFixed(6);
-      var lon=position.coords.longitude.toFixed(6);
 
-      document.getElementById("apartmentLocation").value =
-        lat + ", " + lon;
+      const lat=position.coords.latitude;
+      const lon=position.coords.longitude;
 
-      status.textContent="✅ GPS location detected";
+      const location={
+        latitude:lat,
+        longitude:lon,
+        date:new Date().toLocaleString()
+      };
+
+      localStorage.setItem("gpsLocation",JSON.stringify(location));
+
+      status.textContent=
+        "Latitude: "+lat+" | Longitude: "+lon;
+
     },
     function(){
-      status.textContent="❌ Unable to get GPS location. Allow location permission.";
-    },
-    {
-      enableHighAccuracy:true,
-      timeout:15000,
-      maximumAge:0
+      status.textContent=
+        "Unable to get GPS location. Please allow location permission.";
     }
   );
 }
+
+
+function loadLiftRecords(){
+
+  const list=document.getElementById("recordsList");
+
+  const lift=JSON.parse(localStorage.getItem("liftDetails") || "null");
+
+  if(!lift){
+    list.innerHTML="<p>No lift records saved yet.</p>";
+    return;
+  }
+
+  list.innerHTML=`
+    <div class="record">
+      <b>Customer:</b> ${lift.customer || "-"}<br>
+      <b>Lift Number:</b> ${lift.liftNumber || "-"}<br>
+      <b>Brand:</b> ${lift.brand || "-"}<br>
+      <b>Location:</b> ${lift.location || "-"}<br>
+      <b>Floors:</b> ${lift.floors || "-"}<br>
+      <b>Building:</b> ${lift.apartmentName || "-"}<br>
+      <span class="small">Saved: ${lift.date}</span>
+    </div>
+  `;
+}
+
+
+function generateReport(){
+
+  const output=document.getElementById("reportOutput");
+
+  const lift=JSON.parse(localStorage.getItem("liftDetails") || "null");
+  const breakdown=JSON.parse(localStorage.getItem("breakdownData") || "null");
+  const maintenance=JSON.parse(localStorage.getItem("maintenanceData") || "null");
+  const gps=JSON.parse(localStorage.getItem("gpsLocation") || "null");
+
+  if(!lift && !breakdown && !maintenance){
+    output.innerHTML="<p>No service information available.</p>";
+    return;
+  }
+
+  output.innerHTML=`
+
+    <div class="record">
+      <h3>Lift Details</h3>
+      <b>Customer:</b> ${lift?.customer || "-"}<br>
+      <b>Lift Number:</b> ${lift?.liftNumber || "-"}<br>
+      <b>Brand:</b> ${lift?.brand || "-"}<br>
+      <b>Location:</b> ${lift?.location || "-"}<br>
+      <b>Floors:</b> ${lift?.floors || "-"}
+    </div>
+
+    <div class="record">
+      <h3>Breakdown</h3>
+      <b>Status:</b> ${breakdown?.status || "-"}<br>
+      <b>Problem:</b> ${breakdown?.problem || "-"}<br>
+      <b>Notes:</b> ${breakdown?.notes || "-"}
+    </div>
+
+    <div class="record">
+      <h3>Maintenance</h3>
+      <b>Door:</b> ${maintenance?.door ? "Checked" : "Not checked"}<br>
+      <b>Leveling:</b> ${maintenance?.leveling ? "Checked" : "Not checked"}<br>
+      <b>Brake:</b> ${maintenance?.brake ? "Checked" : "Not checked"}<br>
+      <b>Motor:</b> ${maintenance?.motor ? "Checked" : "Not checked"}<br>
+      <b>Safety:</b> ${maintenance?.safety ? "Checked" : "Not checked"}<br>
+      <b>Emergency:</b> ${maintenance?.emergency ? "Checked" : "Not checked"}<br>
+      <b>Notes:</b> ${maintenance?.notes || "-"}
+    </div>
+
+    <div class="record">
+      <h3>GPS Location</h3>
+      <b>Latitude:</b> ${gps?.latitude || "-"}<br>
+      <b>Longitude:</b> ${gps?.longitude || "-"}
+    </div>
+
+    <p class="small">
+      Generated: ${new Date().toLocaleString()}
+    </p>
+  `;
+}
+
+
+window.onload=function(){
+
+  const email=localStorage.getItem("technicianEmail");
+  const name=localStorage.getItem("technicianName");
+
+  if(email){
+    document.getElementById("welcomeName").textContent=name || "Technician";
+    showScreen("dashboardScreen");
+  }
+};
+
 </script>
-<script>document.addEventListener('DOMContentLoaded',setupSignaturePad);</script></body>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          </html>
+
+</body>
+</html>
