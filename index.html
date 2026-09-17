@@ -2574,6 +2574,125 @@ function openApartmentFile(name){
     "<h2>" + esc(name) + "</h2>" +
     "<p>Apartment file loading...</p>";
 
+}function renderApartmentFile(){
+
+  const container = $("apartmentFileContent");
+
+  if(!container) return;
+
+  const key = String(selectedApartment || "").trim().toLowerCase();
+
+  const lifts = liftRecords.filter(function(record){
+    return String(record.customer || "").trim().toLowerCase() === key;
+  });
+
+  const breakdowns = breakdownRecords.filter(function(record){
+    return String(record.customer || "").trim().toLowerCase() === key;
+  });
+
+  const services = serviceRecords.filter(function(record){
+    return String(record.customer || "").trim().toLowerCase() === key;
+  });
+
+  const maintenance = maintenanceRecords.filter(function(record){
+    return String(record.customer || "").trim().toLowerCase() === key;
+  });
+
+  let html = "";
+
+  html += "<h2>" + esc(selectedApartment) + "</h2>";
+
+  html += "<div class=\"card\">";
+  html += "<b>🛗 Lifts: " + lifts.length + "</b>";
+  html += "<br>🚨 Breakdowns: " + breakdowns.length;
+  html += "<br>🛠️ Maintenance: " + maintenance.length;
+  html += "<br>🔧 Services: " + services.length;
+  html += "</div>";
+
+  if(lifts.length){
+
+    html += "<h3>🛗 Lifts</h3>";
+
+    lifts.forEach(function(record){
+
+      html += "<div class=\"card\">";
+      html += "<b>Lift " + esc(record.liftNumber || "-") + "</b>";
+      html += "<br>Brand: " + esc(record.brand || "-");
+      html += "<br>Floors: " + esc(record.floors || "-");
+      html += "<br>Location: " + esc(record.location || "-");
+      html += "<br>Date Added: " + esc(record.date || "-");
+      html += "</div>";
+
+    });
+
+  }
+
+  if(breakdowns.length){
+
+    html += "<h3>🚨 Breakdown History</h3>";
+
+    breakdowns.forEach(function(record){
+
+      html += "<div class=\"card\">";
+      html += "<b>" + esc(record.date || "-") + "</b>";
+      html += "<br>Lift: " + esc(record.liftNumber || "-");
+      html += "<br>Problem: " + esc(record.problem || "-");
+      html += "<br>Action: " + esc(record.action || "-");
+      html += "</div>";
+
+    });
+
+  }
+
+  if(maintenance.length){
+
+    html += "<h3>🛠️ Maintenance History</h3>";
+
+    maintenance.forEach(function(record){
+
+      html += "<div class=\"card\">";
+      html += "<b>" + esc(record.date || "-") + "</b>";
+      html += "<br>Lift: " + esc(record.liftNumber || "-");
+      html += "<br>Checklist: " + esc(record.checks || "-");
+      html += "<br>Remarks: " + esc(record.remarks || "-");
+      html += "</div>";
+
+    });
+
+  }
+
+  if(services.length){
+
+    html += "<h3>🔧 Service History</h3>";
+
+    services.forEach(function(record){
+
+      html += "<div class=\"card\">";
+      html += "<b>" + esc(record.date || "-") + "</b>";
+      html += "<br>Lift: " + esc(record.liftNumber || "-");
+      html += "<br>Service: " + esc(record.serviceType || "-");
+      html += "<br>Work Done: " + esc(record.description || "-");
+      html += "<br>Remarks: " + esc(record.remarks || "-");
+      html += "</div>";
+
+    });
+
+  }
+
+  if(
+    !breakdowns.length &&
+    !maintenance.length &&
+    !services.length
+  ){
+
+    html += "<div class=\"card empty\">";
+    html += "No service history recorded yet.";
+    html += "</div>";
+
+  }
+
+  container.innerHTML = html;
+
 }
 /* =========================
    ADMIN DASHBOARD
