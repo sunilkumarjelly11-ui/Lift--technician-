@@ -2842,7 +2842,111 @@ document.addEventListener(
 );
 
 
-/* =========================================================
+/* ADMIN DASHBOARD */
+
+(async function(){
+
+  const ADMIN_EMAIL = "sunilkumarjelly11@gmail.com";
+
+  try {
+    const { data } = await supabaseClient.auth.getUser();
+    const user = data?.user;
+
+    if (!user || user.email !== ADMIN_EMAIL) return;
+
+    const adminSection = document.createElement("section");
+    adminSection.id = "adminScreen";
+    adminSection.className = "screen";
+
+    adminSection.innerHTML = `
+      <div class="card">
+        <div class="title">Admin Dashboard</div>
+
+        <div id="adminStats">
+          Loading records...
+        </div>
+
+        <div id="adminRecords"></div>
+
+        <button onclick="showScreen('dashboard')">
+          ← Back to Dashboard
+        </button>
+      </div>
+    `;
+
+    document.body.appendChild(adminSection);
+
+    const dashboardContainer =
+      document.querySelector(".screen.active .container");
+
+    if (dashboardContainer) {
+      const btn = document.createElement("button");
+      btn.innerHTML = "👑 Admin Dashboard";
+      btn.onclick = function(){
+        showScreen("adminScreen");
+        loadAdminData();
+      };
+      dashboardContainer.appendChild(btn);
+    }
+
+    window.loadAdminData = async function(){
+
+      const tables = [
+        ["lift_records", "Lift Records"],
+        ["breakdown_records", "Breakdown Reports"],
+        ["maintenance_records", "Maintenance Records"],
+        ["service_records", "Service Records"]
+      ];
+
+      let html = "";
+
+      for (const [table, title] of tables) {
+
+        const { data, error } =
+          await supabaseClient
+            .from(table)
+            .select("*")
+            .order("created_at", { ascending:false });
+
+        if (error) {
+          html += `<div class="card">
+            <b>${title}</b><br>
+            Error loading records
+          </div>`;
+          continue;
+        }
+
+        html += `
+          <div class="card">
+            <div class="title">${title}: ${data.length}</div>
+        `;
+
+        data.forEach(row => {
+          html += `
+            <div style="padding:10px;border-bottom:1px solid #ddd;">
+              <b>Technician:</b> ${row.technician || "-"}<br>
+              <b>Lift:</b> ${row.lift_number || "-"}<br>
+              <b>Customer:</b> ${row.customer || "-"}<br>
+              <b>Date:</b> ${row.created_at
+                ? new Date(row.created_at).toLocaleString()
+                : "-"}
+            </div>
+          `;
+        });
+
+        html += `</div>`;
+      }
+
+      document.getElementById("adminRecords").innerHTML = html;
+      document.getElementById("adminStats").innerHTML =
+        "👑 Logged in as Admin";
+    };
+
+  } catch(error) {
+    console.log("Admin dashboard error:", error);
+  }
+
+})();/* =========================================================
    SERVICE WORKER
 ========================================================= */
 
