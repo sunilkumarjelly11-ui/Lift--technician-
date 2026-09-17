@@ -2,243 +2,237 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+
 <meta name="theme-color" content="#062542">
 
-<title>JSK Elevators - Lift Technician</title>
-
 <link rel="manifest" href="manifest.json">
+
+<title>JSK Elevators - Lift Technician</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
+
 *{
-  box-sizing:border-box;
+box-sizing:border-box
 }
 
 body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:#eef3f8;
-  color:#162536;
+margin:0;
+font-family:Arial,sans-serif;
+background:#eef3f8;
+color:#162536
 }
 
 header{
-  background:#062542;
-  color:#fff;
-  padding:18px;
-  text-align:center;
-  font-size:21px;
-  font-weight:bold;
+background:#062542;
+color:#fff;
+padding:18px;
+text-align:center;
+font-size:21px;
+font-weight:bold
 }
 
 .container{
-  max-width:520px;
-  margin:auto;
-  padding:18px;
+max-width:520px;
+margin:auto;
+padding:18px
 }
 
 .screen{
-  display:none;
+display:none
 }
 
 .screen.active{
-  display:block;
+display:block
 }
 
 .card{
-  background:#fff;
-  border-radius:16px;
-  padding:18px;
-  margin-bottom:16px;
-  box-shadow:0 4px 14px rgba(0,0,0,.08);
+background:#fff;
+border-radius:16px;
+padding:18px;
+margin-bottom:16px;
+box-shadow:0 4px 14px rgba(0,0,0,.08)
 }
 
 .logo{
-  text-align:center;
-  margin:55px 0 35px;
+text-align:center;
+margin:55px 0 35px
 }
 
 .logo h1{
-  color:#062542;
-  font-size:36px;
-  margin:0;
+color:#062542;
+font-size:36px;
+margin:0
 }
 
 .logo p{
-  color:#607080;
-  font-size:22px;
+color:#607080;
+font-size:22px
 }
 
 .title{
-  color:#062542;
-  font-size:22px;
-  font-weight:bold;
-  margin-bottom:15px;
+color:#062542;
+font-size:22px;
+font-weight:bold;
+margin-bottom:15px
 }
 
 label{
-  display:block;
-  font-weight:bold;
-  margin-top:8px;
+display:block;
+font-weight:bold;
+margin-top:8px
 }
 
 input,
 select,
 textarea{
-  width:100%;
-  padding:14px;
-  margin:7px 0 13px;
-  border:1px solid #ccd5df;
-  border-radius:10px;
-  font-size:16px;
-  background:#fff;
+width:100%;
+padding:14px;
+margin:7px 0 13px;
+border:1px solid #ccd5df;
+border-radius:10px;
+font-size:16px;
+background:#fff
 }
 
 textarea{
-  min-height:100px;
-  resize:vertical;
+min-height:100px;
+resize:vertical
 }
 
 button{
-  width:100%;
-  border:0;
-  border-radius:10px;
-  padding:14px;
-  margin:6px 0;
-  font-size:16px;
-  font-weight:bold;
-  cursor:pointer;
+width:100%;
+border:0;
+border-radius:10px;
+padding:14px;
+margin:6px 0;
+font-size:16px;
+font-weight:bold;
+cursor:pointer
 }
 
 button:disabled{
-  opacity:.6;
+opacity:.6
 }
 
 .primary{
-  background:#062542;
-  color:#fff;
+background:#062542;
+color:#fff
 }
 
 .secondary{
-  background:#dfeaf4;
-  color:#062542;
+background:#dfeaf4;
+color:#062542
 }
 
 .success{
-  background:#16794b;
-  color:#fff;
+background:#16794b;
+color:#fff
 }
 
 .danger{
-  background:#b42318;
-  color:#fff;
+background:#b42318;
+color:#fff
 }
 
 .menu-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px
 }
 
 .menu-btn{
-  min-height:95px;
-  background:#fff;
-  color:#062542;
-  box-shadow:0 4px 12px rgba(0,0,0,.08);
+min-height:95px;
+background:#fff;
+color:#062542;
+box-shadow:0 4px 12px rgba(0,0,0,.08)
 }
 
 .menu-btn span{
-  display:block;
-  font-size:28px;
-  margin-bottom:5px;
+display:block;
+font-size:28px;
+margin-bottom:5px
 }
 
-.stat{
-  background:#f3f7fb;
-  padding:13px;
-  border-radius:10px;
-  margin:8px 0;
-}
-
+.stat,
 .status{
-  background:#f3f7fb;
-  padding:12px;
-  border-radius:10px;
-  margin:8px 0;
-}
-
-.record{
-  border:1px solid #d9e1e8;
-  border-radius:12px;
-  padding:14px;
-  margin:10px 0;
-  background:#fafcfe;
-  line-height:1.6;
-}
-
-.empty{
-  text-align:center;
-  padding:25px;
-  color:#748292;
-}
-
-#loginStatus{
-  min-height:25px;
-  text-align:center;
-  color:#b42318;
-  margin-bottom:5px;
+background:#f3f7fb;
+padding:13px;
+border-radius:10px;
+margin:8px 0
 }
 
 .online{
-  color:#16794b;
-  font-weight:bold;
+color:#16794b;
+font-weight:bold
 }
 
 .offline{
-  color:#b42318;
-  font-weight:bold;
+color:#b42318;
+font-weight:bold
 }
 
 .check{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  padding:11px 0;
-  border-bottom:1px solid #edf0f3;
+display:flex;
+align-items:center;
+gap:10px;
+padding:11px 0;
+border-bottom:1px solid #edf0f3
 }
 
 .check input{
-  width:22px;
-  height:22px;
-  margin:0;
+width:22px;
+height:22px;
+margin:0
 }
 
 .gps-box{
-  background:#eef8f2;
-  border:1px solid #b8dfc7;
-  color:#16794b;
-  padding:12px;
-  border-radius:10px;
-  margin-top:8px;
-  word-break:break-word;
+background:#eef8f2;
+border:1px solid #b8dfc7;
+color:#16794b;
+padding:12px;
+border-radius:10px;
+margin-top:8px;
+word-break:break-word
 }
 
-.error-box{
-  background:#fff1f0;
-  border:1px solid #f1b5b0;
-  color:#b42318;
-  padding:12px;
-  border-radius:10px;
-  margin-top:8px;
-  word-break:break-word;
+#loginStatus{
+min-height:25px;
+text-align:center;
+color:#b42318;
+margin-bottom:5px
 }
+
+.admin-badge{
+background:#fff4cf;
+border:1px solid #ead28a;
+padding:12px;
+border-radius:10px;
+margin-bottom:12px;
+font-weight:bold
+}
+
+.record{
+border:1px solid #d9e1e8;
+border-radius:12px;
+padding:14px;
+margin:10px 0;
+background:#fafcfe;
+line-height:1.6
+}
+
+.empty{
+text-align:center;
+padding:25px;
+color:#748292
+}
+
 </style>
 </head>
 
 <body>
-
-<!-- ================= LOGIN ================= -->
 
 <section id="loginScreen" class="screen active">
 
@@ -259,45 +253,40 @@ JSK ELEVATORS
 Technician Login
 </div>
 
-<label for="email">
-Email
-</label>
+<label>Email</label>
 
 <input
-  id="email"
-  type="email"
-  placeholder="Technician email"
-  autocomplete="email"
+id="email"
+type="email"
+placeholder="Technician email"
+autocomplete="email"
 >
 
-<label for="password">
-Password
-</label>
+<label>Password</label>
 
 <input
-  id="password"
-  type="password"
-  placeholder="Password"
-  autocomplete="current-password"
+id="password"
+type="password"
+placeholder="Password"
+autocomplete="current-password"
 >
 
 <div id="loginStatus"></div>
 
 <button
-  id="loginButton"
-  type="button"
-  class="primary"
+id="loginButton"
+class="primary"
+type="button"
 >
 LOGIN
 </button>
 
 </div>
+
 </div>
 
 </section>
 
-
-<!-- ================= DASHBOARD ================= -->
 
 <section id="dashboardScreen" class="screen">
 
@@ -329,77 +318,78 @@ Breakdown Reports:
 </div>
 
 <div
-  id="onlineStatus"
-  class="status"
+id="onlineStatus"
+class="status"
 >
 Connecting...
 </div>
 
 </div>
 
+<div id="adminButtonArea"></div>
 
 <div class="menu-grid">
 
 <button
-  class="menu-btn"
-  data-screen="liftDetailsScreen"
+class="menu-btn"
+data-screen="liftDetailsScreen"
 >
 <span>🏢</span>
 Lift Details
 </button>
 
 <button
-  class="menu-btn"
-  data-screen="breakdownScreen"
+class="menu-btn"
+data-screen="breakdownScreen"
 >
 <span>🔧</span>
 Breakdown
 </button>
 
 <button
-  class="menu-btn"
-  data-screen="maintenanceScreen"
+class="menu-btn"
+data-screen="maintenanceScreen"
 >
 <span>✅</span>
 Maintenance
 </button>
 
 <button
-  class="menu-btn"
-  data-screen="recordsScreen"
+class="menu-btn"
+data-screen="recordsScreen"
 >
 <span>📋</span>
 Lift Records
 </button>
 
 <button
-  class="menu-btn"
-  data-screen="searchScreen"
+class="menu-btn"
+data-screen="searchScreen"
 >
 <span>🔎</span>
 Search
 </button>
 
 <button
-  class="menu-btn"
-  data-screen="serviceScreen"
+class="menu-btn"
+data-screen="serviceScreen"
 >
 <span>📄</span>
 Service Report
 </button>
 
 <button
-  class="menu-btn"
-  data-screen="apartmentScreen"
+class="menu-btn"
+data-screen="apartmentScreen"
 >
 <span>🏠</span>
 Find Apartment
 </button>
 
 <button
-  id="logoutButton"
-  class="menu-btn"
-  type="button"
+id="logoutButton"
+class="menu-btn"
+type="button"
 >
 <span>🚪</span>
 Logout
@@ -408,10 +398,9 @@ Logout
 </div>
 
 </div>
+
 </section>
 
-
-<!-- ================= LIFT DETAILS ================= -->
 
 <section id="liftDetailsScreen" class="screen">
 
@@ -422,8 +411,8 @@ Lift Details
 <div class="container">
 
 <button
-  class="secondary"
-  data-screen="dashboardScreen"
+class="secondary"
+data-screen="dashboardScreen"
 >
 ← Back
 </button>
@@ -434,74 +423,63 @@ Lift Details
 Lift Information
 </div>
 
-<label>
-Lift Number
-</label>
+<label>Lift Number</label>
 
 <input
-  id="liftNumber"
-  placeholder="Example: LIFT-01"
+id="liftNumber"
+placeholder="Example: LIFT-01"
 >
 
-<label>
-Customer / Apartment
-</label>
+<label>Customer / Apartment</label>
 
 <input
-  id="customerName"
-  placeholder="Apartment / Building / Customer"
+id="customerName"
+placeholder="Apartment / Building / Customer"
 >
 
-<label>
-Lift Brand
-</label>
+<label>Lift Brand</label>
 
 <input
-  id="liftBrand"
-  placeholder="Lift brand"
+id="liftBrand"
+placeholder="Lift brand"
 >
 
-<label>
-Lift Location
-</label>
+<label>Lift Location</label>
 
 <input
-  id="liftLocation"
-  placeholder="Location"
+id="liftLocation"
+placeholder="Location"
 >
 
-<label>
-Number of Floors
-</label>
+<label>Number of Floors</label>
 
 <input
-  id="floors"
-  type="number"
-  placeholder="Example: 5"
+id="floors"
+type="number"
+placeholder="Example: 5"
 >
 
 <button
-  id="gpsSaveButton"
-  class="primary"
-  type="button"
+id="gpsSaveButton"
+class="primary"
+type="button"
 >
 📍 Capture GPS & Save Lift
 </button>
 
 <div
-  id="gpsStatus"
-  class="status"
+id="gpsStatus"
+class="status"
 >
 GPS not captured yet.
 </div>
 
 </div>
+
 </div>
 
 </section>
 
-
-<!-- ================= BREAKDOWN ================= -->
 
 <section id="breakdownScreen" class="screen">
 
@@ -512,8 +490,8 @@ Breakdown Report
 <div class="container">
 
 <button
-  class="secondary"
-  data-screen="dashboardScreen"
+class="secondary"
+data-screen="dashboardScreen"
 >
 ← Back
 </button>
@@ -524,67 +502,55 @@ Breakdown Report
 Breakdown Report
 </div>
 
-<label>
-Lift Number
-</label>
+<label>Lift Number</label>
 
 <input
-  id="breakLiftNumber"
-  placeholder="Lift number"
+id="breakLiftNumber"
+placeholder="Lift number"
 >
 
-<label>
-Customer / Apartment
-</label>
+<label>Customer / Apartment</label>
 
 <input
-  id="breakCustomer"
-  placeholder="Customer / Apartment"
+id="breakCustomer"
+placeholder="Customer / Apartment"
 >
 
-<label>
-Problem
-</label>
+<label>Problem</label>
 
 <textarea
-  id="breakProblem"
-  placeholder="Describe the problem"
+id="breakProblem"
+placeholder="Describe the problem"
 ></textarea>
 
-<label>
-Action Taken
-</label>
+<label>Action Taken</label>
 
 <textarea
-  id="breakAction"
-  placeholder="Describe action taken"
+id="breakAction"
+placeholder="Describe action taken"
 ></textarea>
 
-<label>
-Priority
-</label>
+<label>Priority</label>
 
 <select id="breakPriority">
-<option value="Normal">Normal</option>
-<option value="High">High</option>
-<option value="Emergency">Emergency</option>
+<option>Normal</option>
+<option>High</option>
+<option>Emergency</option>
 </select>
 
 <button
-  id="breakdownSaveButton"
-  class="primary"
-  type="button"
+id="breakdownSaveButton"
+class="primary"
 >
 SAVE BREAKDOWN
 </button>
 
 </div>
+
 </div>
 
 </section>
 
-
-<!-- ================= MAINTENANCE ================= -->
 
 <section id="maintenanceScreen" class="screen">
 
@@ -595,8 +561,8 @@ Maintenance Checklist
 <div class="container">
 
 <button
-  class="secondary"
-  data-screen="dashboardScreen"
+class="secondary"
+data-screen="dashboardScreen"
 >
 ← Back
 </button>
@@ -607,63 +573,81 @@ Maintenance Checklist
 Maintenance Checklist
 </div>
 
-<label>
-Lift Number
-</label>
+<label>Lift Number</label>
 
 <input
-  id="maintLiftNumber"
-  placeholder="Lift number"
+id="maintLiftNumber"
+placeholder="Lift number"
 >
 
 <div class="check">
 <input type="checkbox" id="check1">
-<label for="check1">Door operation checked</label>
+<label for="check1">
+Door operation checked
+</label>
 </div>
 
 <div class="check">
 <input type="checkbox" id="check2">
-<label for="check2">Door safety checked</label>
+<label for="check2">
+Door safety checked
+</label>
 </div>
 
 <div class="check">
 <input type="checkbox" id="check3">
-<label for="check3">Emergency alarm checked</label>
+<label for="check3">
+Emergency alarm checked
+</label>
 </div>
 
 <div class="check">
 <input type="checkbox" id="check4">
-<label for="check4">Emergency light checked</label>
+<label for="check4">
+Emergency light checked
+</label>
 </div>
 
 <div class="check">
 <input type="checkbox" id="check5">
-<label for="check5">Car lighting checked</label>
+<label for="check5">
+Car lighting checked
+</label>
 </div>
 
 <div class="check">
 <input type="checkbox" id="check6">
-<label for="check6">Machine room checked</label>
+<label for="check6">
+Machine room checked
+</label>
 </div>
 
 <div class="check">
 <input type="checkbox" id="check7">
-<label for="check7">Controller checked</label>
+<label for="check7">
+Controller checked
+</label>
 </div>
 
 <div class="check">
 <input type="checkbox" id="check8">
-<label for="check8">Safety circuit checked</label>
+<label for="check8">
+Safety circuit checked
+</label>
 </div>
 
 <div class="check">
 <input type="checkbox" id="check9">
-<label for="check9">Limit switches checked</label>
+<label for="check9">
+Limit switches checked
+</label>
 </div>
 
 <div class="check">
 <input type="checkbox" id="check10">
-<label for="check10">General cleaning completed</label>
+<label for="check10">
+General cleaning completed
+</label>
 </div>
 
 <label>
@@ -671,27 +655,22 @@ Technician Remarks
 </label>
 
 <textarea
-  id="maintRemarks"
-  placeholder="Maintenance remarks"
+id="maintRemarks"
+placeholder="Maintenance remarks"
 ></textarea>
 
 <button
-  id="maintenanceSaveButton"
-  class="success"
-  type="button"
+id="maintenanceSaveButton"
+class="success"
 >
 SAVE MAINTENANCE
 </button>
 
 </div>
+
 </div>
 
-</section>
-
-
-<!-- ================= LIFT RECORDS ================= -->
-
-<section id="recordsScreen" class="screen">
+</section><section id="recordsScreen" class="screen">
 
 <header>
 Lift Records
@@ -700,8 +679,8 @@ Lift Records
 <div class="container">
 
 <button
-  class="secondary"
-  data-screen="dashboardScreen"
+class="secondary"
+data-screen="dashboardScreen"
 >
 ← Back
 </button>
@@ -719,12 +698,11 @@ Loading...
 </div>
 
 </div>
+
 </div>
 
 </section>
 
-
-<!-- ================= SEARCH ================= -->
 
 <section id="searchScreen" class="screen">
 
@@ -735,8 +713,8 @@ Search
 <div class="container">
 
 <button
-  class="secondary"
-  data-screen="dashboardScreen"
+class="secondary"
+data-screen="dashboardScreen"
 >
 ← Back
 </button>
@@ -748,8 +726,8 @@ Search Lift
 </div>
 
 <input
-  id="searchInput"
-  placeholder="Apartment / Building / Customer / Lift Number"
+id="searchInput"
+placeholder="Apartment / Building / Customer / Lift Number"
 >
 
 </div>
@@ -761,8 +739,6 @@ Search Lift
 </section>
 
 
-<!-- ================= SERVICE REPORT ================= -->
-
 <section id="serviceScreen" class="screen">
 
 <header>
@@ -772,8 +748,8 @@ Service Report
 <div class="container">
 
 <button
-  class="secondary"
-  data-screen="dashboardScreen"
+class="secondary"
+data-screen="dashboardScreen"
 >
 ← Back
 </button>
@@ -789,8 +765,8 @@ Lift Number
 </label>
 
 <input
-  id="serviceLiftNumber"
-  placeholder="Lift number"
+id="serviceLiftNumber"
+placeholder="Lift number"
 >
 
 <label>
@@ -798,8 +774,8 @@ Customer / Apartment
 </label>
 
 <input
-  id="serviceCustomer"
-  placeholder="Customer / Apartment"
+id="serviceCustomer"
+placeholder="Customer / Apartment"
 >
 
 <label>
@@ -807,8 +783,8 @@ Service Description
 </label>
 
 <textarea
-  id="serviceDescription"
-  placeholder="Service work done"
+id="serviceDescription"
+placeholder="Service work done"
 ></textarea>
 
 <label>
@@ -816,8 +792,8 @@ Parts Used
 </label>
 
 <textarea
-  id="serviceParts"
-  placeholder="Parts used"
+id="serviceParts"
+placeholder="Parts used"
 ></textarea>
 
 <label>
@@ -825,25 +801,23 @@ Technician Remarks
 </label>
 
 <textarea
-  id="serviceRemarks"
-  placeholder="Remarks"
+id="serviceRemarks"
+placeholder="Remarks"
 ></textarea>
 
 <button
-  id="serviceSaveButton"
-  class="primary"
-  type="button"
+id="serviceSaveButton"
+class="primary"
 >
 SAVE SERVICE REPORT
 </button>
 
 </div>
+
 </div>
 
 </section>
 
-
-<!-- ================= FIND APARTMENT ================= -->
 
 <section id="apartmentScreen" class="screen">
 
@@ -854,8 +828,8 @@ Find Apartment
 <div class="container">
 
 <button
-  class="secondary"
-  data-screen="dashboardScreen"
+class="secondary"
+data-screen="dashboardScreen"
 >
 ← Back
 </button>
@@ -867,8 +841,8 @@ Find Apartment
 </div>
 
 <input
-  id="apartmentSearch"
-  placeholder="Enter apartment / building name"
+id="apartmentSearch"
+placeholder="Enter apartment / building name"
 >
 
 </div>
@@ -882,2102 +856,1987 @@ Find Apartment
 
 <script>
 
-/* =========================================================
-   SUPABASE
-========================================================= */
-
 const SUPABASE_URL =
 "https://bszdhcodjwflhoqxjtqb.supabase.co";
 
+
 /*
- IMPORTANT:
- Keep the SAME working publishable key that is already
- in your current index.html.
+IMPORTANT:
+Replace the text below with your EXISTING
+Supabase Publishable key.
 */
 
 const SUPABASE_PUBLISHABLE_KEY =
 "sb_publishable_wKQWg06T6Qiuv7uN5VJ4Kg_vJtl0x7H";
 
+
+const ADMIN_EMAIL =
+"sunilkumarjelly11@gmail.com";
+
+
 let supabaseClient = null;
 
+let liftRecords = [];
 
-/* =========================================================
-   LOCAL CACHE
-========================================================= */
+let breakdownRecords = [];
 
-let liftRecords =
-JSON.parse(
-  localStorage.getItem("liftRecords") || "[]"
-);
+let maintenanceRecords = [];
 
-let breakdownRecords =
-JSON.parse(
-  localStorage.getItem("breakdownRecords") || "[]"
-);
-
-let maintenanceRecords =
-JSON.parse(
-  localStorage.getItem("maintenanceRecords") || "[]"
-);
-
-let serviceRecords =
-JSON.parse(
-  localStorage.getItem("serviceRecords") || "[]"
-);
+let serviceRecords = [];
 
 
-/* =========================================================
-   INIT SUPABASE
-========================================================= */
+function $(id){
 
-function initSupabase(){
+return document.getElementById(id);
 
-  try{
-
-    if(!window.supabase){
-
-      setLoginStatus(
-        "Supabase library did not load."
-      );
-
-      return false;
-    }
-
-    supabaseClient =
-      window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_PUBLISHABLE_KEY
-      );
-
-    return true;
-
-  }catch(error){
-
-    console.error(error);
-
-    setLoginStatus(
-      "Supabase connection error: " +
-      error.message
-    );
-
-    return false;
-  }
 }
 
 
-/* =========================================================
-   STATUS
-========================================================= */
+function technician(){
 
-function setLoginStatus(message){
+return localStorage.getItem(
+"technicianEmail"
+) || "";
 
-  const el =
-    document.getElementById("loginStatus");
-
-  if(el){
-    el.textContent =
-      message || "";
-  }
 }
 
-
-/* =========================================================
-   TECHNICIAN
-========================================================= */
-
-function getTechnician(){
-
-  return localStorage.getItem(
-    "technicianEmail"
-  ) || "";
-}
-
-
-/* =========================================================
-   LOGIN
-========================================================= */
-
-async function login(){
-
-  setLoginStatus("");
-
-  const button =
-    document.getElementById(
-      "loginButton"
-    );
-
-  const email =
-    document.getElementById(
-      "email"
-    ).value.trim();
-
-  const password =
-    document.getElementById(
-      "password"
-    ).value;
-
-  if(!email || !password){
-
-    setLoginStatus(
-      "Please enter your email and password."
-    );
-
-    return;
-  }
-
-  if(!supabaseClient){
-
-    if(!initSupabase()){
-      return;
-    }
-  }
-
-  button.disabled = true;
-  button.textContent =
-    "SIGNING IN...";
-
-  setLoginStatus(
-    "Connecting to Supabase..."
-  );
-
-  try{
-
-    const result =
-      await supabaseClient.auth.signInWithPassword({
-
-        email:email,
-
-        password:password
-
-      });
-
-    if(result.error){
-
-      setLoginStatus(
-        "Login failed: " +
-        result.error.message
-      );
-
-      return;
-    }
-
-    const name =
-      email.split("@")[0];
-
-    localStorage.setItem(
-      "technicianEmail",
-      email
-    );
-
-    localStorage.setItem(
-      "technicianName",
-      name
-    );
-
-    document.getElementById(
-      "welcomeName"
-    ).textContent =
-      name;
-
-    showScreen(
-      "dashboardScreen"
-    );
-
-    await loadCloudRecords();
-
-    alert(
-      "Login successful!"
-    );
-
-  }catch(error){
-
-    console.error(
-      "LOGIN ERROR:",
-      error
-    );
-
-    setLoginStatus(
-      "Login error: " +
-      error.message
-    );
-
-  }finally{
-
-    button.disabled = false;
-
-    button.textContent =
-      "LOGIN";
-  }
-}
-
-
-/* =========================================================
-   LOGOUT
-========================================================= */
-
-async function logout(){
-
-  try{
-
-    if(supabaseClient){
-
-      await supabaseClient.auth.signOut();
-
-    }
-
-  }catch(error){
-
-    console.error(error);
-
-  }
-
-  localStorage.removeItem(
-    "technicianEmail"
-  );
-
-  localStorage.removeItem(
-    "technicianName"
-  );
-
-  showScreen(
-    "loginScreen"
-  );
-}
-
-
-/* =========================================================
-   SESSION
-========================================================= */
-
-async function checkSession(){
-
-  if(!supabaseClient){
-    return;
-  }
-
-  try{
-
-    const result =
-      await supabaseClient.auth.getSession();
-
-    const session =
-      result.data &&
-      result.data.session;
-
-    if(session){
-
-      const email =
-        session.user.email || "";
-
-      const name =
-        email.split("@")[0];
-
-      localStorage.setItem(
-        "technicianEmail",
-        email
-      );
-
-      localStorage.setItem(
-        "technicianName",
-        name
-      );
-
-      document.getElementById(
-        "welcomeName"
-      ).textContent =
-        name;
-
-      showScreen(
-        "dashboardScreen"
-      );
-
-      await loadCloudRecords();
-
-    }
-
-  }catch(error){
-
-    console.error(
-      "SESSION ERROR:",
-      error
-    );
-  }
-}
-
-
-/* =========================================================
-   LOAD CLOUD DATA
-========================================================= */
-
-async function loadCloudRecords(){
-
-  if(!supabaseClient){
-    return;
-  }
-
-  const technician =
-    getTechnician();
-
-  if(!technician){
-    return;
-  }
-
-  const online =
-    document.getElementById(
-      "onlineStatus"
-    );
-
-  if(online){
-
-    online.textContent =
-      "Loading online data...";
-
-    online.className =
-      "status";
-  }
-
-  try{
-
-    /* ---------------- LIFT ---------------- */
-
-    const lifts =
-      await supabaseClient
-      .from("lift_records")
-      .select("*")
-      .eq(
-        "technician",
-        technician
-      )
-      .order(
-        "created_at",
-        {
-          ascending:false
-        }
-      );
-
-    if(lifts.error){
-
-      console.error(
-        "Lift load error:",
-        lifts.error
-      );
-
-    }else{
-
-      liftRecords =
-        (lifts.data || []).map(
-          function(r){
-
-            return {
-
-              id:r.id,
-
-              technician:r.technician,
-
-              liftNumber:r.lift_number,
-
-              customer:r.customer,
-
-              brand:r.brand,
-
-              location:r.location,
-
-              floors:r.floors,
-
-              latitude:r.latitude,
-
-              longitude:r.longitude,
-
-              date:r.created_at
-
-            };
-
-          }
-        );
-
-      localStorage.setItem(
-        "liftRecords",
-        JSON.stringify(
-          liftRecords
-        )
-      );
-    }
-
-
-    /* ---------------- BREAKDOWN ---------------- */
-
-    const breakdown =
-      await supabaseClient
-      .from("breakdown_records")
-      .select("*")
-      .eq(
-        "technician",
-        technician
-      )
-      .order(
-        "created_at",
-        {
-          ascending:false
-        }
-      );
-
-    if(breakdown.error){
-
-      console.error(
-        "Breakdown load error:",
-        breakdown.error
-      );
-
-    }else{
-
-      breakdownRecords =
-        (breakdown.data || []).map(
-          function(r){
-
-            return {
-
-              id:r.id,
-
-              technician:r.technician,
-
-              liftNumber:r.lift_number,
-
-              customer:r.customer,
-
-              problem:r.problem,
-
-              action:r.action_taken,
-
-              priority:"Normal",
-
-              date:r.created_at
-
-            };
-
-          }
-        );
-
-      localStorage.setItem(
-        "breakdownRecords",
-        JSON.stringify(
-          breakdownRecords
-        )
-      );
-    }
-
-
-    /* ---------------- MAINTENANCE ---------------- */
-
-    const maintenance =
-      await supabaseClient
-      .from("maintenance_records")
-      .select("*")
-      .eq(
-        "technician",
-        technician
-      )
-      .order(
-        "created_at",
-        {
-          ascending:false
-        }
-      );
-
-    if(maintenance.error){
-
-      console.error(
-        "Maintenance load error:",
-        maintenance.error
-      );
-
-    }else{
-
-      maintenanceRecords =
-        (maintenance.data || []).map(
-          function(r){
-
-            let checks = {};
-
-            try{
-
-              checks =
-                typeof r.checklist === "string"
-                ? JSON.parse(r.checklist)
-                : (
-                    r.checklist || {}
-                  );
-
-            }catch(e){
-
-              checks = {};
-
-            }
-
-            return {
-
-              id:r.id,
-
-              technician:r.technician,
-
-              liftNumber:r.lift_number,
-
-              checks:checks,
-
-              remarks:r.remarks || "",
-
-              date:r.created_at
-
-            };
-
-          }
-        );
-
-      localStorage.setItem(
-        "maintenanceRecords",
-        JSON.stringify(
-          maintenanceRecords
-        )
-      );
-    }
-
-
-    /* ---------------- SERVICE ---------------- */
-
-    const services =
-      await supabaseClient
-      .from("service_records")
-      .select("*")
-      .eq(
-        "technician",
-        technician
-      )
-      .order(
-        "created_at",
-        {
-          ascending:false
-        }
-      );
-
-    if(services.error){
-
-      console.error(
-        "Service load error:",
-        services.error
-      );
-
-    }else{
-
-      serviceRecords =
-        (services.data || []).map(
-          function(r){
-
-            return {
-
-              id:r.id,
-
-              technician:r.technician,
-
-              liftNumber:r.lift_number,
-
-              customer:r.customer,
-
-              description:
-                r.service_type || "",
-
-              parts:"",
-
-              remarks:
-                r.remarks || "",
-
-              date:r.created_at
-
-            };
-
-          }
-        );
-
-      localStorage.setItem(
-        "serviceRecords",
-        JSON.stringify(
-          serviceRecords
-        )
-      );
-    }
-
-
-    if(online){
-
-      online.textContent =
-        "Online - Supabase connected";
-
-      online.className =
-        "status online";
-    }
-
-    updateDashboard();
-
-  }catch(error){
-
-    console.error(
-      "Cloud loading error:",
-      error
-    );
-
-    if(online){
-
-      online.textContent =
-        "Offline / connection error";
-
-      online.className =
-        "status offline";
-    }
-  }
-}
-
-
-/* =========================================================
-   NAVIGATION
-========================================================= */
-
-function showScreen(id){
-
-  document
-  .querySelectorAll(".screen")
-  .forEach(
-    function(screen){
-
-      screen.classList.remove(
-        "active"
-      );
-
-    }
-  );
-
-  const target =
-    document.getElementById(id);
-
-  if(target){
-
-    target.classList.add(
-      "active"
-    );
-  }
-
-  if(id === "recordsScreen"){
-
-    renderRecords();
-  }
-
-  if(id === "searchScreen"){
-
-    searchRecords();
-  }
-
-  if(id === "apartmentScreen"){
-
-    findApartment();
-  }
-
-  updateDashboard();
-
-  window.scrollTo(
-    0,
-    0
-  );
-}
-
-
-/* =========================================================
-   ESCAPE HTML
-========================================================= */
 
 function esc(value){
 
-  return String(
-    value == null
-      ? ""
-      : value
-  )
-  .replace(
-    /&/g,
-    "&amp;"
-  )
-  .replace(
-    /</g,
-    "&lt;"
-  )
-  .replace(
-    />/g,
-    "&gt;"
-  )
-  .replace(
-    /"/g,
-    "&quot;"
-  )
-  .replace(
-    /'/g,
-    "&#039;"
-  );
+return String(
+value == null ? "" : value
+)
+
+.replace(/&/g,"&amp;")
+
+.replace(/</g,"&lt;")
+
+.replace(/>/g,"&gt;")
+
+.replace(/"/g,"&quot;")
+
+.replace(/'/g,"&#039;");
+
 }
 
 
-/* =========================================================
-   DASHBOARD
-========================================================= */
+function setLoginStatus(message){
 
-function updateDashboard(){
+$("loginStatus").textContent =
+message || "";
 
-  document.getElementById(
-    "totalRecords"
-  ).textContent =
-    liftRecords.length;
-
-  document.getElementById(
-    "totalBreakdowns"
-  ).textContent =
-    breakdownRecords.length;
 }
 
 
-/* =========================================================
-   SAVE LIFT
-========================================================= */
+function initSupabase(){
 
-async function saveLift(
-  latitude,
-  longitude
-){
+try{
 
-  const liftNumber =
-    document.getElementById(
-      "liftNumber"
-    ).value.trim();
+if(!window.supabase){
 
-  const customer =
-    document.getElementById(
-      "customerName"
-    ).value.trim();
+setLoginStatus(
+"Supabase library did not load."
+);
 
-  const brand =
-    document.getElementById(
-      "liftBrand"
-    ).value.trim();
+return false;
 
-  const location =
-    document.getElementById(
-      "liftLocation"
-    ).value.trim();
-
-  const floors =
-    document.getElementById(
-      "floors"
-    ).value.trim();
-
-  const technician =
-    getTechnician();
-
-  if(!liftNumber){
-
-    alert(
-      "Please enter Lift Number."
-    );
-
-    return;
-  }
-
-  if(!customer){
-
-    alert(
-      "Please enter Customer / Apartment."
-    );
-
-    return;
-  }
-
-
-  let record = {
-
-    id:Date.now(),
-
-    technician:technician,
-
-    liftNumber:liftNumber,
-
-    customer:customer,
-
-    brand:brand,
-
-    location:location,
-
-    floors:floors,
-
-    latitude:latitude,
-
-    longitude:longitude,
-
-    date:new Date().toISOString()
-
-  };
-
-
-  /* ONLINE */
-
-  if(supabaseClient){
-
-    try{
-
-      const result =
-        await supabaseClient
-        .from("lift_records")
-        .insert({
-
-          technician:technician,
-
-          lift_number:liftNumber,
-
-          customer:customer,
-
-          brand:brand,
-
-          location:location,
-
-          floors:floors,
-
-          latitude:
-            latitude === ""
-              ? null
-              : latitude,
-
-          longitude:
-            longitude === ""
-              ? null
-              : longitude
-
-        })
-        .select()
-        .single();
-
-      if(result.error){
-
-        console.error(
-          result.error
-        );
-
-        alert(
-          "Online save failed:\n" +
-          result.error.message
-        );
-
-        return;
-      }
-
-      record.id =
-        result.data.id;
-
-      record.date =
-        result.data.created_at;
-
-    }catch(error){
-
-      alert(
-        "Online save failed:\n" +
-        error.message
-      );
-
-      return;
-    }
-  }
-
-
-  /* LOCAL CACHE */
-
-  liftRecords.push(
-    record
-  );
-
-  localStorage.setItem(
-    "liftRecords",
-    JSON.stringify(
-      liftRecords
-    )
-  );
-
-
-  document.getElementById(
-    "gpsStatus"
-  ).textContent =
-    latitude === ""
-      ? "Saved without GPS."
-      : "Saved successfully. GPS captured.";
-
-
-  document.getElementById(
-    "gpsStatus"
-  ).className =
-    latitude === ""
-      ? "status"
-      : "gps-box";
-
-
-  alert(
-    "Lift details saved!"
-  );
-
-
-  document.getElementById(
-    "liftNumber"
-  ).value = "";
-
-  document.getElementById(
-    "customerName"
-  ).value = "";
-
-  document.getElementById(
-    "liftBrand"
-  ).value = "";
-
-  document.getElementById(
-    "liftLocation"
-  ).value = "";
-
-  document.getElementById(
-    "floors"
-  ).value = "";
-
-
-  updateDashboard();
 }
 
 
-/* =========================================================
-   GPS
-========================================================= */
+supabaseClient =
+window.supabase.createClient(
 
-function captureGPSAndSave(){
+SUPABASE_URL,
 
-  const gps =
-    document.getElementById(
-      "gpsStatus"
-    );
+SUPABASE_PUBLISHABLE_KEY
 
-  if(!navigator.geolocation){
-
-    gps.textContent =
-      "GPS is not supported.";
-
-    saveLift(
-      "",
-      ""
-    );
-
-    return;
-  }
-
-
-  gps.textContent =
-    "Getting GPS location...";
-
-  gps.className =
-    "status";
-
-
-  navigator.geolocation.getCurrentPosition(
-
-    function(position){
-
-      const latitude =
-        position.coords.latitude;
-
-      const longitude =
-        position.coords.longitude;
-
-      gps.textContent =
-        "Latitude: " +
-        latitude.toFixed(6) +
-        " | Longitude: " +
-        longitude.toFixed(6);
-
-      gps.className =
-        "gps-box";
-
-      saveLift(
-        latitude,
-        longitude
-      );
-    },
-
-    function(error){
-
-      gps.textContent =
-        "GPS unavailable: " +
-        error.message;
-
-      gps.className =
-        "error-box";
-
-      saveLift(
-        "",
-        ""
-      );
-    },
-
-    {
-      enableHighAccuracy:true,
-      timeout:15000,
-      maximumAge:0
-    }
-  );
-}
-
-
-/* =========================================================
-   SAVE BREAKDOWN
-========================================================= */
-
-async function saveBreakdown(){
-
-  const liftNumber =
-    document.getElementById(
-      "breakLiftNumber"
-    ).value.trim();
-
-  const customer =
-    document.getElementById(
-      "breakCustomer"
-    ).value.trim();
-
-  const problem =
-    document.getElementById(
-      "breakProblem"
-    ).value.trim();
-
-  const action =
-    document.getElementById(
-      "breakAction"
-    ).value.trim();
-
-  const priority =
-    document.getElementById(
-      "breakPriority"
-    ).value;
-
-  const technician =
-    getTechnician();
-
-
-  if(!liftNumber){
-
-    alert(
-      "Please enter Lift Number."
-    );
-
-    return;
-  }
-
-  if(!problem){
-
-    alert(
-      "Please enter the Problem."
-    );
-
-    return;
-  }
-
-
-  const actionWithPriority =
-    "[Priority: " +
-    priority +
-    "] " +
-    action;
-
-
-  if(supabaseClient){
-
-    try{
-
-      const result =
-        await supabaseClient
-        .from("breakdown_records")
-        .insert({
-
-          technician:technician,
-
-          lift_number:liftNumber,
-
-          customer:customer,
-
-          problem:problem,
-
-          action_taken:
-            actionWithPriority,
-
-          location:""
-
-        })
-        .select()
-        .single();
-
-
-      if(result.error){
-
-        alert(
-          "Breakdown online save failed:\n" +
-          result.error.message
-        );
-
-        return;
-      }
-
-
-      breakdownRecords.push({
-
-        id:result.data.id,
-
-        technician:technician,
-
-        liftNumber:liftNumber,
-
-        customer:customer,
-
-        problem:problem,
-
-        action:actionWithPriority,
-
-        priority:priority,
-
-        date:result.data.created_at
-
-      });
-
-    }catch(error){
-
-      alert(
-        "Breakdown save failed:\n" +
-        error.message
-      );
-
-      return;
-    }
-
-  }
-
-
-  localStorage.setItem(
-    "breakdownRecords",
-    JSON.stringify(
-      breakdownRecords
-    )
-  );
-
-
-  document.getElementById(
-    "breakLiftNumber"
-  ).value = "";
-
-  document.getElementById(
-    "breakCustomer"
-  ).value = "";
-
-  document.getElementById(
-    "breakProblem"
-  ).value = "";
-
-  document.getElementById(
-    "breakAction"
-  ).value = "";
-
-
-  updateDashboard();
-
-  alert(
-    "Breakdown saved!"
-  );
-}
-
-
-/* =========================================================
-   SAVE MAINTENANCE
-========================================================= */
-
-async function saveMaintenance(){
-
-  const liftNumber =
-    document.getElementById(
-      "maintLiftNumber"
-    ).value.trim();
-
-  const remarks =
-    document.getElementById(
-      "maintRemarks"
-    ).value.trim();
-
-  const technician =
-    getTechnician();
-
-
-  if(!liftNumber){
-
-    alert(
-      "Please enter Lift Number."
-    );
-
-    return;
-  }
-
-
-  const checks = {};
-
-
-  for(
-    let i=1;
-    i<=10;
-    i++
-  ){
-
-    checks[
-      "check" + i
-    ] =
-      document.getElementById(
-        "check" + i
-      ).checked;
-  }
-
-
-  if(supabaseClient){
-
-    try{
-
-      const result =
-        await supabaseClient
-        .from("maintenance_records")
-        .insert({
-
-          technician:technician,
-
-          lift_number:liftNumber,
-
-          customer:"",
-
-          checklist:
-            JSON.stringify(
-              checks
-            ),
-
-          remarks:remarks,
-
-          location:""
-
-        })
-        .select()
-        .single();
-
-
-      if(result.error){
-
-        alert(
-          "Maintenance online save failed:\n" +
-          result.error.message
-        );
-
-        return;
-      }
-
-
-      maintenanceRecords.push({
-
-        id:result.data.id,
-
-        technician:technician,
-
-        liftNumber:liftNumber,
-
-        checks:checks,
-
-        remarks:remarks,
-
-        date:result.data.created_at
-
-      });
-
-    }catch(error){
-
-      alert(
-        "Maintenance save failed:\n" +
-        error.message
-      );
-
-      return;
-    }
-
-  }
-
-
-  localStorage.setItem(
-    "maintenanceRecords",
-    JSON.stringify(
-      maintenanceRecords
-    )
-  );
-
-
-  document.getElementById(
-    "maintLiftNumber"
-  ).value = "";
-
-  document.getElementById(
-    "maintRemarks"
-  ).value = "";
-
-
-  for(
-    let i=1;
-    i<=10;
-    i++
-  ){
-
-    document.getElementById(
-      "check" + i
-    ).checked = false;
-  }
-
-
-  alert(
-    "Maintenance saved!"
-  );
-}
-
-
-/* =========================================================
-   SAVE SERVICE REPORT
-========================================================= */
-
-async function saveServiceReport(){
-
-  const liftNumber =
-    document.getElementById(
-      "serviceLiftNumber"
-    ).value.trim();
-
-  const customer =
-    document.getElementById(
-      "serviceCustomer"
-    ).value.trim();
-
-  const description =
-    document.getElementById(
-      "serviceDescription"
-    ).value.trim();
-
-  const parts =
-    document.getElementById(
-      "serviceParts"
-    ).value.trim();
-
-  const remarks =
-    document.getElementById(
-      "serviceRemarks"
-    ).value.trim();
-
-  const technician =
-    getTechnician();
-
-
-  if(!liftNumber){
-
-    alert(
-      "Please enter Lift Number."
-    );
-
-    return;
-  }
-
-
-  if(!description){
-
-    alert(
-      "Please enter Service Description."
-    );
-
-    return;
-  }
-
-
-  let workDone =
-    description;
-
-
-  if(parts){
-
-    workDone +=
-      "\nParts Used: " +
-      parts;
-  }
-
-
-  if(supabaseClient){
-
-    try{
-
-      const result =
-        await supabaseClient
-        .from("service_records")
-        .insert({
-
-          technician:technician,
-
-          lift_number:liftNumber,
-
-          customer:customer,
-
-          service_type:
-            description,
-
-          work_done:
-            workDone,
-
-          remarks:remarks,
-
-          location:""
-
-        })
-        .select()
-        .single();
-
-
-      if(result.error){
-
-        alert(
-          "Service report online save failed:\n" +
-          result.error.message
-        );
-
-        return;
-      }
-
-
-      serviceRecords.push({
-
-        id:result.data.id,
-
-        technician:technician,
-
-        liftNumber:liftNumber,
-
-        customer:customer,
-
-        description:description,
-
-        parts:parts,
-
-        remarks:remarks,
-
-        date:result.data.created_at
-
-      });
-
-    }catch(error){
-
-      alert(
-        "Service report save failed:\n" +
-        error.message
-      );
-
-      return;
-    }
-
-  }
-
-
-  localStorage.setItem(
-    "serviceRecords",
-    JSON.stringify(
-      serviceRecords
-    )
-  );
-
-
-  document.getElementById(
-    "serviceLiftNumber"
-  ).value = "";
-
-  document.getElementById(
-    "serviceCustomer"
-  ).value = "";
-
-  document.getElementById(
-    "serviceDescription"
-  ).value = "";
-
-  document.getElementById(
-    "serviceParts"
-  ).value = "";
-
-  document.getElementById(
-    "serviceRemarks"
-  ).value = "";
-
-
-  alert(
-    "Service report saved!"
-  );
-}
-
-
-/* =========================================================
-   LIFT RECORDS
-========================================================= */
-
-function renderRecords(){
-
-  const container =
-    document.getElementById(
-      "recordsList"
-    );
-
-
-  if(!liftRecords.length){
-
-    container.innerHTML =
-      '<div class="empty">No lift records found.</div>';
-
-    return;
-  }
-
-
-  container.innerHTML = "";
-
-
-  liftRecords
-  .slice()
-  .reverse()
-  .forEach(
-    function(record){
-
-      const div =
-        document.createElement(
-          "div"
-        );
-
-      div.className =
-        "record";
-
-
-      const gps =
-        record.latitude != null &&
-        record.longitude != null
-          ? record.latitude +
-            ", " +
-            record.longitude
-          : "Not captured";
-
-
-      div.innerHTML =
-
-        "<strong>" +
-        esc(record.customer) +
-        "</strong>" +
-
-        "<br>Lift Number: " +
-        esc(record.liftNumber) +
-
-        "<br>Brand: " +
-        esc(record.brand || "-") +
-
-        "<br>Location: " +
-        esc(record.location || "-") +
-
-        "<br>Floors: " +
-        esc(record.floors || "-") +
-
-        "<br>GPS: " +
-        esc(gps) +
-
-        "<br>Date: " +
-        esc(
-          record.date || "-"
-        );
-
-
-      container.appendChild(
-        div
-      );
-    }
-  );
-}
-
-
-/* =========================================================
-   SEARCH
-   APARTMENT / BUILDING / CUSTOMER / LIFT NUMBER
-========================================================= */
-
-function searchRecords(){
-
-  const input =
-    document.getElementById(
-      "searchInput"
-    );
-
-  const container =
-    document.getElementById(
-      "searchResults"
-    );
-
-
-  const q =
-    input.value
-    .trim()
-    .toLowerCase();
-
-
-  if(!q){
-
-    container.innerHTML =
-      "";
-
-    return;
-  }
-
-
-  const results =
-    liftRecords.filter(
-      function(record){
-
-        return [
-
-          record.customer,
-
-          record.liftNumber,
-
-          record.location,
-
-          record.brand
-
-        ]
-        .some(
-          function(value){
-
-            return String(
-              value || ""
-            )
-            .toLowerCase()
-            .includes(q);
-
-          }
-        );
-
-      }
-    );
-
-
-  if(!results.length){
-
-    container.innerHTML =
-      '<div class="card empty">No matching lift found.</div>';
-
-    return;
-  }
-
-
-  container.innerHTML =
-
-    results
-    .slice()
-    .reverse()
-    .map(
-      function(record){
-
-        return (
-
-          '<div class="card record">' +
-
-          "<strong>" +
-          esc(record.customer) +
-          "</strong>" +
-
-          "<br>Lift Number: " +
-          esc(record.liftNumber) +
-
-          "<br>Location: " +
-          esc(
-            record.location || "-"
-          ) +
-
-          "<br>Brand: " +
-          esc(
-            record.brand || "-"
-          ) +
-
-          "<br>Floors: " +
-          esc(
-            record.floors || "-"
-          ) +
-
-          "</div>"
-
-        );
-
-      }
-    )
-    .join("");
-}
-
-
-/* =========================================================
-   FIND APARTMENT
-========================================================= */
-
-function findApartment(){
-
-  const input =
-    document.getElementById(
-      "apartmentSearch"
-    );
-
-  const container =
-    document.getElementById(
-      "apartmentResults"
-    );
-
-
-  const q =
-    input.value
-    .trim()
-    .toLowerCase();
-
-
-  if(!q){
-
-    container.innerHTML =
-      "";
-
-    return;
-  }
-
-
-  const results =
-    liftRecords.filter(
-      function(record){
-
-        return String(
-          record.customer || ""
-        )
-        .toLowerCase()
-        .includes(q);
-
-      }
-    );
-
-
-  if(!results.length){
-
-    container.innerHTML =
-      '<div class="card empty">Apartment not found.</div>';
-
-    return;
-  }
-
-
-  container.innerHTML =
-
-    results
-    .slice()
-    .reverse()
-    .map(
-      function(record){
-
-        return (
-
-          '<div class="card record">' +
-
-          "<strong>" +
-          esc(record.customer) +
-          "</strong>" +
-
-          "<br>Lift Number: " +
-          esc(record.liftNumber) +
-
-          "<br>Location: " +
-          esc(
-            record.location || "-"
-          ) +
-
-          "<br>Brand: " +
-          esc(
-            record.brand || "-"
-          ) +
-
-          "<br>Floors: " +
-          esc(
-            record.floors || "-"
-          ) +
-
-          "</div>"
-
-        );
-
-      }
-    )
-    .join("");
-}
-
-
-/* =========================================================
-   EVENT LISTENERS
-========================================================= */
-
-document.addEventListener(
-  "DOMContentLoaded",
-  async function(){
-
-    document
-    .getElementById(
-      "loginButton"
-    )
-    .addEventListener(
-      "click",
-      login
-    );
-
-
-    document
-    .getElementById(
-      "logoutButton"
-    )
-    .addEventListener(
-      "click",
-      logout
-    );
-
-
-    document
-    .getElementById(
-      "gpsSaveButton"
-    )
-    .addEventListener(
-      "click",
-      captureGPSAndSave
-    );
-
-
-    document
-    .getElementById(
-      "breakdownSaveButton"
-    )
-    .addEventListener(
-      "click",
-      saveBreakdown
-    );
-
-
-    document
-    .getElementById(
-      "maintenanceSaveButton"
-    )
-    .addEventListener(
-      "click",
-      saveMaintenance
-    );
-
-
-    document
-    .getElementById(
-      "serviceSaveButton"
-    )
-    .addEventListener(
-      "click",
-      saveServiceReport
-    );
-
-
-    document
-    .getElementById(
-      "searchInput"
-    )
-    .addEventListener(
-      "input",
-      searchRecords
-    );
-
-
-    document
-    .getElementById(
-      "apartmentSearch"
-    )
-    .addEventListener(
-      "input",
-      findApartment
-    );
-
-
-    document
-    .querySelectorAll(
-      "[data-screen]"
-    )
-    .forEach(
-      function(button){
-
-        button.addEventListener(
-          "click",
-          function(){
-
-            showScreen(
-              button.dataset.screen
-            );
-
-          }
-        );
-
-      }
-    );
-
-
-    initSupabase();
-
-    updateDashboard();
-
-    await checkSession();
-
-  }
 );
 
 
-/* ADMIN DASHBOARD */
+return true;
 
-setTimeout(async function(){
+}
 
-  const ADMIN_EMAIL = "sunilkumarjelly11@gmail.com";
+catch(error){
 
-  try {
-    const { data } = await supabaseClient.auth.getUser();
-    const user = data?.user;
+setLoginStatus(
+"Supabase connection error: "
++ error.message
+);
 
-    if (!user || user.email !== ADMIN_EMAIL) return;
+return false;
 
-    const adminSection = document.createElement("section");
-    adminSection.id = "adminScreen";
-    adminSection.className = "screen";
+}
 
-    adminSection.innerHTML = `
-      <div class="card">
-        <div class="title">Admin Dashboard</div>
+}
 
-        <div id="adminStats">
-          Loading records...
-        </div>
 
-        <div id="adminRecords"></div>
+function showScreen(id){
 
-        <button onclick="showScreen('dashboard')">
-          ← Back to Dashboard
-        </button>
-      </div>
-    `;
+document
+.querySelectorAll(".screen")
+.forEach(function(screen){
 
-    document.body.appendChild(adminSection);
+screen.classList.remove("active");
 
-    const dashboardContainer =
-      document.querySelector("#dashboardScreen .container");
+});
 
-    if (dashboardContainer) {
-      const btn = document.createElement("button");
-      btn.innerHTML = "👑 Admin Dashboard";
-      btn.onclick = function(){
-        showScreen("adminScreen");
-        loadAdminData();
-      };
-      dashboardContainer.appendChild(btn);
-    }
 
-    window.loadAdminData = async function(){
+const screen = $(id);
 
-      const tables = [
-        ["lift_records", "Lift Records"],
-        ["breakdown_records", "Breakdown Reports"],
-        ["maintenance_records", "Maintenance Records"],
-        ["service_records", "Service Records"]
-      ];
 
-      let html = "";
+if(screen){
 
-      for (const [table, title] of tables) {
+screen.classList.add("active");
 
-        const { data, error } =
-          await supabaseClient
-            .from(table)
-            .select("*")
-            .order("created_at", { ascending:false });
+}
 
-        if (error) {
-          html += `<div class="card">
-            <b>${title}</b><br>
-            Error loading records
-          </div>`;
-          continue;
-        }
 
-        html += `
-          <div class="card">
-            <div class="title">${title}: ${data.length}</div>
-        `;
+if(id === "recordsScreen"){
 
-        data.forEach(row => {
-          html += `
-            <div style="padding:10px;border-bottom:1px solid #ddd;">
-              <b>Technician:</b> ${row.technician || "-"}<br>
-              <b>Lift:</b> ${row.lift_number || "-"}<br>
-              <b>Customer:</b> ${row.customer || "-"}<br>
-              <b>Date:</b> ${row.created_at
-                ? new Date(row.created_at).toLocaleString()
-                : "-"}
-            </div>
-          `;
-        });
+renderRecords();
 
-        html += `</div>`;
-      }
+}
 
-      document.getElementById("adminRecords").innerHTML = html;
-      document.getElementById("adminStats").innerHTML =
-        "👑 Logged in as Admin";
-    };
 
-  } catch(error) {
-    console.log("Admin dashboard error:", error);
-  }
+if(id === "searchScreen"){
 
-}, 1000);/* =========================================================
-   SERVICE WORKER
-========================================================= */
+searchRecords();
+
+}
+
+
+if(id === "apartmentScreen"){
+
+findApartment();
+
+}
+
+
+updateDashboard();
+
+window.scrollTo(0,0);
+
+}
+
+
+function updateDashboard(){
+
+if($("totalRecords")){
+
+$("totalRecords").textContent =
+liftRecords.length;
+
+}
+
+
+if($("totalBreakdowns")){
+
+$("totalBreakdowns").textContent =
+breakdownRecords.length;
+
+}
+
+}
+
+
+async function login(){
+
+setLoginStatus("");
+
+const email =
+$("email").value.trim();
+
+const password =
+$("password").value;
+
+
+if(!email || !password){
+
+setLoginStatus(
+"Please enter your email and password."
+);
+
+return;
+
+}
+
 
 if(
-  "serviceWorker" in navigator
+!supabaseClient &&
+!initSupabase()
 ){
 
-  window.addEventListener(
-    "load",
-    function(){
+return;
 
-      navigator.serviceWorker
-      .register(
-        "./sw.js"
-      )
-      .catch(
-        function(error){
-
-          console.log(
-            "Service worker error:",
-            error
-          );
-
-        }
-      );
-
-    }
-  );
 }
+
+
+const button =
+$("loginButton");
+
+button.disabled = true;
+
+button.textContent =
+"SIGNING IN...";
+
+
+try{
+
+const result =
+await supabaseClient.auth.signInWithPassword({
+
+email: email,
+
+password: password
+
+});
+
+
+if(result.error){
+
+setLoginStatus(
+"Login failed: "
++ result.error.message
+);
+
+return;
+
+}
+
+
+localStorage.setItem(
+"technicianEmail",
+email
+);
+
+
+localStorage.setItem(
+"technicianName",
+email.split("@")[0]
+);
+
+
+$("welcomeName").textContent =
+email.split("@")[0];
+
+
+showScreen(
+"dashboardScreen"
+);
+
+
+await loadCloudRecords();
+
+
+await setupAdminDashboard();
+
+
+alert(
+"Login successful!"
+);
+
+}
+
+catch(error){
+
+setLoginStatus(
+"Login error: "
++ error.message
+);
+
+}
+
+finally{
+
+button.disabled = false;
+
+button.textContent =
+"LOGIN";
+
+}
+
+}
+
+
+async function logout(){
+
+try{
+
+if(supabaseClient){
+
+await supabaseClient.auth.signOut();
+
+}
+
+}
+
+catch(error){
+
+console.log(error);
+
+}
+
+
+localStorage.removeItem(
+"technicianEmail"
+);
+
+localStorage.removeItem(
+"technicianName"
+);
+
+
+$("adminButtonArea").innerHTML =
+"";
+
+
+showScreen(
+"loginScreen"
+);
+
+}
+
+
+async function checkSession(){
+
+if(!supabaseClient){
+
+return;
+
+}
+
+
+try{
+
+const result =
+await supabaseClient.auth.getSession();
+
+
+const session =
+result.data &&
+result.data.session;
+
+
+if(session){
+
+const email =
+session.user.email || "";
+
+
+const name =
+email.split("@")[0];
+
+
+localStorage.setItem(
+"technicianEmail",
+email
+);
+
+
+localStorage.setItem(
+"technicianName",
+name
+);
+
+
+$("welcomeName").textContent =
+name;
+
+
+showScreen(
+"dashboardScreen"
+);
+
+
+await loadCloudRecords();
+
+
+await setupAdminDashboard();
+
+}
+
+}
+
+catch(error){
+
+console.error(
+"SESSION ERROR:",
+error
+);
+
+}
+
+}
+
+
+async function loadCloudRecords(){
+
+if(
+!supabaseClient ||
+!technician()
+){
+
+return;
+
+}
+
+
+const tech =
+technician();
+
+
+try{
+
+$("onlineStatus").textContent =
+"Loading online data...";
+
+
+const lifts =
+await supabaseClient
+
+.from("lift_records")
+
+.select("*")
+
+.eq("technician",tech)
+
+.order(
+"created_at",
+{ascending:false}
+);
+
+
+if(!lifts.error){
+
+liftRecords =
+(lifts.data || []).map(
+function(row){
+
+return {
+
+id:row.id,
+
+technician:row.technician,
+
+liftNumber:row.lift_number,
+
+customer:row.customer,
+
+brand:row.brand,
+
+location:row.location,
+
+floors:row.floors,
+
+latitude:row.latitude,
+
+longitude:row.longitude,
+
+date:row.created_at
+
+};
+
+});
+
+}
+
+
+const breakdown =
+await supabaseClient
+
+.from("breakdown_records")
+
+.select("*")
+
+.eq("technician",tech)
+
+.order(
+"created_at",
+{ascending:false}
+);
+
+
+if(!breakdown.error){
+
+breakdownRecords =
+(breakdown.data || []).map(
+function(row){
+
+return {
+
+id:row.id,
+
+technician:row.technician,
+
+liftNumber:row.lift_number,
+
+customer:row.customer,
+
+problem:row.problem,
+
+action:row.action_taken,
+
+date:row.created_at
+
+};
+
+});
+
+}
+
+
+const maintenance =
+await supabaseClient
+
+.from("maintenance_records")
+
+.select("*")
+
+.eq("technician",tech)
+
+.order(
+"created_at",
+{ascending:false}
+);
+
+
+if(!maintenance.error){
+
+maintenanceRecords =
+(maintenance.data || []).map(
+function(row){
+
+let checks = {};
+
+try{
+
+checks =
+typeof row.checklist === "string"
+
+? JSON.parse(
+row.checklist || "{}"
+)
+
+: (row.checklist || {});
+
+}
+
+catch(error){
+
+checks = {};
+
+}
+
+
+return {
+
+id:row.id,
+
+technician:row.technician,
+
+liftNumber:row.lift_number,
+
+checks:checks,
+
+remarks:row.remarks || "",
+
+date:row.created_at
+
+};
+
+});
+
+}
+
+
+const service =
+await supabaseClient
+
+.from("service_records")
+
+.select("*")
+
+.eq("technician",tech)
+
+.order(
+"created_at",
+{ascending:false}
+);
+
+
+if(!service.error){
+
+serviceRecords =
+(service.data || []).map(
+function(row){
+
+return {
+
+id:row.id,
+
+technician:row.technician,
+
+liftNumber:row.lift_number,
+
+customer:row.customer,
+
+description:
+row.service_type || "",
+
+workDone:
+row.work_done || "",
+
+remarks:
+row.remarks || "",
+
+date:row.created_at
+
+};
+
+});
+
+}
+
+
+localStorage.setItem(
+"liftRecords",
+JSON.stringify(liftRecords)
+);
+
+
+localStorage.setItem(
+"breakdownRecords",
+JSON.stringify(breakdownRecords)
+);
+
+
+localStorage.setItem(
+"maintenanceRecords",
+JSON.stringify(maintenanceRecords)
+);
+
+
+localStorage.setItem(
+"serviceRecords",
+JSON.stringify(serviceRecords)
+);
+
+
+$("onlineStatus").textContent =
+"Online - Supabase connected";
+
+
+$("onlineStatus").className =
+"status online";
+
+
+updateDashboard();
+
+}
+
+catch(error){
+
+console.error(error);
+
+
+$("onlineStatus").textContent =
+"Offline / connection error";
+
+
+$("onlineStatus").className =
+"status offline";
+
+}
+
+}
+
+
+async function captureGPSAndSave(){
+
+if(!navigator.geolocation){
+
+$("gpsStatus").textContent =
+"GPS is not supported on this device.";
+
+return;
+
+}
+
+
+const button =
+$("gpsSaveButton");
+
+
+button.disabled = true;
+
+button.textContent =
+"📍 Getting GPS...";
+
+
+navigator.geolocation.getCurrentPosition(
+
+async function(position){
+
+const latitude =
+position.coords.latitude;
+
+
+const longitude =
+position.coords.longitude;
+
+
+$("gpsStatus").innerHTML =
+
+'<div class="gps-box">' +
+
+"GPS: " +
+
+esc(latitude) +
+
+", " +
+
+esc(longitude) +
+
+"</div>";
+
+
+await saveLift(
+latitude,
+longitude
+);
+
+
+button.disabled = false;
+
+button.textContent =
+"📍 Capture GPS & Save Lift";
+
+},
+
+
+function(error){
+
+$("gpsStatus").textContent =
+"GPS error: " +
+error.message;
+
+
+button.disabled = false;
+
+button.textContent =
+"📍 Capture GPS & Save Lift";
+
+},
+
+
+{
+
+enableHighAccuracy:true,
+
+timeout:15000,
+
+maximumAge:0
+
+}
+
+);
+
+}
+
+
+async function saveLift(
+latitude,
+longitude
+){
+
+const data = {
+
+technician:technician(),
+
+lift_number:
+$("liftNumber").value.trim(),
+
+customer:
+$("customerName").value.trim(),
+
+brand:
+$("liftBrand").value.trim(),
+
+location:
+$("liftLocation").value.trim(),
+
+floors:
+$("floors").value || null,
+
+latitude:latitude,
+
+longitude:longitude
+
+};
+
+
+if(
+!data.lift_number ||
+!data.customer
+){
+
+alert(
+"Enter Lift Number and Customer / Apartment."
+);
+
+return;
+
+}
+
+
+const result =
+await supabaseClient
+
+.from("lift_records")
+
+.insert(data)
+
+.select()
+
+.single();
+
+
+if(result.error){
+
+alert(
+"Lift save failed: " +
+result.error.message
+);
+
+return;
+
+}
+
+
+const row =
+result.data;
+
+
+liftRecords.unshift({
+
+id:row.id,
+
+technician:row.technician,
+
+liftNumber:row.lift_number,
+
+customer:row.customer,
+
+brand:row.brand,
+
+location:row.location,
+
+floors:row.floors,
+
+latitude:row.latitude,
+
+longitude:row.longitude,
+
+date:row.created_at
+
+});
+
+
+localStorage.setItem(
+"liftRecords",
+JSON.stringify(liftRecords)
+);
+
+
+updateDashboard();
+
+
+$("liftNumber").value = "";
+
+$("customerName").value = "";
+
+$("liftBrand").value = "";
+
+$("liftLocation").value = "";
+
+$("floors").value = "";
+
+
+alert(
+"Lift details saved!"
+);
+
+}async function saveBreakdown(){
+
+const data = {
+
+technician:technician(),
+
+lift_number:
+$("breakLiftNumber").value.trim(),
+
+customer:
+$("breakCustomer").value.trim(),
+
+problem:
+$("breakProblem").value.trim(),
+
+action_taken:
+$("breakAction").value.trim(),
+
+location:""
+
+};
+
+
+if(
+!data.lift_number ||
+!data.problem
+){
+
+alert(
+"Enter Lift Number and Problem."
+);
+
+return;
+
+}
+
+
+const result =
+await supabaseClient
+
+.from("breakdown_records")
+
+.insert(data)
+
+.select()
+
+.single();
+
+
+if(result.error){
+
+alert(
+"Breakdown save failed: " +
+result.error.message
+);
+
+return;
+
+}
+
+
+const row =
+result.data;
+
+
+breakdownRecords.unshift({
+
+id:row.id,
+
+technician:row.technician,
+
+liftNumber:row.lift_number,
+
+customer:row.customer,
+
+problem:row.problem,
+
+action:row.action_taken,
+
+date:row.created_at
+
+});
+
+
+localStorage.setItem(
+"breakdownRecords",
+JSON.stringify(
+breakdownRecords
+)
+);
+
+
+updateDashboard();
+
+
+$("breakLiftNumber").value = "";
+
+$("breakCustomer").value = "";
+
+$("breakProblem").value = "";
+
+$("breakAction").value = "";
+
+
+alert(
+"Breakdown saved!"
+);
+
+}
+
+
+async function saveMaintenance(){
+
+const checks = {};
+
+
+for(
+let i=1;
+i<=10;
+i++
+){
+
+checks["check"+i] =
+$("check"+i).checked;
+
+}
+
+
+const data = {
+
+technician:technician(),
+
+lift_number:
+$("maintLiftNumber").value.trim(),
+
+customer:"",
+
+checklist:
+JSON.stringify(checks),
+
+remarks:
+$("maintRemarks").value.trim(),
+
+location:""
+
+};
+
+
+if(!data.lift_number){
+
+alert(
+"Enter Lift Number."
+);
+
+return;
+
+}
+
+
+const result =
+await supabaseClient
+
+.from("maintenance_records")
+
+.insert(data)
+
+.select()
+
+.single();
+
+
+if(result.error){
+
+alert(
+"Maintenance save failed: " +
+result.error.message
+);
+
+return;
+
+}
+
+
+const row =
+result.data;
+
+
+maintenanceRecords.unshift({
+
+id:row.id,
+
+technician:row.technician,
+
+liftNumber:row.lift_number,
+
+checks:checks,
+
+remarks:row.remarks,
+
+date:row.created_at
+
+});
+
+
+localStorage.setItem(
+"maintenanceRecords",
+JSON.stringify(
+maintenanceRecords
+)
+);
+
+
+$("maintLiftNumber").value = "";
+
+$("maintRemarks").value = "";
+
+
+for(
+let i=1;
+i<=10;
+i++
+){
+
+$("check"+i).checked=false;
+
+}
+
+
+alert(
+"Maintenance saved!"
+);
+
+}
+
+
+async function saveServiceReport(){
+
+const description =
+$("serviceDescription")
+.value
+.trim();
+
+
+const parts =
+$("serviceParts")
+.value
+.trim();
+
+
+const data = {
+
+technician:technician(),
+
+lift_number:
+$("serviceLiftNumber")
+.value
+.trim(),
+
+customer:
+$("serviceCustomer")
+.value
+.trim(),
+
+service_type:
+description,
+
+work_done:
+(
+description +
+
+(
+parts
+?
+"\nParts used: " + parts
+:
+""
+)
+
+).trim(),
+
+remarks:
+$("serviceRemarks")
+.value
+.trim(),
+
+location:""
+
+};
+
+
+if(
+!data.lift_number ||
+!description
+){
+
+alert(
+"Enter Lift Number and Service Description."
+);
+
+return;
+
+}
+
+
+const result =
+await supabaseClient
+
+.from("service_records")
+
+.insert(data)
+
+.select()
+
+.single();
+
+
+if(result.error){
+
+alert(
+"Service save failed: " +
+result.error.message
+);
+
+return;
+
+}
+
+
+const row =
+result.data;
+
+
+serviceRecords.unshift({
+
+id:row.id,
+
+technician:row.technician,
+
+liftNumber:row.lift_number,
+
+customer:row.customer,
+
+description:row.service_type,
+
+workDone:row.work_done,
+
+remarks:row.remarks,
+
+date:row.created_at
+
+});
+
+
+localStorage.setItem(
+"serviceRecords",
+JSON.stringify(
+serviceRecords
+)
+);
+
+
+$("serviceLiftNumber").value="";
+
+$("serviceCustomer").value="";
+
+$("serviceDescription").value="";
+
+$("serviceParts").value="";
+
+$("serviceRemarks").value="";
+
+
+alert(
+"Service report saved!"
+);
+
+}
+
+
+function renderRecords(){
+
+if(
+!$("recordsList")
+)return;
+
+
+if(!liftRecords.length){
+
+$("recordsList").innerHTML =
+'<div class="empty">' +
+'No lift records found.' +
+'</div>';
+
+return;
+
+}
+
+
+$("recordsList").innerHTML =
+
+liftRecords.map(
+function(record){
+
+return `
+
+<div class="record">
+
+<b>Lift:</b>
+${esc(record.liftNumber)}
+
+<br>
+
+<b>Customer:</b>
+${esc(record.customer)}
+
+<br>
+
+<b>Brand:</b>
+${esc(record.brand || "-")}
+
+<br>
+
+<b>Location:</b>
+${esc(record.location || "-")}
+
+<br>
+
+<b>Floors:</b>
+${esc(record.floors || "-")}
+
+<br>
+
+<b>GPS:</b>
+
+${
+record.latitude != null
+
+?
+
+esc(
+record.latitude +
+", " +
+record.longitude
+)
+
+:
+
+"Not captured"
+}
+
+<br>
+
+<b>Date:</b>
+
+${
+record.date
+
+?
+
+new Date(
+record.date
+).toLocaleString()
+
+:
+
+"-"
+}
+
+</div>
+
+`;
+
+}
+).join("");
+
+}
+
+
+function searchRecords(){
+
+const q =
+(
+$("searchInput").value || ""
+)
+.trim()
+.toLowerCase();
+
+
+if(!q){
+
+$("searchResults").innerHTML="";
+
+return;
+
+}
+
+
+const results =
+liftRecords.filter(
+function(record){
+
+return [
+
+record.customer,
+
+record.location,
+
+record.brand,
+
+record.liftNumber
+
+].some(
+function(value){
+
+return String(
+value || ""
+)
+.toLowerCase()
+.includes(q);
+
+});
+
+}
+);
+
+
+if(!results.length){
+
+$("searchResults").innerHTML =
+
+'<div class="card empty">' +
+
+'No matching lift found.' +
+
+'</div>';
+
+return;
+
+}
+
+
+$("searchResults").innerHTML =
+
+results.map(
+function(record){
+
+return `
+
+<div class="card record">
+
+<b>Lift:</b>
+${esc(record.liftNumber)}
+
+<br>
+
+<b>Customer:</b>
+${esc(record.customer)}
+
+<br>
+
+<b>Location:</b>
+${esc(record.location || "-")}
+
+<br>
+
+<b>Brand:</b>
+${esc(record.brand || "-")}
+
+<br>
+
+<b>Floors:</b>
+${esc(record.floors || "-")}
+
+</div>
+
+`;
+
+}
+).join("");
+
+}
+
+
+function findApartment(){
+
+const q =
+(
+$("apartmentSearch").value || ""
+)
+.trim()
+.toLowerCase();
+
+
+if(!q){
+
+$("apartmentResults").innerHTML="";
+
+return;
+
+}
+
+
+const results =
+liftRecords.filter(
+function(record){
+
+return String(
+record.customer || ""
+)
+.toLowerCase()
+.includes(q);
+
+}
+);
+
+
+if(!results.length){
+
+$("apartmentResults").innerHTML =
+
+'<div class="card empty">' +
+
+'Apartment not found.' +
+
+'</div>';
+
+return;
+
+}
+
+
+$("apartmentResults").innerHTML =
+
+results.map(
+function(record){
+
+return `
+
+<div class="card record">
+
+<b>
+${esc(record.customer)}
+</b>
+
+<br>
+
+Lift Number:
+${esc(record.liftNumber)}
+
+<br>
+
+Location:
+${esc(record.location || "-")}
+
+<br>
+
+Brand:
+${esc(record.brand || "-")}
+
+<br>
+
+Floors:
+${esc(record.floors || "-")}
+
+</div>
+
+`;
+
+}
+).join("");
+
+}
+
+
+/* =========================
+   ADMIN DASHBOARD
+========================= */
+
+async function setupAdminDashboard(){
+
+if(!supabaseClient){
+
+return;
+
+}
+
+
+try{
+
+const result =
+await supabaseClient
+.auth
+.getUser();
+
+
+const user =
+result.data &&
+result.data.user;
+
+
+if(
+!user ||
+user.email !== ADMIN_EMAIL
+){
+
+return;
+
+}
+
+
+if(
+$("adminScreen")
+){
+
+return;
+
+}
+
+
+const adminScreen =
+document.createElement("section");
+
+
+adminScreen.id =
+"adminScreen";
+
+
+adminScreen.className =
+"screen";
+
+
+adminScreen.innerHTML = `
+
+<header>
+Admin Dashboard
+</header>
+
+<div class="container">
+
+<button
+class="secondary"
+type="button"
+onclick="showScreen('dashboardScreen')"
+>
+← Back to Dashboard
+</button>
+
+<div class="admin-badge">
+👑 Logged in as Admin
+</div>
+
+<div id="adminRecords">
+</div>
+
+</div>
+
+`;
+
+
+document.body.appendChild(
+adminScreen
+);
+
+
+const buttonArea =
+$("adminButtonArea");
+
+
+if(buttonArea){
+
+const button =
+document.createElement("button");
+
+
+button.className =
+"primary";
+
+
+button.type =
+"button";
+
+
+button.textContent =
+"👑 Admin Dashboard";
+
+
+button.onclick =
+async function(){
+
+showScreen(
+"adminScreen"
+);
+
+await loadAdminData();
+
+};
+
+
+buttonArea.appendChild(
+button
+);
+
+}
+
+
+window.loadAdminData =
+async function(){
+
+const tables = [
+
+[
+"lift_records",
+"Lift Records"
+],
+
+[
+"breakdown_records",
+"Breakdown Reports"
+],
+
+[
+"maintenance_records",
+"Maintenance Records"
+],
+
+[
+"service_records",
+"Service Reports"
+]
+
+];
+
+
+let html="";
+
+
+for(
+const [table,title]
+of tables
+){
+
+const result =
+await supabaseClient
+
+.from(table)
+
+.select("*")
+
+.order(
+"created_at",
+{
+ascending:false
+}
+);
+
+
+const data =
+result.data || [];
+
+
+const error =
+result.error;
+
+
+html += `
+
+<div class="card">
+
+<div class="title">
+
+${title}:
+
+${error
+?
+"Error"
+:
+data.length
+}
+
+</div>
+
+`;
+
+
+if(error){
+
+html +=
+
+"Unable to load records.";
+
+}
+
+else{
+
+data.forEach(
+function(row){
+
+html += `
+
+<div class="record">
+
+<b>Technician:</b>
+${esc(
+row.technician || "-"
+)}
+
+<br>
+
+<b>Lift:</b>
+${esc(
+row.lift_number || "-"
+)}
+
+<br>
+
+<b>Customer:</b>
+${esc(
+row.customer || "-"
+)}
+
+<br>
+
+<b>Date:</b>
+
+${
+row.created_at
+
+?
+
+new Date(
+row.created_at
+).toLocaleString()
+
+:
+
+"-"
+}
+
+</div>
+
+`;
+
+});
+
+}
+
+
+html +=
+"</div>";
+
+}
+
+
+$("adminRecords")
+.innerHTML =
+html;
+
+};
+
+}
+
+catch(error){
+
+console.error(
+"Admin dashboard error:",
+error
+);
+
+}
+
+}
+
+
+/* =========================
+   START APP
+========================= */
+
+document.addEventListener(
+"DOMContentLoaded",
+async function(){
+
+$("loginButton")
+.addEventListener(
+"click",
+login
+);
+
+
+$("logoutButton")
+.addEventListener(
+"click",
+logout
+);
+
+
+$("gpsSaveButton")
+.addEventListener(
+"click",
+captureGPSAndSave
+);
+
+
+$("breakdownSaveButton")
+.addEventListener(
+"click",
+saveBreakdown
+);
+
+
+$("maintenanceSaveButton")
+.addEventListener(
+"click",
+saveMaintenance
+);
+
+
+$("serviceSaveButton")
+.addEventListener(
+"click",
+saveServiceReport
+);
+
+
+$("searchInput")
+.addEventListener(
+"input",
+searchRecords
+);
+
+
+$("apartmentSearch")
+.addEventListener(
+"input",
+findApartment
+);
+
+
+document
+.querySelectorAll(
+"[data-screen]"
+)
+.forEach(
+function(button){
+
+button.addEventListener(
+"click",
+function(){
+
+showScreen(
+button.dataset.screen
+);
+
+});
+
+});
+
+
+initSupabase();
+
+
+updateDashboard();
+
+
+await checkSession();
+
+});
+
 
 </script>
 
 </body>
+
 </html>
