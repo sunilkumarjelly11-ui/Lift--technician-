@@ -436,7 +436,36 @@ Loading apartments...
 </div>
 
 </section>
+<section id="apartmentFileScreen" class="screen">
 
+<header>
+Apartment File
+</header>
+
+<div class="container">
+
+<button
+class="secondary"
+data-screen="apartmentsScreen"
+>
+← Back to Apartments
+</button>
+
+<div class="card">
+
+<div class="title">
+Apartment History
+</div>
+
+<div id="apartmentFileContent">
+Loading apartment file...
+</div>
+
+</div>
+
+</div>
+
+</section>
 <section id="liftDetailsScreen" class="screen">
 
 <header>
@@ -2518,14 +2547,22 @@ function loadApartments(){
   }
 
   container.innerHTML = apartments.map(function(apartment){
-
-    return `
-      <div class="card record">
-        <b>🏢 ${esc(apartment.name)}</b>
-        <br><br>
-        Lifts: ${apartment.count}
-      </div>
-    `;
+return `
+  <button
+    class="card record"
+    type="button"
+    onclick='openApartmentFile(${JSON.stringify(apartment.name).replace(/'/g, "\\'")})'
+  >
+    <b>🏢 ${esc(apartment.name)}</b>
+    <br><br>
+    Lifts: ${apartment.count}
+  </button>
+`;
+    
+      
+        
+        
+        
 
   }).join("");
 
