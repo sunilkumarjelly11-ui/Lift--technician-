@@ -2655,7 +2655,9 @@ if(error){
 
 html +=
 
-"Unable to load records.";
+"<div class='error-box'>" +
+esc(error.message) +
+"</div>";
 
 }
 
