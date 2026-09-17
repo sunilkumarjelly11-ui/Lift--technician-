@@ -2558,15 +2558,23 @@ return `
     Lifts: ${apartment.count}
   </button>
 `;
-    
-      
-        
-        
-        
+
 
   }).join("");
 
-   }
+   }let selectedApartment = "";
+
+function openApartmentFile(name){
+
+  selectedApartment = name;
+
+  showScreen("apartmentFileScreen");
+
+  $("apartmentFileContent").innerHTML =
+    "<h2>" + esc(name) + "</h2>" +
+    "<p>Apartment file loading...</p>";
+
+}
 /* =========================
    ADMIN DASHBOARD
 ========================= */
