@@ -2603,7 +2603,12 @@ function openApartmentFile(name){
   let html = "";
 
   html += "<h2>" + esc(selectedApartment) + "</h2>";
+const firstLift = lifts[0] || {};
 
+html += "<div class=\"card\">";
+html += "<b>👨‍🔧 Technician:</b> " + esc(firstLift.technician || "-");
+html += "<br><b>📍 Location:</b> " + esc(firstLift.location || "-");
+html += "</div>";
   html += "<div class=\"card\">";
   html += "<b>🛗 Lifts: " + lifts.length + "</b>";
   html += "<br>🚨 Breakdowns: " + breakdowns.length;
