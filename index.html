@@ -1039,7 +1039,9 @@ if(id === "searchScreen"){
 searchRecords();
 
 }
-
+if(id === "apartmentsScreen"){
+  loadApartments();
+}
 
 if(id === "apartmentScreen"){
 
@@ -2475,7 +2477,59 @@ ${esc(record.floors || "-")}
 
 }
 
+function loadApartments(){
 
+  const container = $("apartmentsList");
+
+  if(!container) return;
+
+  const groups = {};
+
+  liftRecords.forEach(function(record){
+
+    const name = String(record.customer || "").trim();
+
+    if(!name) return;
+
+    const key = name.toLowerCase();
+
+    if(!groups[key]){
+      groups[key] = {
+        name: name,
+        count: 0
+      };
+    }
+
+    groups[key].count++;
+
+  });
+
+  const apartments = Object.values(groups)
+    .sort(function(a,b){
+      return a.name.localeCompare(b.name);
+    });
+
+  if(!apartments.length){
+
+    container.innerHTML =
+      '<div class="card empty">No apartments found.</div>';
+
+    return;
+  }
+
+  container.innerHTML = apartments.map(function(apartment){
+
+    return `
+      <div class="card record">
+        <b>🏢 ${esc(apartment.name)}</b>
+        <br><br>
+        Lifts: ${apartment.count}
+      </div>
+    `;
+
+  }).join("");
+
+   }
 /* =========================
    ADMIN DASHBOARD
 ========================= */
