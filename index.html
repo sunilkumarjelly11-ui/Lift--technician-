@@ -2033,7 +2033,9 @@ async function loadApartments(){
             <br><br>
 
             Lifts:
-            ${lifts.length}
+${lifts.map(function(record){
+  return record.liftNumber;
+}).join(", ") || "-"}
 
           </button>
 
