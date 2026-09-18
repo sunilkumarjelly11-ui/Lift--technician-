@@ -1962,48 +1962,26 @@ $("check"+i).checked;
 
 }
 
+const lift = liftRecords.find(function(record){
+  return String(record.liftNumber || "").trim() ===
+         String($("maintLiftNumber").value || "").trim();
+});
 
 const data = {
-
-technician:technician(),
-
-lift_number:
-$("maintLiftNumber").value.trim(),
-
-customer:"",
-
-checklist:
-JSON.stringify(checks),
-
-remarks:
-$("maintRemarks").value.trim(),
-
-location:""
-
+  technician: technician(),
+  lift_number: $("maintLiftNumber").value.trim(),
+  customer: lift ? lift.customer : "",
+  checklist: JSON.stringify(checks),
+  remarks: $("maintRemarks").value.trim(),
+  location: lift ? lift.location : ""
 };
 
-
-if(!data.lift_number){
-
-alert(
-"Enter Lift Number."
-);
-
-return;
-
-}
-
-
 const result =
-await supabaseClient
-
-.from("maintenance_records")
-
-.insert(data)
-
-.select()
-
-.single();
+  await supabaseClient
+    .from("maintenance_records")
+    .insert(data)
+    .select()
+    .single();
 
 
 if(result.error){
@@ -2029,6 +2007,8 @@ id:row.id,
 technician:row.technician,
 
 liftNumber:row.lift_number,
+  customer:row.customer,
+location:row.location,
 
 checks:checks,
 
