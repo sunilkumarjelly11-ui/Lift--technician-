@@ -2490,37 +2490,30 @@ ${esc(record.floors || "-")}
 
 }
 
-function loadApartments(){
+async function loadApartments(){
 
   const container = $("apartmentsList");
 
   if(!container) return;
 
-  const groups = {};
+  container.innerHTML = "Loading apartments...";
 
-  liftRecords.forEach(function(record){
+  const { data, error } = await supabaseClient
+    .from("apartments")
+    .select("*")
+    .order("name", { ascending:true });
 
-    const name = String(record.customer || "").trim();
+  if(error){
 
-    if(!name) return;
+    container.innerHTML =
+      '<div class="card empty">' +
+      esc(error.message) +
+      '</div>';
 
-    const key = name.toLowerCase();
+    return;
+  }
 
-    if(!groups[key]){
-      groups[key] = {
-        name: name,
-        count: 0
-      };
-    }
-
-    groups[key].count++;
-
-  });
-
-  const apartments = Object.values(groups)
-    .sort(function(a,b){
-      return a.name.localeCompare(b.name);
-    });
+  const apartments = data || [];
 
   if(!apartments.length){
 
@@ -2531,20 +2524,29 @@ function loadApartments(){
   }
 
   container.innerHTML = apartments.map(function(apartment){
-return `
-  <button
-    class="card record"
-    type="button"
-    onclick='openApartmentFile(${JSON.stringify(apartment.name).replace(/'/g, "\\'")})'
-  >
-    <b>🏢 ${esc(apartment.name)}</b>
-    <br><br>
-    Lifts: ${apartment.count}
-  </button>
-`;
 
+    const liftCount = liftRecords.filter(function(record){
+
+      return String(record.customer || "").trim().toLowerCase() ===
+        String(apartment.name || "").trim().toLowerCase();
+
+    }).length;
+
+    return `
+      <button
+        class="card record"
+        type="button"
+        onclick='openApartmentFile(${JSON.stringify(apartment.name).replace(/'/g, "\\'")})'
+      >
+        <b>🏢 ${esc(apartment.name)}</b>
+        <br><br>
+        Lifts: ${liftCount}
+      </button>
+    `;
 
   }).join("");
+
+}
 
    }let selectedApartment = "";
 
