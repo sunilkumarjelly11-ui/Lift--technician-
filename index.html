@@ -2640,7 +2640,16 @@ html += "</div>";
       html += "<div class=\"card\">";
       html += "<b>" + esc(record.date || "-") + "</b>";
       html += "<br>Lift: " + esc(record.liftNumber || "-");
-      html += "<br>Checklist: " + esc(record.checks || "-");
+      html += "<br>Checklist: " + esc(
+  Object.keys(record.checks || {})
+    .filter(function(key){
+      return record.checks[key];
+    })
+    .map(function(key){
+      return key;
+    })
+    .join(", ") || "-"
+);
       html += "<br>Remarks: " + esc(record.remarks || "-");
       html += "</div>";
 
