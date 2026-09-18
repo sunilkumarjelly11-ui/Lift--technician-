@@ -2698,7 +2698,72 @@ html += "</div>";
 
   }
 
-  container.innerHTML = html;
+ html += "<h3>📅 Complete Timeline</h3>";
+
+const timeline = [];
+
+lifts.forEach(function(record){
+  timeline.push({
+    date: record.date || "",
+    type: "🛗 Lift Added",
+    lift: record.liftNumber || "-",
+    details: "Brand: " + (record.brand || "-")
+  });
+});
+
+breakdowns.forEach(function(record){
+  timeline.push({
+    date: record.date || "",
+    type: "🚨 Breakdown",
+    lift: record.liftNumber || "-",
+    details: "Problem: " + (record.problem || "-") +
+             " | Action: " + (record.action || "-")
+  });
+});
+
+maintenance.forEach(function(record){
+  timeline.push({
+    date: record.date || "",
+    type: "🛠️ Maintenance",
+    lift: record.liftNumber || "-",
+    details: "Remarks: " + (record.remarks || "-")
+  });
+});
+
+services.forEach(function(record){
+  timeline.push({
+    date: record.date || "",
+    type: "🔧 Service",
+    lift: record.liftNumber || "-",
+    details: "Service: " +
+      (record.serviceType || record.description || "-")
+  });
+});
+
+timeline.sort(function(a,b){
+  return new Date(a.date) - new Date(b.date);
+});
+
+if(timeline.length){
+
+  timeline.forEach(function(event){
+
+    html += "<div class=\"card\">";
+    html += "<b>" + esc(event.type) + "</b>";
+    html += "<br>📅 " + esc(event.date || "-");
+    html += "<br>🛗 Lift: " + esc(event.lift);
+    html += "<br>" + esc(event.details);
+    html += "</div>";
+
+  });
+
+}else{
+
+  html += "<div class=\"card empty\">";
+  html += "No timeline records yet.";
+  html += "</div>";
+
+  } container.innerHTML = html;
 
 }
 /* =========================
