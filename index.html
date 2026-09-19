@@ -2241,11 +2241,19 @@ function renderApartmentFile(){
           <br>
 
           GPS:
-          ${record.latitude != null
-            ? esc(record.latitude) +
-              ", " +
-              esc(record.longitude)
-            : "-"}
+${record.latitude != null
+  ? esc(record.latitude) +
+    ", " +
+    esc(record.longitude)
+  : "-"}
+<br>
+<button
+  class="secondary"
+  type="button"
+  onclick="editGPS(${record.id})"
+>
+  ✏️ Edit GPS Location
+</button>
 
           <br>
 
