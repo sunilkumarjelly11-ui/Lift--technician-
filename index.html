@@ -1518,7 +1518,96 @@ function captureGPSAndSave(){
 
 }
 
+/* =========================
+   EDIT GPS
+========================= */
 
+async function editGPS(id){
+
+  const record =
+    liftRecords.find(function(item){
+      return Number(item.id) === Number(id);
+    });
+
+  if(!record){
+    alert("Lift record not found.");
+    return;
+  }
+
+  const latitude =
+    prompt(
+      "Enter Latitude:",
+      record.latitude != null
+        ? record.latitude
+        : ""
+    );
+
+  if(latitude === null)
+    return;
+
+  const longitude =
+    prompt(
+      "Enter Longitude:",
+      record.longitude != null
+        ? record.longitude
+        : ""
+    );
+
+  if(longitude === null)
+    return;
+
+  const lat =
+    Number(latitude.trim());
+
+  const lon =
+    Number(longitude.trim());
+
+  if(
+    !Number.isFinite(lat) ||
+    !Number.isFinite(lon) ||
+    lat < -90 ||
+    lat > 90 ||
+    lon < -180 ||
+    lon > 180
+  ){
+    alert(
+      "Please enter valid Latitude and Longitude."
+    );
+    return;
+  }
+
+  try{
+
+    const result =
+      await supabaseClient
+        .from("lift_records")
+        .update({
+          latitude:lat,
+          longitude:lon
+        })
+        .eq("id",id);
+
+    if(result.error)
+      throw result.error;
+
+    alert(
+      "GPS location updated successfully."
+    );
+
+    await loadAllData();
+
+    renderApartmentFile();
+
+  }catch(error){
+
+    alert(
+      "GPS update failed: " +
+      error.message
+    );
+
+  }
+
+}
 /* =========================
    SAVE LIFT
 ========================= */
