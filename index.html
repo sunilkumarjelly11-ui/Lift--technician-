@@ -2405,7 +2405,23 @@ async function openApartmentMap(name){
       </p>
 
     </div>
+<hr>
 
+<button
+  class="primary"
+  type="button"
+  onclick='saveApartmentGPS(${JSON.stringify(name)})'
+>
+  📍 Save Current Location
+</button>
+
+<button
+  class="secondary"
+  type="button"
+  onclick='openApartmentMap(${JSON.stringify(name)})'
+>
+  🗺️ Open Location in Map
+</button>
   `;
 
 
