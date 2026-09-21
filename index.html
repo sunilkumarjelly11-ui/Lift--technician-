@@ -2188,7 +2188,134 @@ function formatDate(value){
 }
 
 
-function renderApartmentFile(){
+/* =========================
+   APARTMENT GPS
+========================= */
+
+function saveApartmentGPS(name){
+
+  if(!navigator.geolocation){
+    alert("GPS is not supported on this phone.");
+    return;
+  }
+
+  if(!supabaseClient){
+    alert("Supabase is not connected.");
+    return;
+  }
+
+  alert("Please allow location access if your phone asks.");
+
+  navigator.geolocation.getCurrentPosition(
+    async function(position){
+
+      const latitude =
+        position.coords.latitude;
+
+      const longitude =
+        position.coords.longitude;
+
+      try{
+
+        const result =
+          await supabaseClient
+            .from("apartments")
+            .update({
+              latitude:latitude,
+              longitude:longitude
+            })
+            .eq("name",name);
+
+        if(result.error)
+          throw result.error;
+
+        alert(
+          "Apartment location saved successfully."
+        );
+
+        await loadApartments();
+
+        renderApartmentFile();
+
+      }catch(error){
+
+        alert(
+          "Location save failed: " +
+          error.message
+        );
+
+      }
+
+    },
+    function(error){
+
+      alert(
+        "Unable to get GPS location: " +
+        error.message
+      );
+
+    },
+    {
+      enableHighAccuracy:true,
+      timeout:20000,
+      maximumAge:0
+    }
+  );
+}
+
+
+async function openApartmentMap(name){
+
+  try{
+
+    const result =
+      await supabaseClient
+        .from("apartments")
+        .select("latitude,longitude")
+        .eq("name",name)
+        .limit(1)
+        .maybeSingle();
+
+    if(result.error)
+      throw result.error;
+
+    const apartment =
+      result.data;
+
+    if(
+      !apartment ||
+      apartment.latitude == null ||
+      apartment.longitude == null
+    ){
+
+      alert(
+        "GPS location has not been saved for this apartment."
+      );
+
+      return;
+    }
+
+    const mapUrl =
+      "https://www.google.com/maps?q=" +
+      apartment.latitude +
+      "," +
+      apartment.longitude;
+
+    window.open(
+      mapUrl,
+      "_blank"
+    );
+
+  }catch(error){
+
+    alert(
+      "Unable to open map: " +
+      error.message
+    );
+
+  }
+
+      }function renderApartmentFile(){
 
   const container =
     $("apartmentFile");
