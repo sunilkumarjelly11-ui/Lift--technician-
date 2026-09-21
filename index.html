@@ -2074,7 +2074,46 @@ async function loadApartments(){
 
     const apartments =
       result.data || [];
+apartments.sort(function(a,b){
 
+  const liftA =
+    liftRecords
+      .filter(function(record){
+        return String(record.customer || "")
+          .trim()
+          .toLowerCase() ===
+          String(a.name || "")
+          .trim()
+          .toLowerCase();
+      })
+      .map(function(record){
+        return Number(record.liftNumber);
+      })
+      .filter(Number.isFinite)
+      .sort(function(x,y){
+        return x-y;
+      })[0] || Infinity;
+
+  const liftB =
+    liftRecords
+      .filter(function(record){
+        return String(record.customer || "")
+          .trim()
+          .toLowerCase() ===
+          String(b.name || "")
+          .trim()
+          .toLowerCase();
+      })
+      .map(function(record){
+        return Number(record.liftNumber);
+      })
+      .filter(Number.isFinite)
+      .sort(function(x,y){
+        return x-y;
+      })[0] || Infinity;
+
+  return liftA - liftB;
+});
 
     if(!apartments.length){
 
