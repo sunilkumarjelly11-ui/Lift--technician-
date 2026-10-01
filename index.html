@@ -3776,7 +3776,8 @@ function showReportDetails(type, index) {
       <button
         class="secondary"
         type="button"
-        onclick="showDashboardRecords('${type}')">
+        data-report-type="${type}"
+data-report-index="${index}"
         ← Back to ${type === "breakdown"
           ? "Breakdown Reports"
           : type === "maintenance"
@@ -3788,6 +3789,18 @@ function showReportDetails(type, index) {
   `;
 
   container.innerHTML = html;
+      container.querySelectorAll("[data-report-type]").forEach(function(button) {
+
+  button.addEventListener("click", function() {
+
+    const type = button.dataset.reportType;
+    const index = Number(button.dataset.reportIndex);
+
+    showReportDetails(type, index);
+
+  });
+
+});
 }
 
 window.showDashboardRecords = showDashboardRecords;
