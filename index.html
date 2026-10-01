@@ -3565,7 +3565,254 @@ document.addEventListener(
       );
 
 
-    initSupabase();
+   /* DASHBOARD REPORT CLICK ACTIONS */
+
+function showDashboardRecords(type) {
+
+  showScreen("recordsScreen");
+
+  const container = document.querySelector("#recordsList");
+
+  if (!container) return;
+
+  let records = [];
+  let title = "";
+
+  if (type === "breakdown") {
+    records = breakdownRecords || [];
+    title = "Breakdown Reports";
+  }
+
+  if (type === "maintenance") {
+    records = maintenanceRecords || [];
+    title = "Maintenance Records";
+  }
+
+  if (type === "service") {
+    records = serviceRecords || [];
+    title = "Service Reports";
+  }
+
+  let html = `
+    <div class="card">
+      <div class="title">${title}</div>
+  `;
+
+  if (!records.length) {
+
+    html += `
+      <div class="empty">
+        No ${title.toLowerCase()} found.
+      </div>
+    `;
+
+  } else {
+
+    records.forEach(function(record, index) {
+
+      html += `
+        <div class="record-card">
+
+          <b>${title} ${index + 1}</b>
+
+          <br><br>
+
+          <button
+            class="secondary"
+            type="button"
+            onclick="showReportDetails('${type}', ${index})">
+            View Full Details
+          </button>
+
+        </div>
+      `;
+
+    });
+
+  }
+
+  html += `</div>`;
+
+  container.innerHTML = html;
+}
+
+
+function showReportDetails(type, index) {
+
+  let records = [];
+
+  if (type === "breakdown") {
+    records = breakdownRecords || [];
+  }
+
+  if (type === "maintenance") {
+    records = maintenanceRecords || [];
+  }
+
+  if (type === "service") {
+    records = serviceRecords || [];
+  }
+
+  const record = records[index];
+
+  if (!record) {
+    alert("Record not found.");
+    return;
+  }
+
+  const container = document.querySelector("#recordsList");
+
+  if (!container) return;
+
+  let html = `
+    <div class="card">
+  `;
+
+  if (type === "breakdown") {
+
+    html += `
+      <div class="title">Breakdown Report</div>
+
+      <b>Lift Number:</b>
+      ${esc(record.liftNumber || "-")}
+      <br><br>
+
+      <b>Problem:</b>
+      ${esc(record.problem || "-")}
+      <br><br>
+
+      <b>Action Taken:</b>
+      ${esc(record.actionTaken || "-")}
+      <br><br>
+
+      <b>Location:</b>
+      ${esc(record.location || "-")}
+      <br><br>
+
+      <b>Technician:</b>
+      ${esc(record.technician || "-")}
+      <br><br>
+
+      <b>Date:</b>
+      ${formatDate(record.date || record.created_at)}
+    `;
+
+  }
+
+  if (type === "maintenance") {
+
+    const checked = Object.keys(record.checks || {})
+      .filter(function(key) {
+        return record.checks[key];
+      })
+      .map(function(key) {
+        return key;
+      })
+      .join(", ");
+
+    html += `
+      <div class="title">Maintenance Record</div>
+
+      <b>Lift Number:</b>
+      ${esc(record.liftNumber || "-")}
+      <br><br>
+
+      <b>Checklist Completed:</b>
+      ${esc(checked || "-")}
+      <br><br>
+
+      <b>Remarks:</b>
+      ${esc(record.remarks || "-")}
+      <br><br>
+
+      <b>Location:</b>
+      ${esc(record.location || "-")}
+      <br><br>
+
+      <b>Technician:</b>
+      ${esc(record.technician || "-")}
+      <br><br>
+
+      <b>Date:</b>
+      ${formatDate(record.date || record.created_at)}
+    `;
+
+  }
+
+  if (type === "service") {
+
+    html += `
+      <div class="title">Service Report</div>
+
+      <b>Lift Number:</b>
+      ${esc(record.liftNumber || "-")}
+      <br><br>
+
+      <b>Customer / Apartment:</b>
+      ${esc(record.customer || "-")}
+      <br><br>
+
+      <b>Service Type:</b>
+      ${esc(record.serviceType || "-")}
+      <br><br>
+
+      <b>Work Done:</b>
+      ${esc(record.workDone || "-")}
+      <br><br>
+
+      <b>Technician Remarks:</b>
+      ${esc(record.remarks || "-")}
+      <br><br>
+
+      <b>Date:</b>
+      ${formatDate(record.created_at || record.date)}
+    `;
+
+  }
+
+  html += `
+      <br><br>
+
+      <button
+        class="secondary"
+        type="button"
+        onclick="showDashboardRecords('${type}')">
+        ← Back to ${type === "breakdown"
+          ? "Breakdown Reports"
+          : type === "maintenance"
+          ? "Maintenance Records"
+          : "Service Reports"}
+      </button>
+
+    </div>
+  `;
+
+  container.innerHTML = html;
+}
+
+
+/* MAKE DASHBOARD COUNTERS CLICKABLE */
+
+document
+  .querySelector("#totalBreakdowns")
+  ?.closest(".stat")
+  ?.addEventListener("click", function() {
+    showDashboardRecords("breakdown");
+  });
+
+document
+  .querySelector("#totalMaintenance")
+  ?.closest(".stat")
+  ?.addEventListener("click", function() {
+    showDashboardRecords("maintenance");
+  });
+
+document
+  .querySelector("#totalServices")
+  ?.closest(".stat")
+  ?.addEventListener("click", function() {
+    showDashboardRecords("service");
+  }); initSupabase();
 
     await checkSession();
 
