@@ -1765,6 +1765,12 @@ async function saveBreakdown(){
     !data.lift_number ||
     !data.customer ||
     !data.problem
+        const fileInput = document.getElementById('breakdownImage');
+let imageUrl = "";
+
+if (fileInput.files.length > 0) {
+    const file = fileInput.files[0];
+    const fileName = `${Date.now()}_${file.name}`;
   ){
 
     setStatus(
