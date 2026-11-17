@@ -1732,6 +1732,7 @@ async function saveLift(
 }
 
 
+
 /* =========================
    SAVE BREAKDOWN
 ========================= */
@@ -1740,7 +1741,7 @@ async function saveBreakdown(){
 
   const data = {
 
-    technician:technician(),
+    technician: technician(),
 
     lift_number:
       $("breakdownLiftNumber").value.trim(),
@@ -1759,17 +1760,10 @@ async function saveBreakdown(){
 
   };
 
-
   if(
     !data.lift_number ||
     !data.customer ||
     !data.problem
-        const fileInput = document.getElementById('breakdownImage');
-let imageUrl = "";
-
-if (fileInput.files.length > 0) {
-    const file = fileInput.files[0];
-    const fileName = `${Date.now()}_${file.name}`;
   ){
 
     setStatus(
@@ -1781,7 +1775,6 @@ if (fileInput.files.length > 0) {
     return;
   }
 
-
   try{
 
     const result =
@@ -1792,11 +1785,7 @@ if (fileInput.files.length > 0) {
     if(result.error)
       throw result.error;
 
-
-    alert(
-      "Breakdown saved successfully."
-    );
-
+    alert("Breakdown saved successfully.");
 
     $("breakdownLiftNumber").value = "";
     $("breakdownCustomer").value = "";
@@ -1804,13 +1793,11 @@ if (fileInput.files.length > 0) {
     $("breakdownAction").value = "";
     $("breakdownLocation").value = "";
 
-
     setStatus(
       "breakdownStatus",
       "Breakdown saved.",
       "success"
     );
-
 
     await loadAllData();
 
@@ -1818,14 +1805,14 @@ if (fileInput.files.length > 0) {
 
     setStatus(
       "breakdownStatus",
-      "Save error: " +
-      error.message,
+      "Save error: " + error.message,
       "error"
     );
 
   }
 
 }
+      
 
 
 /* =========================
