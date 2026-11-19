@@ -26,7 +26,27 @@ button:disabled{opacity:.6;cursor:wait}.primary{background:#062542;color:#fff}.s
 .small{color:#687887;font-size:13px}.success{color:#087443}.error{color:#b42318}
 .check{display:flex;align-items:center;gap:10px;margin:10px 0;padding:10px;background:#f5f7f9;border-radius:8px}
 .check input{width:auto;margin:0}.check label{margin:0}hr{border:0;border-top:1px solid #e1e6eb;margin:18px 0}
-</style>
+
+/* JSK modern professional mobile theme */
+:root{--navy:#092b49;--blue:#1769aa;--ink:#172b3d;--muted:#718096;--line:#e4ebf2;--surface:#ffffff;--bg:#f3f6fa}
+body{font-family:Inter,system-ui,-apple-system,Segoe UI,Arial,sans-serif;background:linear-gradient(180deg,#edf4fb 0%,#f7f9fc 48%,#f3f6fa 100%);color:var(--ink);min-height:100vh}
+header{background:linear-gradient(120deg,#071f36,#10466f);padding:22px 18px;letter-spacing:1.2px;box-shadow:0 5px 18px rgba(7,31,54,.18)}
+.container{max-width:620px;padding:18px 16px 32px}.card{border:1px solid rgba(218,228,238,.9);border-radius:20px;padding:20px;box-shadow:0 8px 26px rgba(24,55,84,.07)}
+.logo{margin:44px 0 30px}.logo h1{font-size:34px;letter-spacing:-1px}.logo p{font-size:15px;color:var(--muted)}
+.title{font-size:20px;letter-spacing:-.3px;color:var(--navy)}
+input,select,textarea{border:1px solid #d8e2ec;border-radius:12px;background:#fbfdff;padding:14px;color:var(--ink);outline:none}
+input:focus,select:focus,textarea:focus{border-color:#4c91c8;box-shadow:0 0 0 3px rgba(76,145,200,.13)}
+button{border-radius:12px;transition:transform .12s ease,filter .12s ease}button:active{transform:scale(.99)}
+.primary{background:linear-gradient(120deg,#0b3558,#1769aa);box-shadow:0 5px 14px rgba(11,53,88,.16)}
+.secondary{background:#eaf1f7;color:#123b5c}.danger{background:#a93232}
+.menu-btn,.record{border:1px solid var(--line);border-radius:15px;padding:16px;box-shadow:0 3px 12px rgba(24,55,84,.04)}
+.record{line-height:1.65}.stat{background:#f1f6fb;border:1px solid #e1ebf4;border-radius:13px}
+.empty{background:#f8fafc;border:1px dashed #cbd8e5;border-radius:14px}
+.apartment-search{position:sticky;top:0;z-index:2;background:var(--bg);padding:4px 0 10px}
+.apartment-card{text-align:left;background:#fff;border:1px solid #dce6ef;border-radius:16px;padding:17px;margin:10px 0;box-shadow:0 5px 16px rgba(25,55,85,.06);color:var(--ink)}
+.apartment-card strong{font-size:16px;color:var(--navy)}.apartment-card small{display:block;color:var(--muted);margin-top:6px}
+.media-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}.media-actions label{margin:0;background:#edf4fa;border:1px solid #d8e5f0;color:#123b5c;text-align:center;padding:13px;border-radius:12px;cursor:pointer}.media-actions input{display:none}
+
 </head>
 <body>
 <section id="loginScreen" class="screen active">
@@ -38,22 +58,11 @@ button:disabled{opacity:.6;cursor:wait}.primary{background:#062542;color:#fff}.s
 </div></div></section>
 
 <section id="dashboardScreen" class="screen"><header>JSK ELEVATORS</header><div class="container">
-<div class="card"><div class="title">Dashboard</div><p>Welcome, <strong id="welcomeName">Technician</strong></p>
-<div class="stat">Total Lift Records: <strong id="totalLifts">0</strong></div>
-<div class="stat" role="button" onclick="showDashboardRecords('breakdown')">Breakdown Reports: <strong id="totalBreakdowns">0</strong></div>
-<div class="stat" role="button" onclick="showDashboardRecords('maintenance')">Maintenance Records: <strong id="totalMaintenance">0</strong></div>
-<div class="stat" role="button" onclick="showDashboardRecords('service')">Service Reports: <strong id="totalServices">0</strong></div></div>
-<button class="menu-btn" data-screen="liftScreen"><span>🏢</span>Lift Details</button>
-<button class="menu-btn" data-screen="breakdownScreen"><span>🚨</span>Breakdown Report</button>
-<button class="menu-btn" data-screen="maintenanceScreen"><span>🔧</span>Maintenance Checklist</button>
-<button class="menu-btn" data-screen="apartmentsScreen"><span>🏙️</span>Apartments</button>
-<button class="menu-btn" data-screen="searchScreen"><span>🔎</span>Search</button>
-<button class="menu-btn" data-screen="recordsScreen"><span>📋</span>Lift Records</button>
-<button class="menu-btn" data-screen="serviceScreen"><span>📝</span>Service Report</button>
-<button id="adminButton" class="menu-btn" data-screen="adminScreen" style="display:none"><span>👑</span>Admin Dashboard</button>
-<button class="danger" type="button" onclick="logout()">LOGOUT</button>
+<div class="card"><div class="title">Apartments</div><p class="small">Welcome, <strong id="welcomeName">Technician</strong></p>
+<div class="apartment-search"><input id="apartmentSearchInput" placeholder="Search apartment name..." oninput="filterApartmentCards()" aria-label="Search apartments"></div>
+<div id="apartmentsList"><div class="empty">Loading apartments...</div></div>
+</div><button class="danger" type="button" onclick="logout()">LOGOUT</button>
 </div></section>
-
 <section id="liftScreen" class="screen"><header>Lift Details</header><div class="container">
 <button class="secondary" data-screen="dashboardScreen">← Back to Dashboard</button><div class="card"><div class="title">Add Lift Details</div>
 <label>Lift Number</label><input id="liftNumber" placeholder="Example: 1">
@@ -104,11 +113,9 @@ button:disabled{opacity:.6;cursor:wait}.primary{background:#062542;color:#fff}.s
 <button class="primary" type="button" onclick="saveServiceReport()">SAVE SERVICE REPORT</button><div id="serviceStatus"></div>
 </div></div></section>
 
-<section id="apartmentsScreen" class="screen"><header>Apartments</header><div class="container">
-<button class="secondary" data-screen="dashboardScreen">← Back to Dashboard</button><div class="card"><div class="title">All Apartments</div><input id="apartmentSearchInput" placeholder="Search apartment name..." oninput="filterApartmentCards()"><div id="apartmentsList">Loading apartments...</div></div>
-</div></section>
+
 <section id="apartmentFileScreen" class="screen"><header>Apartment Complete File</header><div class="container">
-<button class="secondary" data-screen="apartmentsScreen">← Back to Apartments</button><div id="apartmentFile">Loading...</div></div></section>
+<button class="secondary" data-screen="dashboardScreen">← Back to Apartments</button><div id="apartmentFile">Loading...</div></div></section>
 <section id="searchScreen" class="screen"><header>Search</header><div class="container">
 <button class="secondary" data-screen="dashboardScreen">← Back to Dashboard</button><div class="card"><div class="title">Search Records</div><input id="searchInput" placeholder="Apartment / Building / Customer / Lift Number"></div><div id="searchResults"></div>
 </div></section>
@@ -161,7 +168,7 @@ async function checkSession(){
 function showScreen(id){
  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
  const target=$(id);if(target)target.classList.add("active");
- if(id==="apartmentsScreen")loadApartments();
+ if(id==="dashboardScreen")loadApartments();
  if(id==="recordsScreen")renderRecords();
  if(id==="searchScreen")searchRecords();
  if(id==="adminScreen")loadAdminDashboard();
@@ -247,4 +254,146 @@ function updateBreakdownLiftNumber(){
 }
 function updateMaintenanceLiftNumber(){
  const select=$("maintenanceApartment"),option=select.options[select.selectedIndex];
- $("maintenanceLiftNumber").valu
+ $("maintenanceLiftNumber").value=option&&option.dataset.lift||"";
+ $("maintenanceLiftDisplay").textContent=option&&option.dataset.lift?"Selected Apartment: "+option.dataset.apartment+" | Lift Number: "+option.dataset.lift:"Select an apartment and lift.";
+}
+async function saveBreakdown(){
+ const select=$("breakdownApartment"),option=select.options[select.selectedIndex];
+ const data={technician:technician(),lift_number:$("breakdownLiftNumber").value.trim(),customer:option&&option.dataset.apartment||"",problem:$("breakdownProblem").value.trim(),action_taken:$("breakdownAction").value.trim(),location:$("breakdownLocation").value.trim()};
+ if(!data.customer||!data.lift_number||!data.problem){setStatus("breakdownStatus","Select an apartment and lift, then enter the problem.","error");return;}
+ const button=$("breakdownSaveButton");button.disabled=true;
+ try{const {error}=await supabaseClient.from("breakdown_records").insert(data);if(error)throw error;
+  ["breakdownProblem","breakdownAction","breakdownLocation"].forEach(id=>$(id).value="");select.value="";$("breakdownLiftNumber").value="";$("breakdownLiftDisplay").textContent="Select an apartment and lift.";
+  setStatus("breakdownStatus","Breakdown saved successfully.","success");await loadAllData();await loadBreakdownApartments();
+ }catch(e){setStatus("breakdownStatus","Save error: "+e.message,"error");}finally{button.disabled=false;}
+}
+async function saveMaintenance(){
+ const select=$("maintenanceApartment"),option=select.options[select.selectedIndex];
+ const checks={"Machine Room":$("checkMachine").checked,"Oil Level":$("checkOil").checked,"Ropes":$("checkRopes").checked,"Door Operation":$("checkDoors").checked,"Safety Devices":$("checkSafety").checked,"Car Operation":$("checkCar").checked,"Pit Inspection":$("checkPit").checked,"Electrical Panel":$("checkElectrical").checked};
+ const data={technician:technician(),lift_number:$("maintenanceLiftNumber").value.trim(),customer:option&&option.dataset.apartment||"",location:$("maintenanceLocation").value.trim(),checklist:checks,remarks:$("maintenanceRemarks").value.trim()};
+ if(!data.customer||!data.lift_number){setStatus("maintenanceStatus","Select an apartment and lift.","error");return;}
+ try{const {error}=await supabaseClient.from("maintenance_records").insert(data);if(error)throw error;
+  select.value="";$("maintenanceLiftNumber").value="";$("maintenanceLocation").value="";$("maintenanceRemarks").value="";
+  document.querySelectorAll("#maintenanceScreen input[type=checkbox]").forEach(x=>x.checked=false);
+  setStatus("maintenanceStatus","Maintenance saved successfully.","success");await loadAllData();
+ }catch(e){setStatus("maintenanceStatus","Save error: "+e.message,"error");}
+}
+async function saveServiceReport(){
+ const data={technician:technician(),lift_number:$("serviceLiftNumber").value.trim(),customer:$("serviceCustomer").value.trim(),service_type:$("serviceType").value.trim(),work_done:$("serviceWorkDone").value.trim(),remarks:$("serviceRemarks").value.trim(),location:$("serviceLocation").value.trim()};
+ if(!data.lift_number||!data.customer){setStatus("serviceStatus","Enter Lift Number and Customer / Apartment.","error");return;}
+ try{const {error}=await supabaseClient.from("service_records").insert(data);if(error)throw error;
+  ["serviceLiftNumber","serviceCustomer","serviceType","serviceWorkDone","serviceRemarks","serviceLocation"].forEach(id=>$(id).value="");
+  setStatus("serviceStatus","Service report saved successfully.","success");await loadAllData();
+ }catch(e){setStatus("serviceStatus","Save error: "+e.message,"error");}
+}
+async function loadApartments(){
+ const box=$("apartmentsList");box.textContent="Loading apartments...";
+ try{
+  const {data,error}=await supabaseClient.from("apartments").select("*").order("name",{ascending:true});if(error)throw error;
+  const names=new Set((data||[]).map(a=>a.name).filter(Boolean));liftRecords.forEach(r=>{if(r.customer)names.add(r.customer);});
+  const apartments=Array.from(names).sort();
+  if(!apartments.length){box.innerHTML='<div class="empty">No apartments found.</div>';return;}
+  box.innerHTML=apartments.map(name=>{
+   const lifts=liftRecords.filter(r=>sameApartment(r.customer,name));
+   return `<button class="apartment-card" type="button" data-apartment="${esc(name)}"><strong>🏢 ${esc(name)}</strong><small>${lifts.length} lift(s) · Lift numbers: ${lifts.map(r=>esc(r.liftNumber)).join(", ")||"Not added yet"}</small></button>`;
+  }).join("");
+  box.querySelectorAll("[data-apartment]").forEach(b=>b.addEventListener("click",()=>openApartmentFile(b.dataset.apartment)));
+ }catch(e){box.innerHTML='<div class="card error">'+esc(e.message)+'</div>';}
+ }
+function filterApartmentCards(){
+ const q=($("apartmentSearchInput")?.value||"").trim().toLowerCase();
+ document.querySelectorAll("#apartmentsList button").forEach(b=>{
+  b.style.display=b.textContent.toLowerCase().includes(q)?"":"none";
+ });
+}
+function openApartmentFile(name){currentApartment=name;showScreen("apartmentFileScreen");}
+function apartmentReportForms(lifts){
+ const options=lifts.map(r=>`<option value="${esc(r.liftNumber)}">Lift ${esc(r.liftNumber)}${r.brand?" - "+esc(r.brand):""}</option>`).join("");
+ const empty=lifts.length?"":"<option value=\"\">No lift records for this apartment</option>";
+ return `<div class="card"><div class="title">📝 Add Report to this Apartment</div>
+ <div class="small">Apartment name is automatically linked: ${esc(currentApartment)}</div>
+ <label>Lift Number</label><select id="apFileLift" ${lifts.length?"":"disabled"}>${empty}${lifts.length?`<option value="">Select Lift</option>${options}`:""}</select>
+ <hr><div class="title">Breakdown Report</div><label>Problem</label><textarea id="apFileBreakProblem" placeholder="Describe the problem"></textarea>
+ <label>Action Taken</label><textarea id="apFileBreakAction" placeholder="Describe action taken"></textarea>
+ <label>Location</label><input id="apFileBreakLocation" placeholder="Location">
+ <label>Photos / Videos</label><div class="media-actions"><label for="apFileCamera">📷 Open Camera<input id="apFileCamera" type="file" accept="image/*" capture="environment"></label><label for="apFileGallery">🖼️ Choose File<input id="apFileGallery" type="file" accept="image/*,video/*" multiple></label></div>
+ <div id="apFileMediaPreview" class="small">Selected media preview will appear here.</div>
+ <button class="primary" type="button" onclick="saveApartmentBreakdown()">SAVE BREAKDOWN</button><div id="apFileBreakStatus"></div>
+ <hr><div class="title">Maintenance Checklist</div>
+ <div class="check"><input type="checkbox" id="apFileCheckMachine"><label for="apFileCheckMachine">Machine Room</label></div><div class="check"><input type="checkbox" id="apFileCheckOil"><label for="apFileCheckOil">Oil Level</label></div><div class="check"><input type="checkbox" id="apFileCheckRopes"><label for="apFileCheckRopes">Ropes</label></div><div class="check"><input type="checkbox" id="apFileCheckDoors"><label for="apFileCheckDoors">Door Operation</label></div><div class="check"><input type="checkbox" id="apFileCheckSafety"><label for="apFileCheckSafety">Safety Devices</label></div><div class="check"><input type="checkbox" id="apFileCheckCar"><label for="apFileCheckCar">Car Operation</label></div><div class="check"><input type="checkbox" id="apFileCheckPit"><label for="apFileCheckPit">Pit Inspection</label></div><div class="check"><input type="checkbox" id="apFileCheckElectrical"><label for="apFileCheckElectrical">Electrical Panel</label></div>
+ <label>Maintenance Remarks</label><textarea id="apFileMaintRemarks" placeholder="Remarks"></textarea><label>Location</label><input id="apFileMaintLocation" placeholder="Location"><button class="primary" type="button" onclick="saveApartmentMaintenance()">SAVE MAINTENANCE</button><div id="apFileMaintStatus"></div>
+ <hr><div class="title">Service Report</div><label>Service Type</label><input id="apFileServiceType" placeholder="Example: Preventive Maintenance"><label>Work Done</label><textarea id="apFileServiceWork" placeholder="Describe work done"></textarea><label>Technician Remarks</label><textarea id="apFileServiceRemarks" placeholder="Remarks"></textarea><label>Location</label><input id="apFileServiceLocation" placeholder="Location"><button class="primary" type="button" onclick="saveApartmentService()">SAVE SERVICE REPORT</button><div id="apFileServiceStatus"></div>
+ </div>`;
+}
+function stripMediaMarker(action){return String(action||"").split("\\n[MEDIA_URLS]")[0];}
+function parseMediaMarker(action){const text=String(action||"");const marker=text.indexOf("\\n[MEDIA_URLS]");if(marker<0)return [];try{return JSON.parse(text.slice(marker+14));}catch(e){return [];}}
+function renderMediaLinks(action){const urls=parseMediaMarker(action);if(!urls.length)return "";return `<div><b>Attached Media:</b><br>${urls.map(u=>u.type&&u.type.startsWith("video")?`<video controls style="width:100%;max-width:360px" src="${esc(u.url)}"></video>`:`<a href="${esc(u.url)}" target="_blank" rel="noopener"><img src="${esc(u.url)}" style="width:100%;max-width:360px;border-radius:10px;margin:6px 0"></a>`).join("")}</div>`;}
+function previewApartmentMedia(){const box=$("apFileMediaPreview");if(!box)return;const files=[...($("apFileCamera")?.files||[]),...($("apFileGallery")?.files||[])];if(!files.length){box.innerHTML="Selected media preview will appear here.";return;}box.innerHTML=files.map(f=>{const url=URL.createObjectURL(f);return `<div style="margin:8px 0"><b>${esc(f.name)}</b><br>${f.type.startsWith("video")?`<video controls style="width:100%;max-width:360px" src="${url}"></video>`:`<img style="width:100%;max-width:360px;border-radius:10px" src="${url}">`}</div>`;}).join("");}
+async function uploadApartmentMedia(files){if(!files.length)return [];const bucket="breakdown-media";const urls=[];for(const file of files){const safe=file.name.replace(/[^a-zA-Z0-9._-]/g,"_");const path=`${technician().replace(/[^a-zA-Z0-9_-]/g,"_")}/${Date.now()}_${Math.random().toString(36).slice(2)}_${safe}`;const {error}=await supabaseClient.storage.from(bucket).upload(path,file,{contentType:file.type,upsert:false});if(error)throw error;const {data}=supabaseClient.storage.from(bucket).getPublicUrl(path);urls.push({url:data.publicUrl,type:file.type,name:file.name});}return urls;}
+async function saveApartmentBreakdown(){const lift=$("apFileLift").value,problem=$("apFileBreakProblem").value.trim(),action=$("apFileBreakAction").value.trim();if(!lift||!problem){setStatus("apFileBreakStatus","Select lift and enter the problem.","error");return;}const btn=document.querySelector('button[onclick="saveApartmentBreakdown()"]');btn.disabled=true;try{const files=[...($("apFileCamera").files||[]),...($("apFileGallery").files||[])];const media=await uploadApartmentMedia(files);const actionWithMedia=action+(media.length?"\\n[MEDIA_URLS]"+JSON.stringify(media):"");const {error}=await supabaseClient.from("breakdown_records").insert({technician:technician(),lift_number:lift,customer:currentApartment,problem,action_taken:actionWithMedia,location:$("apFileBreakLocation").value.trim()});if(error)throw error;setStatus("apFileBreakStatus","Breakdown report saved.","success");["apFileBreakProblem","apFileBreakAction","apFileBreakLocation","apFileCamera","apFileGallery"].forEach(id=>$(id).value="");previewApartmentMedia();await loadAllData();renderApartmentFile();}catch(e){setStatus("apFileBreakStatus","Save failed: "+e.message,"error");}finally{btn.disabled=false;}}
+async function saveApartmentMaintenance(){const lift=$("apFileLift").value;if(!lift){setStatus("apFileMaintStatus","Select lift first.","error");return;}const checks={"Machine Room":$("apFileCheckMachine").checked,"Oil Level":$("apFileCheckOil").checked,"Ropes":$("apFileCheckRopes").checked,"Door Operation":$("apFileCheckDoors").checked,"Safety Devices":$("apFileCheckSafety").checked,"Car Operation":$("apFileCheckCar").checked,"Pit Inspection":$("apFileCheckPit").checked,"Electrical Panel":$("apFileCheckElectrical").checked};try{const {error}=await supabaseClient.from("maintenance_records").insert({technician:technician(),lift_number:lift,customer:currentApartment,location:$("apFileMaintLocation").value.trim(),checklist:checks,remarks:$("apFileMaintRemarks").value.trim()});if(error)throw error;setStatus("apFileMaintStatus","Maintenance saved.","success");["apFileMaintLocation","apFileMaintRemarks"].forEach(id=>$(id).value="");document.querySelectorAll('[id^="apFileCheck"]').forEach(x=>x.checked=false);await loadAllData();renderApartmentFile();}catch(e){setStatus("apFileMaintStatus","Save failed: "+e.message,"error");}}
+async function saveApartmentService(){const lift=$("apFileLift").value;if(!lift){setStatus("apFileServiceStatus","Select lift first.","error");return;}try{const {error}=await supabaseClient.from("service_records").insert({technician:technician(),lift_number:lift,customer:currentApartment,service_type:$("apFileServiceType").value.trim(),work_done:$("apFileServiceWork").value.trim(),remarks:$("apFileServiceRemarks").value.trim(),location:$("apFileServiceLocation").value.trim()});if(error)throw error;setStatus("apFileServiceStatus","Service report saved.","success");["apFileServiceType","apFileServiceWork","apFileServiceRemarks","apFileServiceLocation"].forEach(id=>$(id).value="");await loadAllData();renderApartmentFile();}catch(e){setStatus("apFileServiceStatus","Save failed: "+e.message,"error");}}
+function renderApartmentFile(){
+ const box=$("apartmentFile");if(!box)return;
+ const lifts=liftRecords.filter(r=>sameApartment(r.customer,currentApartment));
+ const breakdowns=breakdownRecords.filter(r=>sameApartment(r.customer,currentApartment));
+ const maint=maintenanceRecords.filter(r=>sameApartment(r.customer,currentApartment));
+ const services=serviceRecords.filter(r=>sameApartment(r.customer,currentApartment));
+ let h=`<div class="card"><div class="title">🏢 ${esc(currentApartment)}</div><p>Lifts: <b>${lifts.length}</b></p><p>Breakdowns: <b>${breakdowns.length}</b></p><p>Maintenance: <b>${maint.length}</b></p><p>Services: <b>${services.length}</b></p></div>`;
+ h+=apartmentReportForms(lifts);
+ h+=`<div class="card"><div class="title">Lift Details</div>${lifts.length?lifts.map(r=>`<div class="record card"><b>Lift ${esc(r.liftNumber)}</b><br>Brand: ${esc(r.brand||"-")}<br>Floors: ${esc(r.floors||"-")}<br>Location: ${esc(r.location||"-")}<br>GPS: ${r.latitude==null?"-":esc(r.latitude)+", "+esc(r.longitude)}<br>Technician: ${esc(r.technician)}<br>Date: ${formatDate(r.date)}</div>`).join(""):'<div class="empty">No lift records.</div>'}</div>`;
+ h+=renderHistorySection("Breakdown History",breakdowns,r=>`<b>Lift ${esc(r.liftNumber)}</b><br>Problem: ${esc(r.problem||"-")}<br>Action Taken: ${esc(stripMediaMarker(r.actionTaken)||"-")}<br>${renderMediaLinks(r.actionTaken)}<br>Location: ${esc(r.location||"-")}<br>Date: ${formatDate(r.date)}`);
+ h+=renderHistorySection("Maintenance History",maint,r=>`<b>Lift ${esc(r.liftNumber)}</b><br>Checklist: ${esc(Object.keys(r.checks||{}).filter(k=>r.checks[k]).join(", ")||"-")}<br>Remarks: ${esc(r.remarks||"-")}<br>Date: ${formatDate(r.date)}`);
+ h+=renderHistorySection("Service History",services,r=>`<b>Lift ${esc(r.liftNumber)}</b><br>Service: ${esc(r.serviceType||"-")}<br>Work Done: ${esc(r.workDone||"-")}<br>Remarks: ${esc(r.remarks||"-")}<br>Date: ${formatDate(r.date)}`);
+ box.innerHTML=h;
+}
+function renderHistorySection(title,rows,render){return `<div class="card"><div class="title">${title}</div>${rows.length?rows.map(r=>`<div class="record card">${render(r)}<br>Technician: ${esc(r.technician)}</div>`).join(""):`<div class="empty">No records.</div>`}</div>`;}
+function renderRecords(){
+ const box=$("recordsList");if(!box)return;
+ box.innerHTML=liftRecords.length?liftRecords.map(r=>`<div class="record card"><b>Lift ${esc(r.liftNumber)}</b><br>Customer: ${esc(r.customer)}<br>Brand: ${esc(r.brand||"-")}<br>Location: ${esc(r.location||"-")}<br>Floors: ${esc(r.floors||"-")}<br>Technician: ${esc(r.technician)}<br>Date: ${formatDate(r.date)}</div>`).join(""):'<div class="card empty">No lift records found.</div>';
+}
+function searchRecords(){
+ const input=$("searchInput"),box=$("searchResults");if(!input||!box)return;
+ const q=input.value.trim().toLowerCase();if(!q){box.innerHTML='<div class="card empty">Enter an apartment, building, customer or lift number.</div>';return;}
+ const rows=liftRecords.filter(r=>[r.customer,r.liftNumber,r.location,r.brand].some(v=>String(v||"").toLowerCase().includes(q)));
+ box.innerHTML=rows.length?rows.map(r=>`<div class="record card"><b>🏢 ${esc(r.customer)}</b><br>Lift: ${esc(r.liftNumber)}<br>Brand: ${esc(r.brand||"-")}<br>Location: ${esc(r.location||"-")}<br>Floors: ${esc(r.floors||"-")}<br>Date: ${formatDate(r.date)}</div>`).join(""):'<div class="card empty">No records found.</div>';
+}
+function showDashboardRecords(type){
+ currentReportType=type;showScreen("recordsScreen");
+ const rows=type==="breakdown"?breakdownRecords:type==="maintenance"?maintenanceRecords:serviceRecords;
+ const title=type==="breakdown"?"Breakdown Reports":type==="maintenance"?"Maintenance Records":"Service Reports";
+ $("recordsList").innerHTML=`<div class="card"><div class="title">${title}</div>${rows.length?rows.map((r,i)=>`<div class="record card"><b>${title} ${i+1}</b><br>Apartment: ${esc(r.customer||"-")} | Lift: ${esc(r.liftNumber||"-")}<br><button class="secondary" type="button" onclick="showReportDetails('${type}',${i})">View Full Details</button></div>`).join(""):`<div class="empty">No ${title.toLowerCase()} found.</div>`}</div>`;
+}
+function showReportDetails(type,index){
+ const rows=type==="breakdown"?breakdownRecords:type==="maintenance"?maintenanceRecords:serviceRecords;const r=rows[index];if(!r){alert("Record not found.");return;}
+ let h="";
+ if(type==="breakdown")h=`<div class="title">Breakdown Report</div><b>Apartment:</b> ${esc(r.customer||"-")}<br><b>Lift Number:</b> ${esc(r.liftNumber||"-")}<br><br><b>Problem:</b> ${esc(r.problem||"-")}<br><br><b>Action Taken:</b> ${esc(r.actionTaken||"-")}<br><br><b>Location:</b> ${esc(r.location||"-")}<br><br><b>Technician:</b> ${esc(r.technician||"-")}<br><br><b>Date:</b> ${formatDate(r.date)}`;
+ if(type==="maintenance")h=`<div class="title">Maintenance Record</div><b>Apartment:</b> ${esc(r.customer||"-")}<br><b>Lift Number:</b> ${esc(r.liftNumber||"-")}<br><br><b>Checklist:</b> ${esc(Object.keys(r.checks||{}).filter(k=>r.checks[k]).join(", ")||"-")}<br><br><b>Remarks:</b> ${esc(r.remarks||"-")}<br><br><b>Location:</b> ${esc(r.location||"-")}<br><br><b>Technician:</b> ${esc(r.technician||"-")}<br><br><b>Date:</b> ${formatDate(r.date)}`;
+ if(type==="service")h=`<div class="title">Service Report</div><b>Apartment:</b> ${esc(r.customer||"-")}<br><b>Lift Number:</b> ${esc(r.liftNumber||"-")}<br><br><b>Service Type:</b> ${esc(r.serviceType||"-")}<br><br><b>Work Done:</b> ${esc(r.workDone||"-")}<br><br><b>Remarks:</b> ${esc(r.remarks||"-")}<br><br><b>Location:</b> ${esc(r.location||"-")}<br><br><b>Technician:</b> ${esc(r.technician||"-")}<br><br><b>Date:</b> ${formatDate(r.date)}`;
+ $("reportDetail").innerHTML=`<div class="card">${h}</div>`;showScreen("reportDetailScreen");
+}
+async function loadAdminDashboard(){
+ const box=$("adminContent");if(technician().toLowerCase()!==ADMIN_EMAIL.toLowerCase()){box.innerHTML='<div class="card empty">Admin access only.</div>';return;}
+ box.textContent="Loading admin data...";
+ try{
+  const tables=["lift_records","breakdown_records","maintenance_records","service_records"];
+  const results=await Promise.all(tables.map(t=>supabaseClient.from(t).select("*").order("created_at",{ascending:false})));
+  results.forEach(r=>{if(r.error)throw r.error;});
+  const [l,b,m,s]=results.map(r=>r.data||[]);
+  box.innerHTML=`<div class="card"><div class="title">Admin Overview</div><div class="stat">Lift Records: <b>${l.length}</b></div><div class="stat">Breakdown Reports: <b>${b.length}</b></div><div class="stat">Maintenance Records: <b>${m.length}</b></div><div class="stat">Service Reports: <b>${s.length}</b></div></div>`+
+  adminSection("Lift Records",l,r=>`Lift ${esc(r.lift_number)}<br>Technician: ${esc(r.technician)}<br>Customer: ${esc(r.customer)}<br>Location: ${esc(r.location||"-")}<br>Date: ${formatDate(r.created_at)}`)+
+  adminSection("Breakdown Reports",b,r=>`Lift ${esc(r.lift_number)}<br>Technician: ${esc(r.technician)}<br>Customer: ${esc(r.customer)}<br>Problem: ${esc(r.problem||"-")}<br>Date: ${formatDate(r.created_at)}`)+
+  adminSection("Maintenance Records",m,r=>`Lift ${esc(r.lift_number)}<br>Technician: ${esc(r.technician)}<br>Customer: ${esc(r.customer)}<br>Remarks: ${esc(r.remarks||"-")}<br>Date: ${formatDate(r.created_at)}`)+
+  adminSection("Service Reports",s,r=>`Lift ${esc(r.lift_number)}<br>Technician: ${esc(r.technician)}<br>Customer: ${esc(r.customer)}<br>Service: ${esc(r.service_type||"-")}<br>Work Done: ${esc(r.work_done||"-")}<br>Date: ${formatDate(r.created_at)}`);
+ }catch(e){box.innerHTML='<div class="card error">'+esc(e.message)+'</div>';}
+}
+function adminSection(title,rows,render){return `<div class="card"><div class="title">${title}</div>${rows.length?rows.map(r=>`<div class="record card">${render(r)}</div>`).join(""):'<div class="empty">No records.</div>'}</div>`;}
+document.addEventListener("DOMContentLoaded",async()=>{
+ document.querySelectorAll("[data-screen]").forEach(b=>b.addEventListener("click",()=>showScreen(b.dataset.screen)));
+ $("searchInput").addEventListener("input",searchRecords);
+ document.addEventListener("change",e=>{if(e.target&&(e.target.id==="apFileCamera"||e.target.id==="apFileGallery"))previewApartmentMedia();});
+ initSupabase();await checkSession();
+});
+</script>
+</body>
+</html>
