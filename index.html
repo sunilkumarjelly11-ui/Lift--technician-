@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,90 +7,321 @@
 <meta name="theme-color" content="#062542">
 <link rel="manifest" href="manifest.json">
 <title>JSK Elevators - Lift Technician</title>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#eef3f8;color:#162536}
-header{background:#062542;color:#fff;padding:18px;text-align:center;font-size:21px;font-weight:bold}
-.container{max-width:520px;margin:auto;padding:18px}.screen{display:none}.screen.active{display:block}
-.card{background:#fff;border-radius:16px;padding:18px;margin-bottom:16px;box-shadow:0 4px 14px rgba(0,0,0,.08)}
-.logo{text-align:center;margin:55px 0 35px}.logo h1{color:#062542;font-size:36px;margin:0}.logo p{color:#607080;font-size:20px}
-.title{color:#062542;font-size:22px;font-weight:bold;margin-bottom:15px}
-label{display:block;font-weight:bold;margin-top:10px}
-input,select,textarea{width:100%;padding:14px;margin:7px 0 13px;border:1px solid #ccd5df;border-radius:10px;font-size:16px;background:#fff}
-textarea{min-height:100px;resize:vertical}button{width:100%;border:0;border-radius:10px;padding:14px;margin:6px 0;font-size:16px;font-weight:bold;cursor:pointer}
-button:disabled{opacity:.6;cursor:wait}.primary{background:#062542;color:#fff}.secondary{background:#dfe8f0;color:#062542}
-.danger{background:#b42318;color:#fff}.menu-btn{text-align:left;background:#fff;color:#062542;border:1px solid #d5dee7}
-.menu-btn span{margin-right:8px}.stat{background:#f4f7fa;border-radius:12px;padding:14px;margin:10px 0;cursor:pointer}
-.record{display:block;text-align:left;background:#fff;border:1px solid #d7e0e8;color:#162536}
-.empty{text-align:center;color:#748292;padding:25px}.status{margin:10px 0;padding:10px;border-radius:8px;font-size:14px}
-.timeline{border-left:3px solid #062542;padding-left:14px;margin:15px 0}.timeline-item{margin-bottom:18px}
-.small{color:#687887;font-size:13px}.success{color:#087443}.error{color:#b42318}
-.check{display:flex;align-items:center;gap:10px;margin:10px 0;padding:10px;background:#f5f7f9;border-radius:8px}
-.check input{width:auto;margin:0}.check label{margin:0}hr{border:0;border-top:1px solid #e1e6eb;margin:18px 0}
-
-/* JSK modern professional mobile theme */
-:root{--navy:#092b49;--blue:#1769aa;--ink:#172b3d;--muted:#718096;--line:#e4ebf2;--surface:#ffffff;--bg:#f3f6fa}
-body{font-family:Inter,system-ui,-apple-system,Segoe UI,Arial,sans-serif;background:linear-gradient(180deg,#edf4fb 0%,#f7f9fc 48%,#f3f6fa 100%);color:var(--ink);min-height:100vh}
-header{background:linear-gradient(120deg,#071f36,#10466f);padding:22px 18px;letter-spacing:1.2px;box-shadow:0 5px 18px rgba(7,31,54,.18)}
-.container{max-width:620px;padding:18px 16px 32px}.card{border:1px solid rgba(218,228,238,.9);border-radius:20px;padding:20px;box-shadow:0 8px 26px rgba(24,55,84,.07)}
-.logo{margin:44px 0 30px}.logo h1{font-size:34px;letter-spacing:-1px}.logo p{font-size:15px;color:var(--muted)}
-.title{font-size:20px;letter-spacing:-.3px;color:var(--navy)}
-input,select,textarea{border:1px solid #d8e2ec;border-radius:12px;background:#fbfdff;padding:14px;color:var(--ink);outline:none}
-input:focus,select:focus,textarea:focus{border-color:#4c91c8;box-shadow:0 0 0 3px rgba(76,145,200,.13)}
-button{border-radius:12px;transition:transform .12s ease,filter .12s ease}button:active{transform:scale(.99)}
-.primary{background:linear-gradient(120deg,#0b3558,#1769aa);box-shadow:0 5px 14px rgba(11,53,88,.16)}
-.secondary{background:#eaf1f7;color:#123b5c}.danger{background:#a93232}
-.menu-btn,.record{border:1px solid var(--line);border-radius:15px;padding:16px;box-shadow:0 3px 12px rgba(24,55,84,.04)}
-.record{line-height:1.65}.stat{background:#f1f6fb;border:1px solid #e1ebf4;border-radius:13px}
-.empty{background:#f8fafc;border:1px dashed #cbd8e5;border-radius:14px}
-.apartment-search{position:sticky;top:0;z-index:2;background:var(--bg);padding:4px 0 10px}
-.apartment-card{text-align:left;background:#fff;border:1px solid #dce6ef;border-radius:16px;padding:17px;margin:10px 0;box-shadow:0 5px 16px rgba(25,55,85,.06);color:var(--ink)}
-.apartment-card strong{font-size:16px;color:var(--navy)}.apartment-card small{display:block;color:var(--muted);margin-top:6px}
-.media-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}.media-actions label{margin:0;background:#edf4fa;border:1px solid #d8e5f0;color:#123b5c;text-align:center;padding:13px;border-radius:12px;cursor:pointer}.media-actions input{display:none}
-
+*{box-sizing:border-box}
+:root{
+--navy:#092b49;
+--blue:#1769aa;
+--ink:#172b3d;
+--muted:#718096;
+--line:#e4ebf2;
+--bg:#f3f6fa;
+}
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:var(--bg);
+color:var(--ink);
+}
+header{
+background:linear-gradient(120deg,#071f36,#10466f);
+color:white;
+padding:20px;
+text-align:center;
+font-size:21px;
+font-weight:bold;
+letter-spacing:1px;
+}
+.container{
+max-width:620px;
+margin:auto;
+padding:18px 16px 35px;
+}
+.screen{display:none}
+.screen.active{display:block}
+.card{
+background:white;
+border:1px solid var(--line);
+border-radius:18px;
+padding:19px;
+margin-bottom:16px;
+box-shadow:0 5px 18px rgba(24,55,84,.06);
+}
+.logo{
+text-align:center;
+margin:55px 0 35px;
+}
+.logo h1{
+font-size:34px;
+color:var(--navy);
+margin:0;
+}
+.logo p{color:var(--muted)}
+.title{
+font-size:21px;
+font-weight:bold;
+color:var(--navy);
+margin-bottom:15px;
+}
+label{
+display:block;
+font-weight:bold;
+margin-top:12px;
+}
+input,select,textarea{
+width:100%;
+padding:14px;
+margin:7px 0 12px;
+border:1px solid #d8e2ec;
+border-radius:11px;
+background:#fbfdff;
+font-size:16px;
+color:var(--ink);
+}
+textarea{min-height:95px;resize:vertical}
+input:focus,select:focus,textarea:focus{
+outline:none;
+border-color:#4c91c8;
+}
+button{
+width:100%;
+padding:14px;
+margin:6px 0;
+border:0;
+border-radius:11px;
+font-size:15px;
+font-weight:bold;
+cursor:pointer;
+}
+button:disabled{opacity:.6}
+.primary{
+background:linear-gradient(120deg,#0b3558,#1769aa);
+color:white;
+}
+.secondary{
+background:#eaf1f7;
+color:#123b5c;
+}
+.danger{background:#a93232;color:white}
+.menu-btn{
+background:white;
+border:1px solid var(--line);
+color:var(--navy);
+text-align:left;
+padding:16px;
+}
+.status{
+padding:11px;
+margin:10px 0;
+border-radius:9px;
+background:#f1f5f9;
+font-size:14px;
+overflow-wrap:anywhere;
+}
+.success{color:#087443;background:#e9f8ef}
+.error{color:#b42318;background:#fff0f0}
+.small{font-size:13px;color:var(--muted)}
+.empty{
+text-align:center;
+padding:22px;
+background:#f8fafc;
+border:1px dashed #cbd8e5;
+border-radius:13px;
+color:var(--muted);
+}
+.apartment-card,.record{
+display:block;
+width:100%;
+text-align:left;
+background:white;
+border:1px solid var(--line);
+border-radius:14px;
+padding:16px;
+margin:10px 0;
+color:var(--ink);
+line-height:1.6;
+}
+.apartment-card strong{color:var(--navy);font-size:17px}
+.apartment-card small{
+display:block;
+color:var(--muted);
+margin-top:5px;
+}
+.stat-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+}
+.stat{
+background:#f1f6fb;
+border:1px solid #e1ebf4;
+border-radius:12px;
+padding:14px;
+text-align:center;
+}
+.stat strong{
+display:block;
+font-size:23px;
+color:var(--navy);
+}
+.stat span{font-size:12px;color:var(--muted)}
+.check{
+display:flex;
+align-items:center;
+gap:12px;
+padding:12px;
+margin:8px 0;
+background:#f4f7fa;
+border-radius:9px;
+}
+.check input{width:20px;margin:0}
+.check label{margin:0}
+hr{border:0;border-top:1px solid var(--line);margin:16px 0}
+.detail-row{padding:10px 0;border-bottom:1px solid var(--line)}
+.detail-row b{color:var(--navy)}
+.media-actions{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:8px;
+}
+.apartment-search{
+position:sticky;
+top:0;
+background:var(--bg);
+z-index:2;
+padding:5px 0;
+}
+</style>
 </head>
+
 <body>
+
+<!-- LOGIN -->
 <section id="loginScreen" class="screen active">
-<header>JSK ELEVATORS</header><div class="container"><div class="logo"><h1>Lift Technician</h1><p>Technician Login</p></div>
-<div class="card"><div class="title">Technician Login</div>
-<label>Email</label><input id="email" type="email" placeholder="Technician email" autocomplete="email">
-<label>Password</label><input id="password" type="password" placeholder="Password" autocomplete="current-password">
-<div id="loginStatus"></div><button id="loginButton" class="primary" type="button" onclick="login()">LOGIN</button>
-</div></div></section>
+<header>JSK ELEVATORS</header>
+<div class="container">
+<div class="logo">
+<h1>Lift Technician</h1>
+<p>Technician Service Application</p>
+</div>
+<div class="card">
+<div class="title">Technician Login</div>
+<label>Email</label>
+<input id="email" type="email" placeholder="Enter email" autocomplete="email">
+<label>Password</label>
+<input id="password" type="password" placeholder="Enter password" autocomplete="current-password">
+<div id="loginStatus"></div>
+<button id="loginButton" class="primary" onclick="login()">LOGIN</button>
+</div>
+</div>
+</section>
 
-<section id="dashboardScreen" class="screen"><header>JSK ELEVATORS</header><div class="container">
-<div class="card"><div class="title">Apartments</div><p class="small">Welcome, <strong id="welcomeName">Technician</strong></p>
-<div class="apartment-search"><input id="apartmentSearchInput" placeholder="Search apartment name..." oninput="filterApartmentCards()" aria-label="Search apartments"></div>
+<!-- DASHBOARD -->
+<section id="dashboardScreen" class="screen">
+<header>JSK ELEVATORS</header>
+<div class="container">
+
+<div class="card">
+<div class="title">Dashboard</div>
+<p>Welcome, <b id="welcomeName">Technician</b></p>
+<div class="stat-grid">
+<div class="stat"><strong id="totalLifts">0</strong><span>Total Lifts</span></div>
+<div class="stat"><strong id="totalBreakdowns">0</strong><span>Breakdowns</span></div>
+<div class="stat"><strong id="totalMaintenance">0</strong><span>Maintenance</span></div>
+<div class="stat"><strong id="totalServices">0</strong><span>Service Reports</span></div>
+</div>
+</div>
+
+<div class="card">
+<div class="title">Lift Management</div>
+<button class="menu-btn" onclick="showScreen('liftScreen')">➕ Add Lift Details</button>
+<button class="menu-btn" onclick="showScreen('breakdownScreen')">🔧 New Breakdown Report</button>
+<button class="menu-btn" onclick="showScreen('maintenanceScreen')">📋 Maintenance Checklist</button>
+<button class="menu-btn" onclick="showScreen('serviceScreen')">📄 New Service Report</button>
+<button class="menu-btn" onclick="showScreen('searchScreen')">🔍 Search Records</button>
+<button class="menu-btn" onclick="showScreen('recordsScreen')">📁 All Records</button>
+<button class="menu-btn" id="adminButton" style="display:none" onclick="showScreen('adminScreen')">👨‍💼 Admin Dashboard</button>
+</div>
+
+<div class="card">
+<div class="title">Apartments</div>
+<div class="apartment-search">
+<input id="apartmentSearchInput" placeholder="Search apartment name..." oninput="filterApartmentCards()">
+</div>
 <div id="apartmentsList"><div class="empty">Loading apartments...</div></div>
-</div><button class="danger" type="button" onclick="logout()">LOGOUT</button>
-</div></section>
-<section id="liftScreen" class="screen"><header>Lift Details</header><div class="container">
-<button class="secondary" data-screen="dashboardScreen">← Back to Dashboard</button><div class="card"><div class="title">Add Lift Details</div>
-<label>Lift Number</label><input id="liftNumber" placeholder="Example: 1">
-<label>Customer / Apartment</label><input id="customerName" placeholder="Apartment / Building name">
-<label>Lift Brand</label><input id="liftBrand" placeholder="Lift brand">
-<label>Lift Location</label><input id="liftLocation" placeholder="Location">
-<label>Floors</label><input id="floors" type="number" placeholder="Number of floors">
+</div>
+
+<button class="danger" onclick="logout()">LOGOUT</button>
+</div>
+</section>
+
+<!-- LIFT DETAILS -->
+<section id="liftScreen" class="screen">
+<header>Add Lift Details</header>
+<div class="container">
+<button class="secondary" onclick="showScreen('dashboardScreen')">← Back to Dashboard</button>
+<div class="card">
+<div class="title">Lift Information</div>
+<label>Lift Number *</label>
+<input id="liftNumber" placeholder="Example: 1">
+<label>Customer / Apartment *</label>
+<input id="customerName" placeholder="Apartment / Building name">
+<label>Lift Brand</label>
+<input id="liftBrand" placeholder="Lift brand">
+<label>Lift Location</label>
+<input id="liftLocation" placeholder="Location">
+<label>Number of Floors</label>
+<input id="floors" type="number" placeholder="Number of floors">
 <div id="gpsStatus" class="status">GPS not captured</div>
-<button id="gpsSaveButton" class="primary" type="button" onclick="captureGPSAndSave()">📍 Capture GPS & Save Lift</button>
-</div></div></section>
+<button id="gpsSaveButton" class="primary" onclick="captureGPSAndSave()">📍 CAPTURE GPS & SAVE LIFT</button>
+</div>
+</div>
+</section>
 
-<section id="breakdownScreen" class="screen"><header>Breakdown Report</header><div class="container">
-<button class="secondary" data-screen="dashboardScreen">← Back to Dashboard</button><div class="card"><div class="title">New Breakdown Report</div>
-<label>Select Apartment</label><select id="breakdownApartment" onchange="updateBreakdownLiftNumber()"><option value="">Loading apartments...</option></select>
+<!-- BREAKDOWN -->
+<section id="breakdownScreen" class="screen">
+<header>Breakdown Report</header>
+<div class="container">
+<button class="secondary" onclick="showScreen('dashboardScreen')">← Back</button>
+<div class="card">
+<div class="title">New Breakdown Report</div>
+<label>Select Apartment / Lift</label>
+<select id="breakdownApartment" onchange="updateBreakdownLiftNumber()">
+<option value="">Loading...</option>
+</select>
 <input type="hidden" id="breakdownLiftNumber">
-<div class="status" id="breakdownLiftDisplay">Select an apartment to get Lift Number.</div>
-<label>Problem</label><textarea id="breakdownProblem" placeholder="Describe the problem"></textarea>
-<label>Action Taken</label><textarea id="breakdownAction" placeholder="Describe action taken"></textarea>
-<label>Location</label><input id="breakdownLocation" placeholder="Location">
-<button id="breakdownSaveButton" class="primary" type="button" onclick="saveBreakdown()">SAVE BREAKDOWN</button><div id="breakdownStatus"></div>
-</div></div></section>
+<div id="breakdownLiftDisplay" class="status">Select a lift.</div>
+<label>Problem *</label>
+<textarea id="breakdownProblem" placeholder="Describe the problem"></textarea>
+<label>Action Taken</label>
+<textarea id="breakdownAction" placeholder="Describe action taken"></textarea>
+<label>Location</label>
+<input id="breakdownLocation" placeholder="Location">
+<button id="breakdownSaveButton" class="primary" onclick="saveBreakdown()">SAVE BREAKDOWN</button>
+<div id="breakdownStatus"></div>
+</div>
+</div>
+</section>
 
-<section id="maintenanceScreen" class="screen"><header>Maintenance Checklist</header><div class="container">
-<button class="secondary" data-screen="dashboardScreen">← Back to Dashboard</button><div class="card"><div class="title">Maintenance Checklist</div>
-<label>Select Apartment</label><select id="maintenanceApartment" onchange="updateMaintenanceLiftNumber()"><option value="">Loading apartments...</option></select>
-<input type="hidden" id="maintenanceLiftNumber"><div id="maintenanceLiftDisplay" class="status">Select an apartment.</div>
-<label>Location</label><input id="maintenanceLocation" placeholder="Location">
+<!-- MAINTENANCE -->
+<section id="maintenanceScreen" class="screen">
+<header>Maintenance Checklist</header>
+<div class="container">
+<button class="secondary" onclick="showScreen('dashboardScreen')">← Back</button>
+<div class="card">
+<div class="title">Maintenance Checklist</div>
+<label>Select Apartment / Lift</label>
+<select id="maintenanceApartment" onchange="updateMaintenanceLiftNumber()">
+<option value="">Loading...</option>
+</select>
+<input type="hidden" id="maintenanceLiftNumber">
+<div id="maintenanceLiftDisplay" class="status">Select a lift.</div>
+<label>Location</label>
+<input id="maintenanceLocation" placeholder="Location">
+
 <div class="check"><input type="checkbox" id="checkMachine"><label for="checkMachine">Machine Room</label></div>
 <div class="check"><input type="checkbox" id="checkOil"><label for="checkOil">Oil Level</label></div>
 <div class="check"><input type="checkbox" id="checkRopes"><label for="checkRopes">Ropes</label></div>
@@ -98,302 +330,1008 @@ button{border-radius:12px;transition:transform .12s ease,filter .12s ease}button
 <div class="check"><input type="checkbox" id="checkCar"><label for="checkCar">Car Operation</label></div>
 <div class="check"><input type="checkbox" id="checkPit"><label for="checkPit">Pit Inspection</label></div>
 <div class="check"><input type="checkbox" id="checkElectrical"><label for="checkElectrical">Electrical Panel</label></div>
-<label>Remarks</label><textarea id="maintenanceRemarks" placeholder="Technician remarks"></textarea>
-<button class="primary" type="button" onclick="saveMaintenance()">SAVE MAINTENANCE</button><div id="maintenanceStatus"></div>
-</div></div></section>
 
-<section id="serviceScreen" class="screen"><header>Service Report</header><div class="container">
-<button class="secondary" data-screen="dashboardScreen">← Back to Dashboard</button><div class="card"><div class="title">New Service Report</div>
-<label>Lift Number</label><input id="serviceLiftNumber" placeholder="Lift number">
-<label>Customer / Apartment</label><input id="serviceCustomer" placeholder="Apartment / Building">
-<label>Service Type</label><input id="serviceType" placeholder="Example: Preventive Maintenance">
-<label>Work Done</label><textarea id="serviceWorkDone" placeholder="Describe work done"></textarea>
-<label>Technician Remarks</label><textarea id="serviceRemarks" placeholder="Remarks"></textarea>
-<label>Location</label><input id="serviceLocation" placeholder="Location">
-<button class="primary" type="button" onclick="saveServiceReport()">SAVE SERVICE REPORT</button><div id="serviceStatus"></div>
-</div></div></section>
+<label>Remarks</label>
+<textarea id="maintenanceRemarks" placeholder="Technician remarks"></textarea>
+<button class="primary" onclick="saveMaintenance()">SAVE MAINTENANCE</button>
+<div id="maintenanceStatus"></div>
+</div>
+</div>
+</section>
 
+<!-- SERVICE -->
+<section id="serviceScreen" class="screen">
+<header>Service Report</header>
+<div class="container">
+<button class="secondary" onclick="showScreen('dashboardScreen')">← Back</button>
+<div class="card">
+<div class="title">New Service Report</div>
+<label>Lift Number *</label>
+<input id="serviceLiftNumber" placeholder="Lift number">
+<label>Customer / Apartment *</label>
+<input id="serviceCustomer" placeholder="Apartment / Building">
+<label>Service Type</label>
+<input id="serviceType" placeholder="Preventive Maintenance">
+<label>Work Done</label>
+<textarea id="serviceWorkDone" placeholder="Describe work done"></textarea>
+<label>Technician Remarks</label>
+<textarea id="serviceRemarks" placeholder="Remarks"></textarea>
+<label>Location</label>
+<input id="serviceLocation" placeholder="Location">
+<button class="primary" onclick="saveServiceReport()">SAVE SERVICE REPORT</button>
+<div id="serviceStatus"></div>
+</div>
+</div>
+</section>
 
-<section id="apartmentFileScreen" class="screen"><header>Apartment Complete File</header><div class="container">
-<button class="secondary" data-screen="dashboardScreen">← Back to Apartments</button><div id="apartmentFile">Loading...</div></div></section>
-<section id="searchScreen" class="screen"><header>Search</header><div class="container">
-<button class="secondary" data-screen="dashboardScreen">← Back to Dashboard</button><div class="card"><div class="title">Search Records</div><input id="searchInput" placeholder="Apartment / Building / Customer / Lift Number"></div><div id="searchResults"></div>
-</div></section>
-<section id="recordsScreen" class="screen"><header>Records</header><div class="container">
-<button class="secondary" data-screen="dashboardScreen">← Back to Dashboard</button><div id="recordsList"></div></div></section>
-<section id="reportDetailScreen" class="screen"><header>Report Details</header><div class="container">
-<button class="secondary" onclick="showDashboardRecords(currentReportType)">← Back to Reports</button><div id="reportDetail"></div></div></section>
-<section id="adminScreen" class="screen"><header>Admin Dashboard</header><div class="container">
-<button class="secondary" data-screen="dashboardScreen">← Back to Dashboard</button><div id="adminContent">Loading...</div></div></section>
+<!-- APARTMENT FILE -->
+<section id="apartmentFileScreen" class="screen">
+<header>Apartment Complete File</header>
+<div class="container">
+<button class="secondary" onclick="showScreen('dashboardScreen')">← Back to Apartments</button>
+<div id="apartmentFile">Loading...</div>
+</div>
+</section>
+
+<!-- SEARCH -->
+<section id="searchScreen" class="screen">
+<header>Search Records</header>
+<div class="container">
+<button class="secondary" onclick="showScreen('dashboardScreen')">← Back</button>
+<div class="card">
+<div class="title">Search</div>
+<input id="searchInput" placeholder="Apartment / Customer / Lift Number" oninput="searchRecords()">
+</div>
+<div id="searchResults"></div>
+</div>
+</section>
+
+<!-- ALL RECORDS -->
+<section id="recordsScreen" class="screen">
+<header>All Records</header>
+<div class="container">
+<button class="secondary" onclick="showScreen('dashboardScreen')">← Back</button>
+<div id="recordsList"></div>
+</div>
+</section>
+
+<!-- REPORT DETAILS -->
+<section id="reportDetailScreen" class="screen">
+<header>Report Details</header>
+<div class="container">
+<button class="secondary" onclick="showScreen('apartmentFileScreen')">← Back</button>
+<div id="reportDetail"></div>
+</div>
+</section>
+
+<!-- ADMIN -->
+<section id="adminScreen" class="screen">
+<header>Admin Dashboard</header>
+<div class="container">
+<button class="secondary" onclick="showScreen('dashboardScreen')">← Back</button>
+<div id="adminContent"></div>
+</div>
+</section>
 
 <script>
-const SUPABASE_URL = "https://bszdhcodjwflhoqxjtqb.supabase.co";
-const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_wKQWg06T6Qiuv7uN5VJ4Kg_vJtl0x7H";
-const ADMIN_EMAIL = "sunilkumarjelly11@gmail.com";
-let supabaseClient = null;
-let liftRecords = [], breakdownRecords = [], maintenanceRecords = [], serviceRecords = [];
-let currentApartment = "", currentReportType = "breakdown";
+// =======================================
+// SUPABASE CONFIGURATION
+// =======================================
 
-function $(id){return document.getElementById(id);}
-function esc(value){return String(value == null ? "" : value).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");}
-function technician(){return localStorage.getItem("technicianEmail") || "";}
-function setStatus(id,message,type){const el=$(id);if(el){el.className="status "+(type||"");el.textContent=message||"";}}
-function sameApartment(a,b){return String(a||"").trim().toLowerCase()===String(b||"").trim().toLowerCase();}
-function formatDate(value){return value ? new Date(value).toLocaleString("en-IN") : "-";}
-function initSupabase(){try{if(!window.supabase){setStatus("loginStatus","Supabase library did not load.","error");return false;}supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);return true;}catch(e){setStatus("loginStatus","Supabase connection error: "+e.message,"error");return false;}}
+const SUPABASE_URL="https://bszdhcodjwflhoqxjtqb.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY="sb_publishable_wKQWg06T6Qiuv7uN5VJ4Kg_vJtl0x7H";
+const ADMIN_EMAIL="sunilkumarjelly11@gmail.com";
+
+let supabaseClient=null;
+let liftRecords=[];
+let breakdownRecords=[];
+let maintenanceRecords=[];
+let serviceRecords=[];
+let currentApartment="";
+let currentReportType="breakdown";
+let currentReportId="";
+
+// =======================================
+// COMMON FUNCTIONS
+// =======================================
+
+function $(id){return document.getElementById(id)}
+
+function esc(value){
+return String(value==null?"":value)
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
+}
+
+function technician(){
+return localStorage.getItem("technicianEmail")||"";
+}
+
+function setStatus(id,message,type=""){
+const el=$(id);
+if(!el)return;
+el.className="status "+type;
+el.textContent=message;
+}
+
+function sameApartment(a,b){
+return String(a||"").trim().toLowerCase()===
+String(b||"").trim().toLowerCase();
+}
+
+function formatDate(value){
+if(!value)return "-";
+const d=new Date(value);
+return isNaN(d.getTime())?"-":d.toLocaleString("en-IN");
+}
+
+function initSupabase(){
+try{
+if(!window.supabase){
+setStatus("loginStatus","Supabase library failed to load.","error");
+return false;
+}
+supabaseClient=window.supabase.createClient(
+SUPABASE_URL,
+SUPABASE_PUBLISHABLE_KEY
+);
+return true;
+}catch(e){
+setStatus("loginStatus","Supabase error: "+e.message,"error");
+return false;
+}
+}
+
+function showScreen(id){
+document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
+const target=$(id);
+if(target)target.classList.add("active");
+
+if(id==="dashboardScreen"){
+loadApartments();
+}
+if(id==="recordsScreen")renderRecords();
+if(id==="searchScreen")searchRecords();
+if(id==="adminScreen")loadAdminDashboard();
+if(id==="breakdownScreen")loadBreakdownApartments();
+if(id==="maintenanceScreen")loadMaintenanceApartments();
+if(id==="apartmentFileScreen")renderApartmentFile();
+}
+
+// =======================================
+// LOGIN / LOGOUT
+// =======================================
 
 async function login(){
- const email=$("email").value.trim(), password=$("password").value;
- setStatus("loginStatus","");
- if(!email||!password){setStatus("loginStatus","Please enter your email and password.","error");return;}
- if(!supabaseClient&&!initSupabase())return;
- const button=$("loginButton");button.disabled=true;button.textContent="SIGNING IN...";
- try{
-  const {data,error}=await supabaseClient.auth.signInWithPassword({email,password});
-  if(error)throw error;
-  localStorage.setItem("technicianEmail",data.user.email);
-  showScreen("dashboardScreen");await loadAllData();updateDashboard();
- }catch(e){setStatus("loginStatus","Login failed: "+e.message,"error");}
- finally{button.disabled=false;button.textContent="LOGIN";}
+const email=$("email").value.trim();
+const password=$("password").value;
+
+setStatus("loginStatus","");
+
+if(!email||!password){
+setStatus("loginStatus","Enter email and password.","error");
+return;
 }
-async function logout(){try{if(supabaseClient)await supabaseClient.auth.signOut();}catch(e){console.error(e);}
- localStorage.removeItem("technicianEmail");liftRecords=[];breakdownRecords=[];maintenanceRecords=[];serviceRecords=[];showScreen("loginScreen");}
+
+if(!supabaseClient&&!initSupabase())return;
+
+const button=$("loginButton");
+button.disabled=true;
+button.textContent="SIGNING IN...";
+
+try{
+const {data,error}=await supabaseClient.auth.signInWithPassword({
+email,password
+});
+if(error)throw error;
+
+localStorage.setItem("technicianEmail",data.user.email);
+$("password").value="";
+showScreen("dashboardScreen");
+await loadAllData();
+
+}catch(e){
+setStatus("loginStatus","Login failed: "+e.message,"error");
+}finally{
+button.disabled=false;
+button.textContent="LOGIN";
+}
+}
+
+async function logout(){
+try{
+if(supabaseClient)await supabaseClient.auth.signOut();
+}catch(e){
+console.error(e);
+}
+localStorage.removeItem("technicianEmail");
+liftRecords=[];
+breakdownRecords=[];
+maintenanceRecords=[];
+serviceRecords=[];
+showScreen("loginScreen");
+}
+
 async function checkSession(){
- if(!supabaseClient&&!initSupabase())return;
- try{const {data,error}=await supabaseClient.auth.getSession();if(error)throw error;
-  if(data.session){localStorage.setItem("technicianEmail",data.session.user.email);showScreen("dashboardScreen");await loadAllData();updateDashboard();}
-  else showScreen("loginScreen");
- }catch(e){console.error("Session error:",e);showScreen("loginScreen");}
+if(!supabaseClient&&!initSupabase())return;
+
+try{
+const {data,error}=await supabaseClient.auth.getSession();
+if(error)throw error;
+
+if(data.session){
+localStorage.setItem("technicianEmail",data.session.user.email);
+showScreen("dashboardScreen");
+await loadAllData();
+}else{
+showScreen("loginScreen");
 }
-function showScreen(id){
- document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
- const target=$(id);if(target)target.classList.add("active");
- if(id==="dashboardScreen")loadApartments();
- if(id==="recordsScreen")renderRecords();
- if(id==="searchScreen")searchRecords();
- if(id==="adminScreen")loadAdminDashboard();
- if(id==="breakdownScreen")loadBreakdownApartments();
- if(id==="maintenanceScreen")loadMaintenanceApartments();
- if(id==="apartmentFileScreen")renderApartmentFile();
+}catch(e){
+console.error("Session error:",e);
+showScreen("loginScreen");
 }
+}
+
+// =======================================
+// LOAD ALL DATA
+// =======================================
+
 async function loadAllData(){
- if(!supabaseClient&&!initSupabase())return;
- const email=technician();
- try{
-  const [lifts,breakdowns,maintenance,services]=await Promise.all([
-   supabaseClient.from("lift_records").select("*").eq("technician",email).order("created_at",{ascending:false}),
-   supabaseClient.from("breakdown_records").select("*").eq("technician",email).order("created_at",{ascending:false}),
-   supabaseClient.from("maintenance_records").select("*").eq("technician",email).order("created_at",{ascending:false}),
-   supabaseClient.from("service_records").select("*").eq("technician",email).order("created_at",{ascending:false})
-  ]);
-  [lifts,breakdowns,maintenance,services].forEach(r=>{if(r.error)throw r.error;});
-  liftRecords=(lifts.data||[]).map(r=>({id:r.id,technician:r.technician,liftNumber:r.lift_number,customer:r.customer,brand:r.brand,location:r.location,floors:r.floors,latitude:r.latitude,longitude:r.longitude,date:r.created_at}));
-  breakdownRecords=(breakdowns.data||[]).map(r=>({id:r.id,technician:r.technician,liftNumber:r.lift_number,customer:r.customer,problem:r.problem,actionTaken:r.action_taken,location:r.location,date:r.created_at}));
-  maintenanceRecords=(maintenance.data||[]).map(r=>({id:r.id,technician:r.technician,liftNumber:r.lift_number,customer:r.customer,location:r.location,checks:r.checklist||{},remarks:r.remarks||"",date:r.created_at}));
-  serviceRecords=(services.data||[]).map(r=>({id:r.id,technician:r.technician,liftNumber:r.lift_number,customer:r.customer,serviceType:r.service_type||"",workDone:r.work_done||"",remarks:r.remarks||"",location:r.location,date:r.created_at}));
-  updateDashboard();renderRecords();
-  if($("breakdownScreen").classList.contains("active"))await loadBreakdownApartments();
-  if($("maintenanceScreen").classList.contains("active"))await loadMaintenanceApartments();
- }catch(e){console.error("Load data error:",e);alert("Unable to load records: "+e.message);}
+if(!supabaseClient&&!initSupabase())return;
+
+const email=technician();
+
+try{
+const [lifts,breakdowns,maintenance,services]=await Promise.all([
+supabaseClient.from("lift_records").select("*")
+.eq("technician",email).order("created_at",{ascending:false}),
+
+supabaseClient.from("breakdown_records").select("*")
+.eq("technician",email).order("created_at",{ascending:false}),
+
+supabaseClient.from("maintenance_records").select("*")
+.eq("technician",email).order("created_at",{ascending:false}),
+
+supabaseClient.from("service_records").select("*")
+.eq("technician",email).order("created_at",{ascending:false})
+]);
+
+for(const r of [lifts,breakdowns,maintenance,services]){
+if(r.error)throw r.error;
 }
+
+liftRecords=(lifts.data||[]).map(r=>({
+id:r.id,
+technician:r.technician,
+liftNumber:r.lift_number,
+customer:r.customer,
+brand:r.brand,
+location:r.location,
+floors:r.floors,
+latitude:r.latitude,
+longitude:r.longitude,
+date:r.created_at
+}));
+
+breakdownRecords=(breakdowns.data||[]).map(r=>({
+id:r.id,
+technician:r.technician,
+liftNumber:r.lift_number,
+customer:r.customer,
+problem:r.problem,
+actionTaken:r.action_taken,
+location:r.location,
+date:r.created_at
+}));
+
+maintenanceRecords=(maintenance.data||[]).map(r=>({
+id:r.id,
+technician:r.technician,
+liftNumber:r.lift_number,
+customer:r.customer,
+location:r.location,
+checks:r.checklist||{},
+remarks:r.remarks||"",
+date:r.created_at
+}));
+
+serviceRecords=(services.data||[]).map(r=>({
+id:r.id,
+technician:r.technician,
+liftNumber:r.lift_number,
+customer:r.customer,
+serviceType:r.service_type||"",
+workDone:r.work_done||"",
+remarks:r.remarks||"",
+location:r.location,
+date:r.created_at
+}));
+
+updateDashboard();
+renderRecords();
+
+}catch(e){
+console.error("Load data error:",e);
+alert("Unable to load records: "+e.message);
+}
+}
+
+// =======================================
+// DASHBOARD
+// =======================================
+
 function updateDashboard(){
- $("welcomeName").textContent=technician()||"Technician";
- $("totalLifts").textContent=liftRecords.length;$("totalBreakdowns").textContent=breakdownRecords.length;
- $("totalMaintenance").textContent=maintenanceRecords.length;$("totalServices").textContent=serviceRecords.length;
- $("adminButton").style.display=technician().toLowerCase()===ADMIN_EMAIL.toLowerCase()?"block":"none";
+$("welcomeName").textContent=technician()||"Technician";
+
+$("totalLifts").textContent=liftRecords.length;
+$("totalBreakdowns").textContent=breakdownRecords.length;
+$("totalMaintenance").textContent=maintenanceRecords.length;
+$("totalServices").textContent=serviceRecords.length;
+
+$("adminButton").style.display=
+technician().toLowerCase()===ADMIN_EMAIL.toLowerCase()
+?"block":"none";
 }
-function captureGPSAndSave(){
- const button=$("gpsSaveButton");
- if(!navigator.geolocation){setStatus("gpsStatus","GPS is not supported by this browser.","error");return;}
- button.disabled=true;button.textContent="CAPTURING GPS...";setStatus("gpsStatus","Getting GPS location...");
- navigator.geolocation.getCurrentPosition(async pos=>{
-  setStatus("gpsStatus","GPS captured: "+pos.coords.latitude.toFixed(6)+", "+pos.coords.longitude.toFixed(6),"success");
-  await saveLift(pos.coords.latitude,pos.coords.longitude);button.disabled=false;button.textContent="📍 Capture GPS & Save Lift";
- },err=>{button.disabled=false;button.textContent="📍 Capture GPS & Save Lift";setStatus("gpsStatus","GPS error: "+err.message,"error");},{enableHighAccuracy:true,timeout:15000,maximumAge:0});
+
+function getApartmentNames(){
+return [...new Set(
+liftRecords.map(r=>(r.customer||"").trim()).filter(Boolean)
+)].sort((a,b)=>a.localeCompare(b));
 }
-async function saveLift(latitude,longitude){
- const data={technician:technician(),lift_number:$("liftNumber").value.trim(),customer:$("customerName").value.trim(),brand:$("liftBrand").value.trim(),location:$("liftLocation").value.trim(),floors:$("floors").value||null,latitude,longitude};
- if(!data.lift_number||!data.customer){setStatus("gpsStatus","Enter Lift Number and Customer / Apartment.","error");return;}
- try{
-  const {error}=await supabaseClient.from("lift_records").insert(data);if(error)throw error;
-  const apartmentName=data.customer;
-  const existing=await supabaseClient.from("apartments").select("id").eq("name",apartmentName).limit(1);
-  if(existing.error)throw existing.error;
-  if(!existing.data||!existing.data.length){const add=await supabaseClient.from("apartments").insert({name:apartmentName});if(add.error)throw add.error;}
-  ["liftNumber","customerName","liftBrand","liftLocation","floors"].forEach(id=>$(id).value="");
-  setStatus("gpsStatus","Lift saved successfully.","success");await loadAllData();
- }catch(e){setStatus("gpsStatus","Save error: "+e.message,"error");}
+
+function loadApartments(){
+const box=$("apartmentsList");
+if(!box)return;
+
+if(!liftRecords.length){
+box.innerHTML='<div class="empty">No apartments found. Add your first lift.</div>';
+return;
 }
-function getApartmentOptions(){
- const names=new Set(liftRecords.map(r=>(r.customer||"").trim()).filter(Boolean));
- return Array.from(names).sort((a,b)=>a.localeCompare(b));
+
+filterApartmentCards();
 }
-function fillApartmentSelect(selectId,displayId){
- const select=$(selectId);if(!select)return;
- const names=getApartmentOptions();
- select.innerHTML='<option value="">Select Apartment</option>';
- names.forEach(name=>{
-  const lifts=liftRecords.filter(r=>sameApartment(r.customer,name));
-  lifts.forEach(lift=>{
-   const option=document.createElement("option");
-   option.value=String(lift.id);
-   option.textContent=name+" — Lift "+lift.liftNumber;
-   option.dataset.apartment=name;option.dataset.lift=lift.liftNumber;
-   select.appendChild(option);
-  });
- });
- if(!names.length)select.innerHTML='<option value="">No saved lift records found</option>';
- if(displayId)$(displayId).textContent="Select an apartment and lift.";
-}
-async function loadBreakdownApartments(){fillApartmentSelect("breakdownApartment","breakdownLiftDisplay");}
-async function loadMaintenanceApartments(){fillApartmentSelect("maintenanceApartment","maintenanceLiftDisplay");}
-function updateBreakdownLiftNumber(){
- const select=$("breakdownApartment"),option=select.options[select.selectedIndex];
- $("breakdownLiftNumber").value=option&&option.dataset.lift||"";
- $("breakdownLiftDisplay").textContent=option&&option.dataset.lift?"Selected Apartment: "+option.dataset.apartment+" | Lift Number: "+option.dataset.lift:"Select an apartment and lift.";
-}
-function updateMaintenanceLiftNumber(){
- const select=$("maintenanceApartment"),option=select.options[select.selectedIndex];
- $("maintenanceLiftNumber").value=option&&option.dataset.lift||"";
- $("maintenanceLiftDisplay").textContent=option&&option.dataset.lift?"Selected Apartment: "+option.dataset.apartment+" | Lift Number: "+option.dataset.lift:"Select an apartment and lift.";
-}
-async function saveBreakdown(){
- const select=$("breakdownApartment"),option=select.options[select.selectedIndex];
- const data={technician:technician(),lift_number:$("breakdownLiftNumber").value.trim(),customer:option&&option.dataset.apartment||"",problem:$("breakdownProblem").value.trim(),action_taken:$("breakdownAction").value.trim(),location:$("breakdownLocation").value.trim()};
- if(!data.customer||!data.lift_number||!data.problem){setStatus("breakdownStatus","Select an apartment and lift, then enter the problem.","error");return;}
- const button=$("breakdownSaveButton");button.disabled=true;
- try{const {error}=await supabaseClient.from("breakdown_records").insert(data);if(error)throw error;
-  ["breakdownProblem","breakdownAction","breakdownLocation"].forEach(id=>$(id).value="");select.value="";$("breakdownLiftNumber").value="";$("breakdownLiftDisplay").textContent="Select an apartment and lift.";
-  setStatus("breakdownStatus","Breakdown saved successfully.","success");await loadAllData();await loadBreakdownApartments();
- }catch(e){setStatus("breakdownStatus","Save error: "+e.message,"error");}finally{button.disabled=false;}
-}
-async function saveMaintenance(){
- const select=$("maintenanceApartment"),option=select.options[select.selectedIndex];
- const checks={"Machine Room":$("checkMachine").checked,"Oil Level":$("checkOil").checked,"Ropes":$("checkRopes").checked,"Door Operation":$("checkDoors").checked,"Safety Devices":$("checkSafety").checked,"Car Operation":$("checkCar").checked,"Pit Inspection":$("checkPit").checked,"Electrical Panel":$("checkElectrical").checked};
- const data={technician:technician(),lift_number:$("maintenanceLiftNumber").value.trim(),customer:option&&option.dataset.apartment||"",location:$("maintenanceLocation").value.trim(),checklist:checks,remarks:$("maintenanceRemarks").value.trim()};
- if(!data.customer||!data.lift_number){setStatus("maintenanceStatus","Select an apartment and lift.","error");return;}
- try{const {error}=await supabaseClient.from("maintenance_records").insert(data);if(error)throw error;
-  select.value="";$("maintenanceLiftNumber").value="";$("maintenanceLocation").value="";$("maintenanceRemarks").value="";
-  document.querySelectorAll("#maintenanceScreen input[type=checkbox]").forEach(x=>x.checked=false);
-  setStatus("maintenanceStatus","Maintenance saved successfully.","success");await loadAllData();
- }catch(e){setStatus("maintenanceStatus","Save error: "+e.message,"error");}
-}
-async function saveServiceReport(){
- const data={technician:technician(),lift_number:$("serviceLiftNumber").value.trim(),customer:$("serviceCustomer").value.trim(),service_type:$("serviceType").value.trim(),work_done:$("serviceWorkDone").value.trim(),remarks:$("serviceRemarks").value.trim(),location:$("serviceLocation").value.trim()};
- if(!data.lift_number||!data.customer){setStatus("serviceStatus","Enter Lift Number and Customer / Apartment.","error");return;}
- try{const {error}=await supabaseClient.from("service_records").insert(data);if(error)throw error;
-  ["serviceLiftNumber","serviceCustomer","serviceType","serviceWorkDone","serviceRemarks","serviceLocation"].forEach(id=>$(id).value="");
-  setStatus("serviceStatus","Service report saved successfully.","success");await loadAllData();
- }catch(e){setStatus("serviceStatus","Save error: "+e.message,"error");}
-}
-async function loadApartments(){
- const box=$("apartmentsList");box.textContent="Loading apartments...";
- try{
-  const {data,error}=await supabaseClient.from("apartments").select("*").order("name",{ascending:true});if(error)throw error;
-  const names=new Set((data||[]).map(a=>a.name).filter(Boolean));liftRecords.forEach(r=>{if(r.customer)names.add(r.customer);});
-  const apartments=Array.from(names).sort();
-  if(!apartments.length){box.innerHTML='<div class="empty">No apartments found.</div>';return;}
-  box.innerHTML=apartments.map(name=>{
-   const lifts=liftRecords.filter(r=>sameApartment(r.customer,name));
-   return `<button class="apartment-card" type="button" data-apartment="${esc(name)}"><strong>🏢 ${esc(name)}</strong><small>${lifts.length} lift(s) · Lift numbers: ${lifts.map(r=>esc(r.liftNumber)).join(", ")||"Not added yet"}</small></button>`;
-  }).join("");
-  box.querySelectorAll("[data-apartment]").forEach(b=>b.addEventListener("click",()=>openApartmentFile(b.dataset.apartment)));
- }catch(e){box.innerHTML='<div class="card error">'+esc(e.message)+'</div>';}
- }
+
 function filterApartmentCards(){
- const q=($("apartmentSearchInput")?.value||"").trim().toLowerCase();
- document.querySelectorAll("#apartmentsList button").forEach(b=>{
-  b.style.display=b.textContent.toLowerCase().includes(q)?"":"none";
- });
+const box=$("apartmentsList");
+if(!box)return;
+
+const q=($("apartmentSearchInput").value||"").trim().toLowerCase();
+
+const names=getApartmentNames().filter(name=>name.toLowerCase().includes(q));
+
+if(!names.length){
+box.innerHTML='<div class="empty">No matching apartments found.</div>';
+return;
 }
-function openApartmentFile(name){currentApartment=name;showScreen("apartmentFileScreen");}
-function apartmentReportForms(lifts){
- const options=lifts.map(r=>`<option value="${esc(r.liftNumber)}">Lift ${esc(r.liftNumber)}${r.brand?" - "+esc(r.brand):""}</option>`).join("");
- const empty=lifts.length?"":"<option value=\"\">No lift records for this apartment</option>";
- return `<div class="card"><div class="title">📝 Add Report to this Apartment</div>
- <div class="small">Apartment name is automatically linked: ${esc(currentApartment)}</div>
- <label>Lift Number</label><select id="apFileLift" ${lifts.length?"":"disabled"}>${empty}${lifts.length?`<option value="">Select Lift</option>${options}`:""}</select>
- <hr><div class="title">Breakdown Report</div><label>Problem</label><textarea id="apFileBreakProblem" placeholder="Describe the problem"></textarea>
- <label>Action Taken</label><textarea id="apFileBreakAction" placeholder="Describe action taken"></textarea>
- <label>Location</label><input id="apFileBreakLocation" placeholder="Location">
- <label>Photos / Videos</label><div class="media-actions"><label for="apFileCamera">📷 Open Camera<input id="apFileCamera" type="file" accept="image/*" capture="environment"></label><label for="apFileGallery">🖼️ Choose File<input id="apFileGallery" type="file" accept="image/*,video/*" multiple></label></div>
- <div id="apFileMediaPreview" class="small">Selected media preview will appear here.</div>
- <button class="primary" type="button" onclick="saveApartmentBreakdown()">SAVE BREAKDOWN</button><div id="apFileBreakStatus"></div>
- <hr><div class="title">Maintenance Checklist</div>
- <div class="check"><input type="checkbox" id="apFileCheckMachine"><label for="apFileCheckMachine">Machine Room</label></div><div class="check"><input type="checkbox" id="apFileCheckOil"><label for="apFileCheckOil">Oil Level</label></div><div class="check"><input type="checkbox" id="apFileCheckRopes"><label for="apFileCheckRopes">Ropes</label></div><div class="check"><input type="checkbox" id="apFileCheckDoors"><label for="apFileCheckDoors">Door Operation</label></div><div class="check"><input type="checkbox" id="apFileCheckSafety"><label for="apFileCheckSafety">Safety Devices</label></div><div class="check"><input type="checkbox" id="apFileCheckCar"><label for="apFileCheckCar">Car Operation</label></div><div class="check"><input type="checkbox" id="apFileCheckPit"><label for="apFileCheckPit">Pit Inspection</label></div><div class="check"><input type="checkbox" id="apFileCheckElectrical"><label for="apFileCheckElectrical">Electrical Panel</label></div>
- <label>Maintenance Remarks</label><textarea id="apFileMaintRemarks" placeholder="Remarks"></textarea><label>Location</label><input id="apFileMaintLocation" placeholder="Location"><button class="primary" type="button" onclick="saveApartmentMaintenance()">SAVE MAINTENANCE</button><div id="apFileMaintStatus"></div>
- <hr><div class="title">Service Report</div><label>Service Type</label><input id="apFileServiceType" placeholder="Example: Preventive Maintenance"><label>Work Done</label><textarea id="apFileServiceWork" placeholder="Describe work done"></textarea><label>Technician Remarks</label><textarea id="apFileServiceRemarks" placeholder="Remarks"></textarea><label>Location</label><input id="apFileServiceLocation" placeholder="Location"><button class="primary" type="button" onclick="saveApartmentService()">SAVE SERVICE REPORT</button><div id="apFileServiceStatus"></div>
- </div>`;
+
+box.innerHTML=names.map(name=>{
+const lifts=liftRecords.filter(r=>sameApartment(r.customer,name));
+const count=lifts.length;
+return `
+<button class="apartment-card" onclick="openApartment('${esc(name).replace(/'/g,"&#039;")}')">
+<strong>🏢 ${esc(name)}</strong>
+<small>${count} Lift(s)</small>
+<small>Tap to open complete apartment file →</small>
+</button>`;
+}).join("");
 }
-function stripMediaMarker(action){return String(action||"").split("\\n[MEDIA_URLS]")[0];}
-function parseMediaMarker(action){const text=String(action||"");const marker=text.indexOf("\\n[MEDIA_URLS]");if(marker<0)return [];try{return JSON.parse(text.slice(marker+14));}catch(e){return [];}}
-function renderMediaLinks(action){const urls=parseMediaMarker(action);if(!urls.length)return "";return `<div><b>Attached Media:</b><br>${urls.map(u=>u.type&&u.type.startsWith("video")?`<video controls style="width:100%;max-width:360px" src="${esc(u.url)}"></video>`:`<a href="${esc(u.url)}" target="_blank" rel="noopener"><img src="${esc(u.url)}" style="width:100%;max-width:360px;border-radius:10px;margin:6px 0"></a>`).join("")}</div>`;}
-function previewApartmentMedia(){const box=$("apFileMediaPreview");if(!box)return;const files=[...($("apFileCamera")?.files||[]),...($("apFileGallery")?.files||[])];if(!files.length){box.innerHTML="Selected media preview will appear here.";return;}box.innerHTML=files.map(f=>{const url=URL.createObjectURL(f);return `<div style="margin:8px 0"><b>${esc(f.name)}</b><br>${f.type.startsWith("video")?`<video controls style="width:100%;max-width:360px" src="${url}"></video>`:`<img style="width:100%;max-width:360px;border-radius:10px" src="${url}">`}</div>`;}).join("");}
-async function uploadApartmentMedia(files){if(!files.length)return [];const bucket="breakdown-media";const urls=[];for(const file of files){const safe=file.name.replace(/[^a-zA-Z0-9._-]/g,"_");const path=`${technician().replace(/[^a-zA-Z0-9_-]/g,"_")}/${Date.now()}_${Math.random().toString(36).slice(2)}_${safe}`;const {error}=await supabaseClient.storage.from(bucket).upload(path,file,{contentType:file.type,upsert:false});if(error)throw error;const {data}=supabaseClient.storage.from(bucket).getPublicUrl(path);urls.push({url:data.publicUrl,type:file.type,name:file.name});}return urls;}
-async function saveApartmentBreakdown(){const lift=$("apFileLift").value,problem=$("apFileBreakProblem").value.trim(),action=$("apFileBreakAction").value.trim();if(!lift||!problem){setStatus("apFileBreakStatus","Select lift and enter the problem.","error");return;}const btn=document.querySelector('button[onclick="saveApartmentBreakdown()"]');btn.disabled=true;try{const files=[...($("apFileCamera").files||[]),...($("apFileGallery").files||[])];const media=await uploadApartmentMedia(files);const actionWithMedia=action+(media.length?"\\n[MEDIA_URLS]"+JSON.stringify(media):"");const {error}=await supabaseClient.from("breakdown_records").insert({technician:technician(),lift_number:lift,customer:currentApartment,problem,action_taken:actionWithMedia,location:$("apFileBreakLocation").value.trim()});if(error)throw error;setStatus("apFileBreakStatus","Breakdown report saved.","success");["apFileBreakProblem","apFileBreakAction","apFileBreakLocation","apFileCamera","apFileGallery"].forEach(id=>$(id).value="");previewApartmentMedia();await loadAllData();renderApartmentFile();}catch(e){setStatus("apFileBreakStatus","Save failed: "+e.message,"error");}finally{btn.disabled=false;}}
-async function saveApartmentMaintenance(){const lift=$("apFileLift").value;if(!lift){setStatus("apFileMaintStatus","Select lift first.","error");return;}const checks={"Machine Room":$("apFileCheckMachine").checked,"Oil Level":$("apFileCheckOil").checked,"Ropes":$("apFileCheckRopes").checked,"Door Operation":$("apFileCheckDoors").checked,"Safety Devices":$("apFileCheckSafety").checked,"Car Operation":$("apFileCheckCar").checked,"Pit Inspection":$("apFileCheckPit").checked,"Electrical Panel":$("apFileCheckElectrical").checked};try{const {error}=await supabaseClient.from("maintenance_records").insert({technician:technician(),lift_number:lift,customer:currentApartment,location:$("apFileMaintLocation").value.trim(),checklist:checks,remarks:$("apFileMaintRemarks").value.trim()});if(error)throw error;setStatus("apFileMaintStatus","Maintenance saved.","success");["apFileMaintLocation","apFileMaintRemarks"].forEach(id=>$(id).value="");document.querySelectorAll('[id^="apFileCheck"]').forEach(x=>x.checked=false);await loadAllData();renderApartmentFile();}catch(e){setStatus("apFileMaintStatus","Save failed: "+e.message,"error");}}
-async function saveApartmentService(){const lift=$("apFileLift").value;if(!lift){setStatus("apFileServiceStatus","Select lift first.","error");return;}try{const {error}=await supabaseClient.from("service_records").insert({technician:technician(),lift_number:lift,customer:currentApartment,service_type:$("apFileServiceType").value.trim(),work_done:$("apFileServiceWork").value.trim(),remarks:$("apFileServiceRemarks").value.trim(),location:$("apFileServiceLocation").value.trim()});if(error)throw error;setStatus("apFileServiceStatus","Service report saved.","success");["apFileServiceType","apFileServiceWork","apFileServiceRemarks","apFileServiceLocation"].forEach(id=>$(id).value="");await loadAllData();renderApartmentFile();}catch(e){setStatus("apFileServiceStatus","Save failed: "+e.message,"error");}}
+
+function openApartment(name){
+currentApartment=name;
+showScreen("apartmentFileScreen");
+}
+
+// =======================================
+// LIFT DETAILS + GPS
+// =======================================
+
+function captureGPSAndSave(){
+const button=$("gpsSaveButton");
+
+if(!navigator.geolocation){
+setStatus("gpsStatus","GPS is not supported by this browser.","error");
+return;
+}
+
+button.disabled=true;
+button.textContent="CAPTURING GPS...";
+setStatus("gpsStatus","Getting GPS location...");
+
+navigator.geolocation.getCurrentPosition(
+async pos=>{
+try{
+const latitude=pos.coords.latitude;
+const longitude=pos.coords.longitude;
+
+setStatus("gpsStatus",
+"GPS captured: "+latitude.toFixed(6)+", "+longitude.toFixed(6),
+"success");
+
+await saveLift(latitude,longitude);
+}catch(e){
+setStatus("gpsStatus","Error: "+e.message,"error");
+}finally{
+button.disabled=false;
+button.textContent="📍 CAPTURE GPS & SAVE LIFT";
+}
+},
+err=>{
+button.disabled=false;
+button.textContent="📍 CAPTURE GPS & SAVE LIFT";
+setStatus("gpsStatus","GPS error: "+err.message,"error");
+},
+{
+enableHighAccuracy:true,
+timeout:20000,
+maximumAge:0
+}
+);
+}
+
+async function saveLift(latitude,longitude){
+const data={
+technician:technician(),
+lift_number:$("liftNumber").value.trim(),
+customer:$("customerName").value.trim(),
+brand:$("liftBrand").value.trim(),
+location:$("liftLocation").value.trim(),
+floors:$("floors").value?Number($("floors").value):null,
+latitude,
+longitude
+};
+
+if(!data.lift_number||!data.customer){
+setStatus("gpsStatus","Enter Lift Number and Apartment Name.","error");
+return;
+}
+
+try{
+const {error}=await supabaseClient
+.from("lift_records").insert(data);
+
+if(error)throw error;
+
+["liftNumber","customerName","liftBrand","liftLocation","floors"]
+.forEach(id=>$(id).value="");
+
+setStatus("gpsStatus","Lift saved successfully!","success");
+
+await loadAllData();
+
+}catch(e){
+setStatus("gpsStatus","Save error: "+e.message,"error");
+}
+}
+
+// =======================================
+// APARTMENT / LIFT SELECT
+// =======================================
+
+function fillApartmentSelect(selectId,displayId){
+const select=$(selectId);
+if(!select)return;
+
+select.innerHTML='<option value="">Select Apartment / Lift</option>';
+
+liftRecords.forEach(lift=>{
+const option=document.createElement("option");
+option.value=String(lift.id);
+option.textContent=(lift.customer||"Apartment")+" — Lift "+(lift.liftNumber||"-");
+select.appendChild(option);
+});
+
+if(!liftRecords.length){
+select.innerHTML='<option value="">No saved lifts found</option>';
+}
+
+if(displayId)setStatus(displayId,"Select a lift.");
+}
+
+function findLiftById(id){
+return liftRecords.find(r=>String(r.id)===String(id));
+}
+
+function loadBreakdownApartments(){
+fillApartmentSelect("breakdownApartment","breakdownLiftDisplay");
+}
+
+function loadMaintenanceApartments(){
+fillApartmentSelect("maintenanceApartment","maintenanceLiftDisplay");
+}
+
+function updateBreakdownLiftNumber(){
+const lift=findLiftById($("breakdownApartment").value);
+
+$("breakdownLiftNumber").value=lift?lift.liftNumber:"";
+
+if(lift){
+setStatus("breakdownLiftDisplay",
+"Apartment: "+lift.customer+" | Lift: "+lift.liftNumber+
+" | Location: "+(lift.location||"-"));
+$("breakdownLocation").value=lift.location||"";
+}else{
+setStatus("breakdownLiftDisplay","Select a lift.");
+}
+}
+
+function updateMaintenanceLiftNumber(){
+const lift=findLiftById($("maintenanceApartment").value);
+
+$("maintenanceLiftNumber").value=lift?lift.liftNumber:"";
+
+if(lift){
+setStatus("maintenanceLiftDisplay",
+"Apartment: "+lift.customer+" | Lift: "+lift.liftNumber);
+$("maintenanceLocation").value=lift.location||"";
+}else{
+setStatus("maintenanceLiftDisplay","Select a lift.");
+}
+}
+
+// =======================================
+// SAVE BREAKDOWN
+// =======================================
+
+async function saveBreakdown(){
+const lift=findLiftById($("breakdownApartment").value);
+const problem=$("breakdownProblem").value.trim();
+
+if(!lift){
+setStatus("breakdownStatus","Please select an apartment and lift.","error");
+return;
+}
+
+if(!problem){
+setStatus("breakdownStatus","Please enter the problem.","error");
+return;
+}
+
+const button=$("breakdownSaveButton");
+button.disabled=true;
+
+try{
+const data={
+technician:technician(),
+lift_number:lift.liftNumber,
+customer:lift.customer,
+problem,
+action_taken:$("breakdownAction").value.trim(),
+location:$("breakdownLocation").value.trim()
+};
+
+const {error}=await supabaseClient
+.from("breakdown_records").insert(data);
+
+if(error)throw error;
+
+$("breakdownProblem").value="";
+$("breakdownAction").value="";
+$("breakdownApartment").value="";
+$("breakdownLocation").value="";
+$("breakdownLiftNumber").value="";
+setStatus("breakdownLiftDisplay","Select a lift.");
+
+setStatus("breakdownStatus","Breakdown saved successfully!","success");
+await loadAllData();
+
+}catch(e){
+setStatus("breakdownStatus","Save error: "+e.message,"error");
+}finally{
+button.disabled=false;
+}
+}
+
+// =======================================
+// SAVE MAINTENANCE
+// =======================================
+
+async function saveMaintenance(){
+const lift=findLiftById($("maintenanceApartment").value);
+
+if(!lift){
+setStatus("maintenanceStatus","Please select an apartment and lift.","error");
+return;
+}
+
+const checklist={
+machine_room:$("checkMachine").checked,
+oil_level:$("checkOil").checked,
+ropes:$("checkRopes").checked,
+door_operation:$("checkDoors").checked,
+safety_devices:$("checkSafety").checked,
+car_operation:$("checkCar").checked,
+pit_inspection:$("checkPit").checked,
+electrical_panel:$("checkElectrical").checked
+};
+
+try{
+const data={
+technician:technician(),
+lift_number:lift.liftNumber,
+customer:lift.customer,
+location:$("maintenanceLocation").value.trim(),
+checklist,
+remarks:$("maintenanceRemarks").value.trim()
+};
+
+const {error}=await supabaseClient
+.from("maintenance_records").insert(data);
+
+if(error)throw error;
+
+[
+"checkMachine","checkOil","checkRopes","checkDoors",
+"checkSafety","checkCar","checkPit","checkElectrical"
+].forEach(id=>$(id).checked=false);
+
+$("maintenanceRemarks").value="";
+$("maintenanceApartment").value="";
+$("maintenanceLocation").value="";
+setStatus("maintenanceLiftDisplay","Select a lift.");
+
+setStatus("maintenanceStatus","Maintenance saved successfully!","success");
+await loadAllData();
+
+}catch(e){
+setStatus("maintenanceStatus","Save error: "+e.message,"error");
+}
+}
+
+// =======================================
+// SAVE SERVICE REPORT
+// =======================================
+
+async function saveServiceReport(){
+const liftNumber=$("serviceLiftNumber").value.trim();
+const customer=$("serviceCustomer").value.trim();
+
+if(!liftNumber||!customer){
+setStatus("serviceStatus","Enter Lift Number and Apartment Name.","error");
+return;
+}
+
+try{
+const data={
+technician:technician(),
+lift_number:liftNumber,
+customer,
+service_type:$("serviceType").value.trim(),
+work_done:$("serviceWorkDone").value.trim(),
+remarks:$("serviceRemarks").value.trim(),
+location:$("serviceLocation").value.trim()
+};
+
+const {error}=await supabaseClient
+.from("service_records").insert(data);
+
+if(error)throw error;
+
+[
+"serviceLiftNumber","serviceCustomer","serviceType",
+"serviceWorkDone","serviceRemarks","serviceLocation"
+].forEach(id=>$(id).value="");
+
+setStatus("serviceStatus","Service report saved successfully!","success");
+await loadAllData();
+
+}catch(e){
+setStatus("serviceStatus","Save error: "+e.message,"error");
+}
+}
+
+// =======================================
+// APARTMENT COMPLETE FILE
+// =======================================
+
 function renderApartmentFile(){
- const box=$("apartmentFile");if(!box)return;
- const lifts=liftRecords.filter(r=>sameApartment(r.customer,currentApartment));
- const breakdowns=breakdownRecords.filter(r=>sameApartment(r.customer,currentApartment));
- const maint=maintenanceRecords.filter(r=>sameApartment(r.customer,currentApartment));
- const services=serviceRecords.filter(r=>sameApartment(r.customer,currentApartment));
- let h=`<div class="card"><div class="title">🏢 ${esc(currentApartment)}</div><p>Lifts: <b>${lifts.length}</b></p><p>Breakdowns: <b>${breakdowns.length}</b></p><p>Maintenance: <b>${maint.length}</b></p><p>Services: <b>${services.length}</b></p></div>`;
- h+=apartmentReportForms(lifts);
- h+=`<div class="card"><div class="title">Lift Details</div>${lifts.length?lifts.map(r=>`<div class="record card"><b>Lift ${esc(r.liftNumber)}</b><br>Brand: ${esc(r.brand||"-")}<br>Floors: ${esc(r.floors||"-")}<br>Location: ${esc(r.location||"-")}<br>GPS: ${r.latitude==null?"-":esc(r.latitude)+", "+esc(r.longitude)}<br>Technician: ${esc(r.technician)}<br>Date: ${formatDate(r.date)}</div>`).join(""):'<div class="empty">No lift records.</div>'}</div>`;
- h+=renderHistorySection("Breakdown History",breakdowns,r=>`<b>Lift ${esc(r.liftNumber)}</b><br>Problem: ${esc(r.problem||"-")}<br>Action Taken: ${esc(stripMediaMarker(r.actionTaken)||"-")}<br>${renderMediaLinks(r.actionTaken)}<br>Location: ${esc(r.location||"-")}<br>Date: ${formatDate(r.date)}`);
- h+=renderHistorySection("Maintenance History",maint,r=>`<b>Lift ${esc(r.liftNumber)}</b><br>Checklist: ${esc(Object.keys(r.checks||{}).filter(k=>r.checks[k]).join(", ")||"-")}<br>Remarks: ${esc(r.remarks||"-")}<br>Date: ${formatDate(r.date)}`);
- h+=renderHistorySection("Service History",services,r=>`<b>Lift ${esc(r.liftNumber)}</b><br>Service: ${esc(r.serviceType||"-")}<br>Work Done: ${esc(r.workDone||"-")}<br>Remarks: ${esc(r.remarks||"-")}<br>Date: ${formatDate(r.date)}`);
- box.innerHTML=h;
+const box=$("apartmentFile");
+if(!box)return;
+
+if(!currentApartment){
+box.innerHTML='<div class="empty">Select an apartment.</div>';
+return;
 }
-function renderHistorySection(title,rows,render){return `<div class="card"><div class="title">${title}</div>${rows.length?rows.map(r=>`<div class="record card">${render(r)}<br>Technician: ${esc(r.technician)}</div>`).join(""):`<div class="empty">No records.</div>`}</div>`;}
+
+const lifts=liftRecords.filter(r=>sameApartment(r.customer,currentApartment));
+const breakdowns=breakdownRecords.filter(r=>sameApartment(r.customer,currentApartment));
+const maintenance=maintenanceRecords.filter(r=>sameApartment(r.customer,currentApartment));
+const services=serviceRecords.filter(r=>sameApartment(r.customer,currentApartment));
+
+let html=`
+<div class="card">
+<div class="title">🏢 ${esc(currentApartment)}</div>
+<div class="stat-grid">
+<div class="stat"><strong>${lifts.length}</strong><span>Lifts</span></div>
+<div class="stat"><strong>${breakdowns.length}</strong><span>Breakdowns</span></div>
+<div class="stat"><strong>${maintenance.length}</strong><span>Maintenance</span></div>
+<div class="stat"><strong>${services.length}</strong><span>Service Reports</span></div>
+</div>
+</div>
+`;
+
+lifts.forEach(l=>{
+html+=`
+<div class="card">
+<div class="title">Lift ${esc(l.liftNumber)}</div>
+<div class="detail-row"><b>Brand:</b> ${esc(l.brand||"-")}</div>
+<div class="detail-row"><b>Location:</b> ${esc(l.location||"-")}</div>
+<div class="detail-row"><b>Floors:</b> ${esc(l.floors||"-")}</div>
+<div class="detail-row"><b>GPS:</b> ${esc(l.latitude??"-")}, ${esc(l.longitude??"-")}</div>
+<div class="detail-row"><b>Added:</b> ${esc(formatDate(l.date))}</div>
+${l.latitude!=null&&l.longitude!=null?
+`<button class="secondary" onclick="openMap(${Number(l.latitude)},${Number(l.longitude)})">📍 OPEN IN GOOGLE MAPS</button>`:""}
+</div>`;
+});
+
+html+=renderReportSection("Breakdown Reports",breakdowns,"breakdown");
+html+=renderReportSection("Maintenance Reports",maintenance,"maintenance");
+html+=renderReportSection("Service Reports",services,"service");
+
+box.innerHTML=html;
+}
+
+function renderReportSection(title,items,type){
+let html=`<div class="card"><div class="title">${esc(title)} (${items.length})</div>`;
+
+if(!items.length){
+html+='<div class="empty">No records available.</div>';
+}else{
+items.forEach(r=>{
+let summary="";
+
+if(type==="breakdown")summary=r.problem;
+if(type==="maintenance")summary=r.remarks||"Maintenance completed";
+if(type==="service")summary=r.serviceType||"Service completed";
+
+html+=`
+<button class="record" onclick="openReport('${type}','${String(r.id).replace(/'/g,"")}')">
+<b>${esc("Lift "+(r.liftNumber||"-"))}</b>
+<br>${esc(summary||"-")}
+<br><span class="small">${esc(formatDate(r.date))}</span>
+<br><span class="small">Tap to view complete details →</span>
+</button>`;
+});
+}
+html+="</div>";
+return html;
+}
+
+function openMap(lat,lng){
+if(!Number.isFinite(lat)||!Number.isFinite(lng))return;
+window.open("https://www.google.com/maps?q="+lat+","+lng,"_blank");
+}
+
+// =======================================
+// REPORT DETAIL
+// =======================================
+
+function openReport(type,id){
+currentReportType=type;
+currentReportId=id;
+
+let list=type==="breakdown"?breakdownRecords:
+type==="maintenance"?maintenanceRecords:serviceRecords;
+
+const r=list.find(x=>String(x.id)===String(id));
+if(!r)return;
+
+let html=`<div class="card"><div class="title">${esc(type.toUpperCase())} REPORT</div>`;
+
+function row(label,value){
+return `<div class="detail-row"><b>${esc(label)}:</b><br>${esc(value||"-")}</div>`;
+}
+
+html+=row("Apartment",r.customer);
+html+=row("Lift Number",r.liftNumber);
+html+=row("Date",formatDate(r.date));
+
+if(type==="breakdown"){
+html+=row("Problem",r.problem);
+html+=row("Action Taken",r.actionTaken);
+html+=row("Location",r.location);
+}
+
+if(type==="maintenance"){
+html+=row("Location",r.location);
+html+='<hr><b>Checklist</b>';
+
+const labels={
+machine_room:"Machine Room",
+oil_level:"Oil Level",
+ropes:"Ropes",
+door_operation:"Door Operation",
+safety_devices:"Safety Devices",
+car_operation:"Car Operation",
+pit_inspection:"Pit Inspection",
+electrical_panel:"Electrical Panel"
+};
+
+Object.keys(labels).forEach(k=>{
+html+=`<div class="detail-row">${esc(labels[k])}: <b>${r.checks&&r.checks[k]?"Completed":"Not completed"}</b></div>`;
+});
+
+html+=row("Remarks",r.remarks);
+}
+
+if(type==="service"){
+html+=row("Service Type",r.serviceType);
+html+=row("Work Done",r.workDone);
+html+=row("Technician Remarks",r.remarks);
+html+=row("Location",r.location);
+}
+
+html+="</div>";
+$("reportDetail").innerHTML=html;
+showScreen("reportDetailScreen");
+}
+
+// =======================================
+// ALL RECORDS
+// =======================================
+
 function renderRecords(){
- const box=$("recordsList");if(!box)return;
- box.innerHTML=liftRecords.length?liftRecords.map(r=>`<div class="record card"><b>Lift ${esc(r.liftNumber)}</b><br>Customer: ${esc(r.customer)}<br>Brand: ${esc(r.brand||"-")}<br>Location: ${esc(r.location||"-")}<br>Floors: ${esc(r.floors||"-")}<br>Technician: ${esc(r.technician)}<br>Date: ${formatDate(r.date)}</div>`).join(""):'<div class="card empty">No lift records found.</div>';
+const box=$("recordsList");
+if(!box)return;
+
+let html="";
+
+html+=renderReportSection("Breakdown Reports",breakdownRecords,"breakdown");
+html+=renderReportSection("Maintenance Reports",maintenanceRecords,"maintenance");
+html+=renderReportSection("Service Reports",serviceRecords,"service");
+
+if(!liftRecords.length&&!breakdownRecords.length&&
+!maintenanceRecords.length&&!serviceRecords.length){
+html='<div class="empty">No records found.</div>';
 }
+
+box.innerHTML=html;
+}
+
+// =======================================
+// SEARCH
+// =======================================
+
 function searchRecords(){
- const input=$("searchInput"),box=$("searchResults");if(!input||!box)return;
- const q=input.value.trim().toLowerCase();if(!q){box.innerHTML='<div class="card empty">Enter an apartment, building, customer or lift number.</div>';return;}
- const rows=liftRecords.filter(r=>[r.customer,r.liftNumber,r.location,r.brand].some(v=>String(v||"").toLowerCase().includes(q)));
- box.innerHTML=rows.length?rows.map(r=>`<div class="record card"><b>🏢 ${esc(r.customer)}</b><br>Lift: ${esc(r.liftNumber)}<br>Brand: ${esc(r.brand||"-")}<br>Location: ${esc(r.location||"-")}<br>Floors: ${esc(r.floors||"-")}<br>Date: ${formatDate(r.date)}</div>`).join(""):'<div class="card empty">No records found.</div>';
+const box=$("searchResults");
+if(!box)return;
+
+const q=($("searchInput").value||"").trim().toLowerCase();
+
+if(!q){
+box.innerHTML='<div class="empty">Enter a search term.</div>';
+return;
 }
-function showDashboardRecords(type){
- currentReportType=type;showScreen("recordsScreen");
- const rows=type==="breakdown"?breakdownRecords:type==="maintenance"?maintenanceRecords:serviceRecords;
- const title=type==="breakdown"?"Breakdown Reports":type==="maintenance"?"Maintenance Records":"Service Reports";
- $("recordsList").innerHTML=`<div class="card"><div class="title">${title}</div>${rows.length?rows.map((r,i)=>`<div class="record card"><b>${title} ${i+1}</b><br>Apartment: ${esc(r.customer||"-")} | Lift: ${esc(r.liftNumber||"-")}<br><button class="secondary" type="button" onclick="showReportDetails('${type}',${i})">View Full Details</button></div>`).join(""):`<div class="empty">No ${title.toLowerCase()} found.</div>`}</div>`;
+
+let results=[];
+
+liftRecords.forEach(r=>{
+if([r.customer,r.liftNumber,r.brand,r.location]
+.some(v=>String(v||"").toLowerCase().includes(q))){
+results.push({
+title:"Lift "+r.liftNumber+" - "+r.customer,
+detail:"Lift Details",
+date:r.date,
+action:()=>openApartment(r.customer)
+});
 }
-function showReportDetails(type,index){
- const rows=type==="breakdown"?breakdownRecords:type==="maintenance"?maintenanceRecords:serviceRecords;const r=rows[index];if(!r){alert("Record not found.");return;}
- let h="";
- if(type==="breakdown")h=`<div class="title">Breakdown Report</div><b>Apartment:</b> ${esc(r.customer||"-")}<br><b>Lift Number:</b> ${esc(r.liftNumber||"-")}<br><br><b>Problem:</b> ${esc(r.problem||"-")}<br><br><b>Action Taken:</b> ${esc(r.actionTaken||"-")}<br><br><b>Location:</b> ${esc(r.location||"-")}<br><br><b>Technician:</b> ${esc(r.technician||"-")}<br><br><b>Date:</b> ${formatDate(r.date)}`;
- if(type==="maintenance")h=`<div class="title">Maintenance Record</div><b>Apartment:</b> ${esc(r.customer||"-")}<br><b>Lift Number:</b> ${esc(r.liftNumber||"-")}<br><br><b>Checklist:</b> ${esc(Object.keys(r.checks||{}).filter(k=>r.checks[k]).join(", ")||"-")}<br><br><b>Remarks:</b> ${esc(r.remarks||"-")}<br><br><b>Location:</b> ${esc(r.location||"-")}<br><br><b>Technician:</b> ${esc(r.technician||"-")}<br><br><b>Date:</b> ${formatDate(r.date)}`;
- if(type==="service")h=`<div class="title">Service Report</div><b>Apartment:</b> ${esc(r.customer||"-")}<br><b>Lift Number:</b> ${esc(r.liftNumber||"-")}<br><br><b>Service Type:</b> ${esc(r.serviceType||"-")}<br><br><b>Work Done:</b> ${esc(r.workDone||"-")}<br><br><b>Remarks:</b> ${esc(r.remarks||"-")}<br><br><b>Location:</b> ${esc(r.location||"-")}<br><br><b>Technician:</b> ${esc(r.technician||"-")}<br><br><b>Date:</b> ${formatDate(r.date)}`;
- $("reportDetail").innerHTML=`<div class="card">${h}</div>`;showScreen("reportDetailScreen");
+});
+
+breakdownRecords.forEach(r=>{
+if([r.customer,r.liftNumber,r.problem,r.actionTaken]
+.some(v=>String(v||"").toLowerCase().includes(q))){
+results.push({
+title:"Breakdown - "+r.customer+" / Lift "+r.liftNumber,
+detail:r.problem,
+date:r.date,
+action:()=>openReport("breakdown",r.id)
+});
 }
+});
+
+maintenanceRecords.forEach(r=>{
+if([r.customer,r.liftNumber,r.remarks]
+.some(v=>String(v||"").toLowerCase().includes(q))){
+results.push({
+title:"Maintenance - "+r.customer+" / Lift "+r.liftNumber,
+detail:r.remarks,
+date:r.date,
+action:()=>openReport("maintenance",r.id)
+});
+}
+});
+
+serviceRecords.forEach(r=>{
+if([r.customer,r.liftNumber,r.serviceType,r.workDone]
+.some(v=>String(v||"").toLowerCase().includes(q))){
+results.push({
+title:"Service - "+r.customer+" / Lift "+r.liftNumber,
+detail:r.serviceType,
+date:r.date,
+action:()=>openReport("service",r.id)
+});
+}
+});
+
+if(!results.length){
+box.innerHTML='<div class="empty">No matching records found.</div>';
+return;
+}
+
+box.innerHTML=results.map((r,i)=>`
+<button class="record" data-search-index="${i}">
+<b>${esc(r.title)}</b>
+<br>${esc(r.detail||"-")}
+<br><span class="small">${esc(formatDate(r.date))}</span>
+</button>
+`).join("");
+
+box.querySelectorAll("[data-search-index]").forEach(btn=>{
+btn.addEventListener("click",()=>{
+const index=Number(btn.dataset.searchIndex);
+results[index].action();
+});
+});
+}
+
+// =======================================
+// ADMIN DASHBOARD
+// =======================================
+
 async function loadAdminDashboard(){
- const box=$("adminContent");if(technician().toLowerCase()!==ADMIN_EMAIL.toLowerCase()){box.innerHTML='<div class="card empty">Admin access only.</div>';return;}
- box.textContent="Loading admin data...";
- try{
-  const tables=["lift_records","breakdown_records","maintenance_records","service_records"];
-  const results=await Promise.all(tables.map(t=>supabaseClient.from(t).select("*").order("created_at",{ascending:false})));
-  results.forEach(r=>{if(r.error)throw r.error;});
-  const [l,b,m,s]=results.map(r=>r.data||[]);
-  box.innerHTML=`<div class="card"><div class="title">Admin Overview</div><div class="stat">Lift Records: <b>${l.length}</b></div><div class="stat">Breakdown Reports: <b>${b.length}</b></div><div class="stat">Maintenance Records: <b>${m.length}</b></div><div class="stat">Service Reports: <b>${s.length}</b></div></div>`+
-  adminSection("Lift Records",l,r=>`Lift ${esc(r.lift_number)}<br>Technician: ${esc(r.technician)}<br>Customer: ${esc(r.customer)}<br>Location: ${esc(r.location||"-")}<br>Date: ${formatDate(r.created_at)}`)+
-  adminSection("Breakdown Reports",b,r=>`Lift ${esc(r.lift_number)}<br>Technician: ${esc(r.technician)}<br>Customer: ${esc(r.customer)}<br>Problem: ${esc(r.problem||"-")}<br>Date: ${formatDate(r.created_at)}`)+
-  adminSection("Maintenance Records",m,r=>`Lift ${esc(r.lift_number)}<br>Technician: ${esc(r.technician)}<br>Customer: ${esc(r.customer)}<br>Remarks: ${esc(r.remarks||"-")}<br>Date: ${formatDate(r.created_at)}`)+
-  adminSection("Service Reports",s,r=>`Lift ${esc(r.lift_number)}<br>Technician: ${esc(r.technician)}<br>Customer: ${esc(r.customer)}<br>Service: ${esc(r.service_type||"-")}<br>Work Done: ${esc(r.work_done||"-")}<br>Date: ${formatDate(r.created_at)}`);
- }catch(e){box.innerHTML='<div class="card error">'+esc(e.message)+'</div>';}
+const box=$("adminContent");
+if(!box)return;
+
+if(technician().toLowerCase()!==ADMIN_EMAIL.toLowerCase()){
+box.innerHTML='<div class="empty">Admin access only.</div>';
+return;
 }
-function adminSection(title,rows,render){return `<div class="card"><div class="title">${title}</div>${rows.length?rows.map(r=>`<div class="record card">${render(r)}</div>`).join(""):'<div class="empty">No records.</div>'}</div>`;}
-document.addEventListener("DOMContentLoaded",async()=>{
- document.querySelectorAll("[data-screen]").forEach(b=>b.addEventListener("click",()=>showScreen(b.dataset.screen)));
- $("searchInput").addEventListener("input",searchRecords);
- document.addEventListener("change",e=>{if(e.target&&(e.target.id==="apFileCamera"||e.target.id==="apFileGallery"))previewApartmentMedia();});
- initSupabase();await checkSession();
+
+box.innerHTML='<div class="empty">Loading admin information...</div>';
+
+try{
+const tables=[
+"lift_records",
+"breakdown_records",
+"maintenance_records",
+"service_records"
+];
+
+const results=await Promise.all(tables.map(table=>
+supabaseClient.from(table).select("*",{count:"exact",head:true})
+));
+
+results.forEach(r=>{if(r.error)throw r.error;});
+
+const counts=results.map(r=>r.count||0);
+
+box.innerHTML=`
+<div class="card">
+<div class="title">JSK ELEVATORS - Admin Dashboard</div>
+<div class="stat-grid">
+<div class="stat"><strong>${counts[0]}</strong><span>Total Lifts</span></div>
+<div class="stat"><strong>${counts[1]}</strong><span>Breakdowns</span></div>
+<div class="stat"><strong>${counts[2]}</strong><span>Maintenance</span></div>
+<div class="stat"><strong>${counts[3]}</strong><span>Service Reports</span></div>
+</div>
+<p class="small">Counts depend on your Supabase database access policies.</p>
+</div>`;
+}catch(e){
+box.innerHTML='<div class="status error">Admin loading error: '+esc(e.message)+'</div>';
+}
+}
+
+// =======================================
+// START APPLICATION
+// =======================================
+
+document.addEventListener("DOMContentLoaded",()=>{
+if(!initSupabase())return;
+checkSession();
 });
 </script>
+
 </body>
 </html>
