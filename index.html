@@ -26,7 +26,27 @@ button:disabled{opacity:.6;cursor:wait}.primary{background:#062542;color:#fff}.s
 .small{color:#687887;font-size:13px}.success{color:#087443}.error{color:#b42318}
 .check{display:flex;align-items:center;gap:10px;margin:10px 0;padding:10px;background:#f5f7f9;border-radius:8px}
 .check input{width:auto;margin:0}.check label{margin:0}hr{border:0;border-top:1px solid #e1e6eb;margin:18px 0}
-</style>
+
+/* JSK modern professional mobile theme */
+:root{--navy:#092b49;--blue:#1769aa;--ink:#172b3d;--muted:#718096;--line:#e4ebf2;--surface:#ffffff;--bg:#f3f6fa}
+body{font-family:Inter,system-ui,-apple-system,Segoe UI,Arial,sans-serif;background:linear-gradient(180deg,#edf4fb 0%,#f7f9fc 48%,#f3f6fa 100%);color:var(--ink);min-height:100vh}
+header{background:linear-gradient(120deg,#071f36,#10466f);padding:22px 18px;letter-spacing:1.2px;box-shadow:0 5px 18px rgba(7,31,54,.18)}
+.container{max-width:620px;padding:18px 16px 32px}.card{border:1px solid rgba(218,228,238,.9);border-radius:20px;padding:20px;box-shadow:0 8px 26px rgba(24,55,84,.07)}
+.logo{margin:44px 0 30px}.logo h1{font-size:34px;letter-spacing:-1px}.logo p{font-size:15px;color:var(--muted)}
+.title{font-size:20px;letter-spacing:-.3px;color:var(--navy)}
+input,select,textarea{border:1px solid #d8e2ec;border-radius:12px;background:#fbfdff;padding:14px;color:var(--ink);outline:none}
+input:focus,select:focus,textarea:focus{border-color:#4c91c8;box-shadow:0 0 0 3px rgba(76,145,200,.13)}
+button{border-radius:12px;transition:transform .12s ease,filter .12s ease}button:active{transform:scale(.99)}
+.primary{background:linear-gradient(120deg,#0b3558,#1769aa);box-shadow:0 5px 14px rgba(11,53,88,.16)}
+.secondary{background:#eaf1f7;color:#123b5c}.danger{background:#a93232}
+.menu-btn,.record{border:1px solid var(--line);border-radius:15px;padding:16px;box-shadow:0 3px 12px rgba(24,55,84,.04)}
+.record{line-height:1.65}.stat{background:#f1f6fb;border:1px solid #e1ebf4;border-radius:13px}
+.empty{background:#f8fafc;border:1px dashed #cbd8e5;border-radius:14px}
+.apartment-search{position:sticky;top:0;z-index:2;background:var(--bg);padding:4px 0 10px}
+.apartment-card{text-align:left;background:#fff;border:1px solid #dce6ef;border-radius:16px;padding:17px;margin:10px 0;box-shadow:0 5px 16px rgba(25,55,85,.06);color:var(--ink)}
+.apartment-card strong{font-size:16px;color:var(--navy)}.apartment-card small{display:block;color:var(--muted);margin-top:6px}
+.media-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}.media-actions label{margin:0;background:#edf4fa;border:1px solid #d8e5f0;color:#123b5c;text-align:center;padding:13px;border-radius:12px;cursor:pointer}.media-actions input{display:none}
+
 </head>
 <body>
 <section id="loginScreen" class="screen active">
@@ -38,22 +58,11 @@ button:disabled{opacity:.6;cursor:wait}.primary{background:#062542;color:#fff}.s
 </div></div></section>
 
 <section id="dashboardScreen" class="screen"><header>JSK ELEVATORS</header><div class="container">
-<div class="card"><div class="title">Dashboard</div><p>Welcome, <strong id="welcomeName">Technician</strong></p>
-<div class="stat">Total Lift Records: <strong id="totalLifts">0</strong></div>
-<div class="stat" role="button" onclick="showDashboardRecords('breakdown')">Breakdown Reports: <strong id="totalBreakdowns">0</strong></div>
-<div class="stat" role="button" onclick="showDashboardRecords('maintenance')">Maintenance Records: <strong id="totalMaintenance">0</strong></div>
-<div class="stat" role="button" onclick="showDashboardRecords('service')">Service Reports: <strong id="totalServices">0</strong></div></div>
-<button class="menu-btn" data-screen="liftScreen"><span>🏢</span>Lift Details</button>
-<button class="menu-btn" data-screen="breakdownScreen"><span>🚨</span>Breakdown Report</button>
-<button class="menu-btn" data-screen="maintenanceScreen"><span>🔧</span>Maintenance Checklist</button>
-<button class="menu-btn" data-screen="apartmentsScreen"><span>🏙️</span>Apartments</button>
-<button class="menu-btn" data-screen="searchScreen"><span>🔎</span>Search</button>
-<button class="menu-btn" data-screen="recordsScreen"><span>📋</span>Lift Records</button>
-<button class="menu-btn" data-screen="serviceScreen"><span>📝</span>Service Report</button>
-<button id="adminButton" class="menu-btn" data-screen="adminScreen" style="display:none"><span>👑</span>Admin Dashboard</button>
-<button class="danger" type="button" onclick="logout()">LOGOUT</button>
+<div class="card"><div class="title">Apartments</div><p class="small">Welcome, <strong id="welcomeName">Technician</strong></p>
+<div class="apartment-search"><input id="apartmentSearchInput" placeholder="Search apartment name..." oninput="filterApartmentCards()" aria-label="Search apartments"></div>
+<div id="apartmentsList"><div class="empty">Loading apartments...</div></div>
+</div><button class="danger" type="button" onclick="logout()">LOGOUT</button>
 </div></section>
-
 <section id="liftScreen" class="screen"><header>Lift Details</header><div class="container">
 <button class="secondary" data-screen="dashboardScreen">← Back to Dashboard</button><div class="card"><div class="title">Add Lift Details</div>
 <label>Lift Number</label><input id="liftNumber" placeholder="Example: 1">
@@ -104,11 +113,9 @@ button:disabled{opacity:.6;cursor:wait}.primary{background:#062542;color:#fff}.s
 <button class="primary" type="button" onclick="saveServiceReport()">SAVE SERVICE REPORT</button><div id="serviceStatus"></div>
 </div></div></section>
 
-<section id="apartmentsScreen" class="screen"><header>Apartments</header><div class="container">
-<button class="secondary" data-screen="dashboardScreen">← Back to Dashboard</button><div class="card"><div class="title">All Apartments</div><input id="apartmentSearchInput" placeholder="Search apartment name..." oninput="filterApartmentCards()"><div id="apartmentsList">Loading apartments...</div></div>
-</div></section>
+
 <section id="apartmentFileScreen" class="screen"><header>Apartment Complete File</header><div class="container">
-<button class="secondary" data-screen="apartmentsScreen">← Back to Apartments</button><div id="apartmentFile">Loading...</div></div></section>
+<button class="secondary" data-screen="dashboardScreen">← Back to Apartments</button><div id="apartmentFile">Loading...</div></div></section>
 <section id="searchScreen" class="screen"><header>Search</header><div class="container">
 <button class="secondary" data-screen="dashboardScreen">← Back to Dashboard</button><div class="card"><div class="title">Search Records</div><input id="searchInput" placeholder="Apartment / Building / Customer / Lift Number"></div><div id="searchResults"></div>
 </div></section>
@@ -161,7 +168,7 @@ async function checkSession(){
 function showScreen(id){
  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
  const target=$(id);if(target)target.classList.add("active");
- if(id==="apartmentsScreen")loadApartments();
+ if(id==="dashboardScreen")loadApartments();
  if(id==="recordsScreen")renderRecords();
  if(id==="searchScreen")searchRecords();
  if(id==="adminScreen")loadAdminDashboard();
@@ -288,7 +295,7 @@ async function loadApartments(){
   if(!apartments.length){box.innerHTML='<div class="empty">No apartments found.</div>';return;}
   box.innerHTML=apartments.map(name=>{
    const lifts=liftRecords.filter(r=>sameApartment(r.customer,name));
-   return `<button class="record card" type="button" data-apartment="${esc(name)}"><b>🏢 ${esc(name)}</b><br><br>Lifts: ${lifts.map(r=>esc(r.liftNumber)).join(", ")||"-"}</button>`;
+   return `<button class="apartment-card" type="button" data-apartment="${esc(name)}"><strong>🏢 ${esc(name)}</strong><small>${lifts.length} lift(s) · Lift numbers: ${lifts.map(r=>esc(r.liftNumber)).join(", ")||"Not added yet"}</small></button>`;
   }).join("");
   box.querySelectorAll("[data-apartment]").forEach(b=>b.addEventListener("click",()=>openApartmentFile(b.dataset.apartment)));
  }catch(e){box.innerHTML='<div class="card error">'+esc(e.message)+'</div>';}
@@ -309,7 +316,7 @@ function apartmentReportForms(lifts){
  <hr><div class="title">Breakdown Report</div><label>Problem</label><textarea id="apFileBreakProblem" placeholder="Describe the problem"></textarea>
  <label>Action Taken</label><textarea id="apFileBreakAction" placeholder="Describe action taken"></textarea>
  <label>Location</label><input id="apFileBreakLocation" placeholder="Location">
- <label>Photo / Video</label><input id="apFileBreakMedia" type="file" accept="image/*,video/*" multiple capture="environment">
+ <label>Photos / Videos</label><div class="media-actions"><label for="apFileCamera">📷 Open Camera<input id="apFileCamera" type="file" accept="image/*" capture="environment"></label><label for="apFileGallery">🖼️ Choose File<input id="apFileGallery" type="file" accept="image/*,video/*" multiple></label></div>
  <div id="apFileMediaPreview" class="small">Selected media preview will appear here.</div>
  <button class="primary" type="button" onclick="saveApartmentBreakdown()">SAVE BREAKDOWN</button><div id="apFileBreakStatus"></div>
  <hr><div class="title">Maintenance Checklist</div>
@@ -321,9 +328,9 @@ function apartmentReportForms(lifts){
 function stripMediaMarker(action){return String(action||"").split("\\n[MEDIA_URLS]")[0];}
 function parseMediaMarker(action){const text=String(action||"");const marker=text.indexOf("\\n[MEDIA_URLS]");if(marker<0)return [];try{return JSON.parse(text.slice(marker+14));}catch(e){return [];}}
 function renderMediaLinks(action){const urls=parseMediaMarker(action);if(!urls.length)return "";return `<div><b>Attached Media:</b><br>${urls.map(u=>u.type&&u.type.startsWith("video")?`<video controls style="width:100%;max-width:360px" src="${esc(u.url)}"></video>`:`<a href="${esc(u.url)}" target="_blank" rel="noopener"><img src="${esc(u.url)}" style="width:100%;max-width:360px;border-radius:10px;margin:6px 0"></a>`).join("")}</div>`;}
-function previewApartmentMedia(){const input=$("apFileBreakMedia"),box=$("apFileMediaPreview");if(!input||!box)return;const files=[...(input.files||[])];if(!files.length){box.innerHTML="Selected media preview will appear here.";return;}box.innerHTML=files.map(f=>{const url=URL.createObjectURL(f);return `<div style="margin:8px 0"><b>${esc(f.name)}</b><br>${f.type.startsWith("video")?`<video controls style="width:100%;max-width:360px" src="${url}"></video>`:`<img style="width:100%;max-width:360px;border-radius:10px" src="${url}">`}</div>`;}).join("");}
+function previewApartmentMedia(){const box=$("apFileMediaPreview");if(!box)return;const files=[...($("apFileCamera")?.files||[]),...($("apFileGallery")?.files||[])];if(!files.length){box.innerHTML="Selected media preview will appear here.";return;}box.innerHTML=files.map(f=>{const url=URL.createObjectURL(f);return `<div style="margin:8px 0"><b>${esc(f.name)}</b><br>${f.type.startsWith("video")?`<video controls style="width:100%;max-width:360px" src="${url}"></video>`:`<img style="width:100%;max-width:360px;border-radius:10px" src="${url}">`}</div>`;}).join("");}
 async function uploadApartmentMedia(files){if(!files.length)return [];const bucket="breakdown-media";const urls=[];for(const file of files){const safe=file.name.replace(/[^a-zA-Z0-9._-]/g,"_");const path=`${technician().replace(/[^a-zA-Z0-9_-]/g,"_")}/${Date.now()}_${Math.random().toString(36).slice(2)}_${safe}`;const {error}=await supabaseClient.storage.from(bucket).upload(path,file,{contentType:file.type,upsert:false});if(error)throw error;const {data}=supabaseClient.storage.from(bucket).getPublicUrl(path);urls.push({url:data.publicUrl,type:file.type,name:file.name});}return urls;}
-async function saveApartmentBreakdown(){const lift=$("apFileLift").value,problem=$("apFileBreakProblem").value.trim(),action=$("apFileBreakAction").value.trim();if(!lift||!problem){setStatus("apFileBreakStatus","Select lift and enter the problem.","error");return;}const btn=document.querySelector('button[onclick="saveApartmentBreakdown()"]');btn.disabled=true;try{const files=[...($("apFileBreakMedia").files||[])];const media=await uploadApartmentMedia(files);const actionWithMedia=action+(media.length?"\\n[MEDIA_URLS]"+JSON.stringify(media):"");const {error}=await supabaseClient.from("breakdown_records").insert({technician:technician(),lift_number:lift,customer:currentApartment,problem,action_taken:actionWithMedia,location:$("apFileBreakLocation").value.trim()});if(error)throw error;setStatus("apFileBreakStatus","Breakdown report saved.","success");["apFileBreakProblem","apFileBreakAction","apFileBreakLocation","apFileBreakMedia"].forEach(id=>$(id).value="");previewApartmentMedia();await loadAllData();renderApartmentFile();}catch(e){setStatus("apFileBreakStatus","Save failed: "+e.message,"error");}finally{btn.disabled=false;}}
+async function saveApartmentBreakdown(){const lift=$("apFileLift").value,problem=$("apFileBreakProblem").value.trim(),action=$("apFileBreakAction").value.trim();if(!lift||!problem){setStatus("apFileBreakStatus","Select lift and enter the problem.","error");return;}const btn=document.querySelector('button[onclick="saveApartmentBreakdown()"]');btn.disabled=true;try{const files=[...($("apFileCamera").files||[]),...($("apFileGallery").files||[])];const media=await uploadApartmentMedia(files);const actionWithMedia=action+(media.length?"\\n[MEDIA_URLS]"+JSON.stringify(media):"");const {error}=await supabaseClient.from("breakdown_records").insert({technician:technician(),lift_number:lift,customer:currentApartment,problem,action_taken:actionWithMedia,location:$("apFileBreakLocation").value.trim()});if(error)throw error;setStatus("apFileBreakStatus","Breakdown report saved.","success");["apFileBreakProblem","apFileBreakAction","apFileBreakLocation","apFileCamera","apFileGallery"].forEach(id=>$(id).value="");previewApartmentMedia();await loadAllData();renderApartmentFile();}catch(e){setStatus("apFileBreakStatus","Save failed: "+e.message,"error");}finally{btn.disabled=false;}}
 async function saveApartmentMaintenance(){const lift=$("apFileLift").value;if(!lift){setStatus("apFileMaintStatus","Select lift first.","error");return;}const checks={"Machine Room":$("apFileCheckMachine").checked,"Oil Level":$("apFileCheckOil").checked,"Ropes":$("apFileCheckRopes").checked,"Door Operation":$("apFileCheckDoors").checked,"Safety Devices":$("apFileCheckSafety").checked,"Car Operation":$("apFileCheckCar").checked,"Pit Inspection":$("apFileCheckPit").checked,"Electrical Panel":$("apFileCheckElectrical").checked};try{const {error}=await supabaseClient.from("maintenance_records").insert({technician:technician(),lift_number:lift,customer:currentApartment,location:$("apFileMaintLocation").value.trim(),checklist:checks,remarks:$("apFileMaintRemarks").value.trim()});if(error)throw error;setStatus("apFileMaintStatus","Maintenance saved.","success");["apFileMaintLocation","apFileMaintRemarks"].forEach(id=>$(id).value="");document.querySelectorAll('[id^="apFileCheck"]').forEach(x=>x.checked=false);await loadAllData();renderApartmentFile();}catch(e){setStatus("apFileMaintStatus","Save failed: "+e.message,"error");}}
 async function saveApartmentService(){const lift=$("apFileLift").value;if(!lift){setStatus("apFileServiceStatus","Select lift first.","error");return;}try{const {error}=await supabaseClient.from("service_records").insert({technician:technician(),lift_number:lift,customer:currentApartment,service_type:$("apFileServiceType").value.trim(),work_done:$("apFileServiceWork").value.trim(),remarks:$("apFileServiceRemarks").value.trim(),location:$("apFileServiceLocation").value.trim()});if(error)throw error;setStatus("apFileServiceStatus","Service report saved.","success");["apFileServiceType","apFileServiceWork","apFileServiceRemarks","apFileServiceLocation"].forEach(id=>$(id).value="");await loadAllData();renderApartmentFile();}catch(e){setStatus("apFileServiceStatus","Save failed: "+e.message,"error");}}
 function renderApartmentFile(){
@@ -384,7 +391,7 @@ function adminSection(title,rows,render){return `<div class="card"><div class="t
 document.addEventListener("DOMContentLoaded",async()=>{
  document.querySelectorAll("[data-screen]").forEach(b=>b.addEventListener("click",()=>showScreen(b.dataset.screen)));
  $("searchInput").addEventListener("input",searchRecords);
- document.addEventListener("change",e=>{if(e.target&&e.target.id==="apFileBreakMedia")previewApartmentMedia();});
+ document.addEventListener("change",e=>{if(e.target&&(e.target.id==="apFileCamera"||e.target.id==="apFileGallery"))previewApartmentMedia();});
  initSupabase();await checkSession();
 });
 </script>
