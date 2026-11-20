@@ -38,7 +38,7 @@
   <h3 class="title" style="margin-top:22px">Add Apartment</h3>
   <label for="new-apt-name">Apartment / Building Name</label><input id="new-apt-name" type="text" placeholder="Example: Green Park Apartments">
   <button class="success full" onclick="addApartment()">+ Save Apartment</button>
-  <p class="small">Each apartment has its own Breakdown, Service, Gallery, Camera, Video, Map, Controls, Manuals and Motors sections.</p>
+  <p class="small">All signed-in technicians can view the shared apartment list. Each apartment has its own Breakdown, Service, Gallery, Camera, Video, Map, Controls, Manuals and Motors records.</p>
 </section>
 
 <section id="apartment-list-screen" class="container hidden">
@@ -51,7 +51,7 @@
 <section id="apartment-screen" class="container hidden">
   <button class="secondary back" onclick="showScreen('apartment-list-screen')">← Apartments</button>
   <h2 class="title" id="apartment-heading">Apartment</h2>
-  <p class="sub">All information saved here belongs only to this apartment.</p>
+  <p class="sub">All technicians can view this apartment and its shared service records.</p>
   <div class="grid" id="module-grid"></div>
 </section>
 
@@ -122,7 +122,7 @@ async function restoreSession(){try{const {data}=await db.auth.getSession();if(d
 
 async function loadApartments(){
   if(!currentUser)return;
-  try{const {data,error}=await db.from('apartments').select('id,name,location,technician,created_at,latitude,longitude').eq('technician',currentUser.email).order('name',{ascending:true});if(error)throw error;apartments=data||[];}
+  try{const {data,error}=await db.from('apartments').select('id,name,location,technician,created_at,latitude,longitude').order('name',{ascending:true});if(error)throw error;apartments=data||[];}
   catch(err){showMessage('dashboard-message','Could not load apartments: '+err.message+'\nCheck the apartments table columns and its Row Level Security policy. This app uses the technician column.');return}
   renderApartmentList();
 }
@@ -147,7 +147,7 @@ function openApartmentMap(){if(!currentApartment)return;const a=currentApartment
 
 async function loadModuleAssets(){
   if(!currentUser||!currentApartment)return;el('module-assets').innerHTML='<div class="empty">Loading records...</div>';
-  try{const {data,error}=await db.from('apartment_assets').select('id,technician,apartment_name,category,title,notes,media_urls,created_at').eq('technician',currentUser.email).eq('apartment_name',currentApartment.name).eq('category',currentModule).order('created_at',{ascending:false});if(error)throw error;renderModuleAssets(data||[])}
+  try{const {data,error}=await db.from('apartment_assets').select('id,technician,apartment_name,category,title,notes,media_urls,created_at').eq('apartment_name',currentApartment.name).eq('category',currentModule).order('created_at',{ascending:false});if(error)throw error;renderModuleAssets(data||[])}
   catch(err){el('module-assets').innerHTML='';showMessage('module-message','Could not load records: '+err.message)}
 }
 function renderModuleAssets(rows){
@@ -180,3 +180,4 @@ restoreSession();
 </script>
 </body>
 </html>
+
