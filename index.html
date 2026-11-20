@@ -122,14 +122,14 @@ async function restoreSession(){try{const {data}=await db.auth.getSession();if(d
 
 async function loadApartments(){
   if(!currentUser)return;
-  try{const {data,error}=await db.from('apartments').select('id,name,created_at').eq('user_id',currentUser.id).order('name',{ascending:true});if(error)throw error;apartments=data||[];}
-  catch(err){showMessage('dashboard-message','Could not load apartments: '+err.message+'\nPlease run the supplied SQL setup in Supabase.');return}
+  try{const {data,error}=await db.from('apartments').select('id,name,location,technician,created_at,latitude,longitude').eq('technician',currentUser.email).order('name',{ascending:true});if(error)throw error;apartments=data||[];}
+  catch(err){showMessage('dashboard-message','Could not load apartments: '+err.message+'\nCheck the apartments table columns and its Row Level Security policy. This app uses the technician column.');return}
   renderApartmentList();
 }
 async function addApartment(){
   const name=el('new-apt-name').value.trim();if(!name){showMessage('dashboard-message','Please enter an apartment name.');return}
   const exists=apartments.some(a=>a.name.toLowerCase()===name.toLowerCase());if(exists){showMessage('dashboard-message','This apartment is already in your list.');return}
-  try{const {error}=await db.from('apartments').insert([{user_id:currentUser.id,technician:currentUser.email, name}]);if(error)throw error;el('new-apt-name').value='';hideMessage('dashboard-message');await loadApartments();showMessage('dashboard-message','Apartment saved successfully.','ok')}
+  try{const {error}=await db.from('apartments').insert([{technician:currentUser.email, name}]);if(error)throw error;el('new-apt-name').value='';hideMessage('dashboard-message');await loadApartments();showMessage('dashboard-message','Apartment saved successfully.','ok')}
   catch(err){showMessage('dashboard-message','Could not save apartment: '+err.message)}
 }
 function openApartmentList(filter){apartmentFilter=filter||'';el('list-filter-label').textContent=filter?filter.toUpperCase():'All Apartments';el('apartment-search').value='';renderApartmentList();showScreen('apartment-list-screen')}
@@ -140,18 +140,20 @@ function renderApartmentList(){
   list.innerHTML=rows.map(a=>`<div class="apt-card"><div><strong>${escapeHTML(a.name)}</strong><div class="muted">Open apartment modules</div></div><button class="primary" onclick="openApartment('${a.id}')">Open →</button></div>`).join('');
 }
 function filterApartmentList(){renderApartmentList()}
-function openApartment(id){const apt=apartments.find(a=>a.id===id);if(!apt)return;currentApartment=apt;el('apartment-heading').textContent=apt.name;el('module-grid').innerHTML=MODULES.map(m=>`<div class="card" onclick="openModule('${m.id}')"><div class="ico">${m.icon}</div><h3>${m.name}</h3></div>`).join('');showScreen('apartment-screen')}
-function openModule(module){currentModule=module;const item=MODULES.find(m=>m.id===module);el('module-heading').textContent=currentApartment.name+' — '+(item?item.name:module);el('asset-title').value='';el('asset-details').value='';el('asset-file').value='';el('asset-date').value=new Date().toISOString().slice(0,10);hideMessage('module-message');showScreen('module-screen');loadModuleAssets()}
+function openApartment(id){const apt=apartments.find(a=>String(a.id)===String(id));if(!apt)return;currentApartment=apt;el('apartment-heading').textContent=apt.name;el('module-grid').innerHTML=MODULES.map(m=>`<div class="card" onclick="openModule('${m.id}')"><div class="ico">${m.icon}</div><h3>${m.name}</h3></div>`).join('');showScreen('apartment-screen');if(apartmentFilter)openModule(apartmentFilter)}
+function openModule(module){if(module==='map'){openApartmentMap();return}currentModule=module;const item=MODULES.find(m=>m.id===module);el('module-heading').textContent=currentApartment.name+' — '+(item?item.name:module);el('asset-title').value='';el('asset-details').value='';el('asset-file').value='';el('asset-date').value=new Date().toISOString().slice(0,10);hideMessage('module-message');showScreen('module-screen');loadModuleAssets()}
+
+function openApartmentMap(){if(!currentApartment)return;const a=currentApartment;const target=(a.latitude!=null&&a.longitude!=null)?`${a.latitude},${a.longitude}`:(a.location||a.name);if(!target){showMessage('dashboard-message','ఈ Apartment‌కు Location లేదు.');return}window.open('https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(target),'_blank','noopener') }
 
 async function loadModuleAssets(){
   if(!currentUser||!currentApartment)return;el('module-assets').innerHTML='<div class="empty">Loading records...</div>';
-  try{const {data,error}=await db.from('apartment_assets').select('*').eq('user_id',currentUser.id).eq('apartment_id',currentApartment.id).eq('category',currentModule).order('created_at',{ascending:false});if(error)throw error;renderModuleAssets(data||[])}
+  try{const {data,error}=await db.from('apartment_assets').select('id,technician,apartment_name,category,title,notes,media_urls,created_at').eq('technician',currentUser.email).eq('apartment_name',currentApartment.name).eq('category',currentModule).order('created_at',{ascending:false});if(error)throw error;renderModuleAssets(data||[])}
   catch(err){el('module-assets').innerHTML='';showMessage('module-message','Could not load records: '+err.message)}
 }
 function renderModuleAssets(rows){
   const box=el('module-assets');if(!rows.length){box.innerHTML='<div class="empty">No records in this section yet.</div>';return}
   box.innerHTML=rows.map(r=>{
-    const title=escapeHTML(r.title||'Untitled record');const details=escapeHTML(r.details||'');const date=safeDate(r.record_date);const urls=Array.isArray(r.media_urls)?r.media_urls:[];
+    const title=escapeHTML(r.title||'Untitled record');const details=escapeHTML(r.notes||'');const date='';const urls=Array.isArray(r.media_urls)?r.media_urls:[];
     const links=urls.map(url=>{const u=String(url);const safe=u.startsWith('https://')?u:'';if(!safe)return '';const ext=safe.split('?')[0].toLowerCase();if(/\.(jpg|jpeg|png|gif|webp|heic)$/.test(ext))return `<a href="${escapeHTML(safe)}" target="_blank" rel="noopener"><img class="asset-media" src="${escapeHTML(safe)}" alt="Attachment"></a>`;if(/\.(mp4|webm|mov|m4v)$/.test(ext))return `<video class="asset-media" controls src="${escapeHTML(safe)}"></video>`;return `<a class="asset-link" href="${escapeHTML(safe)}" target="_blank" rel="noopener">📎 Open attachment</a>`}).join('');
     return `<article class="asset-card"><div class="row" style="justify-content:space-between"><strong>${title}</strong><span class="pill">${escapeHTML(currentModule.toUpperCase())}</span></div>${date?`<div class="muted">Date: ${escapeHTML(date)}</div>`:''}${details?`<p>${details}</p>`:''}${links}<div class="muted">Saved: ${escapeHTML(new Date(r.created_at).toLocaleString())}</div></article>`;
   }).join('');
@@ -163,11 +165,12 @@ async function saveAsset(){
   const button=el('save-asset-btn');button.disabled=true;button.textContent='Saving...';let uploadedPath='';
   try{
     const mediaUrls=[];
-    if(file){const safeName=file.name.replace(/[^a-zA-Z0-9._-]/g,'_');const path=`${currentUser.id}/${currentApartment.id}/${currentModule}/${Date.now()}_${safeName}`;
+    if(file){const safeName=file.name.replace(/[^a-zA-Z0-9._-]/g,'_');const ownerFolder=currentUser.email.replace(/[^a-zA-Z0-9_-]/g,'_');const path=`${ownerFolder}/${currentApartment.id}/${currentModule}/${Date.now()}_${safeName}`;
       const {error:uploadError}=await db.storage.from(STORAGE_BUCKET).upload(path,file,{upsert:false,contentType:file.type||undefined});if(uploadError)throw new Error('File upload failed: '+uploadError.message);uploadedPath=path;
       const {data:urlData}=db.storage.from(STORAGE_BUCKET).getPublicUrl(path);if(urlData?.publicUrl)mediaUrls.push(urlData.publicUrl);
     }
-    const {error}=await db.from('apartment_assets').insert([{user_id:currentUser.id,technician:currentUser.email,apartment_id:currentApartment.id,apartment_name:currentApartment.name,category:currentModule,title:title||file?.name||'Record',details,record_date:recordDate,media_urls:mediaUrls,storage_path:uploadedPath||null}]);if(error)throw error;
+    const savedNotes = (details ? details + '\n' : '') + 'Record date: ' + recordDate;
+    const {error}=await db.from('apartment_assets').insert([{technician:currentUser.email,apartment_name:currentApartment.name,category:currentModule,title:title||file?.name||'Record',notes:savedNotes,media_urls:mediaUrls}]);if(error)throw error;
     el('asset-title').value='';el('asset-details').value='';el('asset-file').value='';hideMessage('module-message');showMessage('module-message','Saved successfully for '+currentApartment.name+'.','ok');await loadModuleAssets();
   }catch(err){showMessage('module-message',err.message||'Could not save record.')}
   finally{button.disabled=false;button.textContent='Save Record'}
