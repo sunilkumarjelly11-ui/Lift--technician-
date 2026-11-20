@@ -46,6 +46,7 @@ button{border-radius:12px;transition:transform .12s ease,filter .12s ease}button
 .apartment-card{text-align:left;background:#fff;border:1px solid #dce6ef;border-radius:16px;padding:17px;margin:10px 0;box-shadow:0 5px 16px rgba(25,55,85,.06);color:var(--ink)}
 .apartment-card strong{font-size:16px;color:var(--navy)}.apartment-card small{display:block;color:var(--muted);margin-top:6px}
 .media-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}.media-actions label{margin:0;background:#edf4fa;border:1px solid #d8e5f0;color:#123b5c;text-align:center;padding:13px;border-radius:12px;cursor:pointer}.media-actions input{display:none}
+.module-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.module-tile{min-height:82px;text-align:center;background:#fff;color:#123b5c;border:1px solid #dce6ef;box-shadow:0 4px 12px rgba(24,55,85,.05)}
 
 
 .map-frame{width:100%;height:260px;border:0;border-radius:14px;background:#e8eef4}
@@ -64,7 +65,7 @@ button{border-radius:12px;transition:transform .12s ease,filter .12s ease}button
 </div></div></section>
 
 <section id="dashboardScreen" class="screen"><header>JSK ELEVATORS</header><div class="container">
-<div class="card"><div class="title">Apartments</div><p class="small">Welcome, <strong id="welcomeName">Technician</strong></p>
+<div class="card"><div class="title">JSK ELEVATORS Dashboard</div><div class="module-grid"><button class="module-tile" type="button" onclick="document.getElementById('apartmentsList').scrollIntoView({behavior:'smooth'})">🏢<br><b>Apartments</b></button><button class="module-tile" type="button" onclick="openDashboardModule('controls')">🎛️<br><b>Controls</b></button><button class="module-tile" type="button" onclick="openDashboardModule('manuals')">📘<br><b>Manuals</b></button><button class="module-tile" type="button" onclick="openDashboardModule('motors')">⚙️<br><b>Motors</b></button></div><hr><div class="title">Apartments</div><p class="small">Welcome, <strong id="welcomeName">Technician</strong></p>
 <div class="apartment-search"><input id="apartmentSearchInput" placeholder="Search apartment name..." oninput="filterApartmentCards()" aria-label="Search apartments"></div>
 <div id="apartmentsList"><div class="empty">Loading apartments...</div></div>
 </div>
@@ -131,6 +132,7 @@ button{border-radius:12px;transition:transform .12s ease,filter .12s ease}button
 
 <section id="apartmentFileScreen" class="screen"><header>Apartment Complete File</header><div class="container">
 <button class="secondary" data-screen="dashboardScreen">← Back to Apartments</button><div id="apartmentFile">Loading...</div></div></section>
+<section id="apartmentModuleScreen" class="screen"><header id="moduleHeader">Apartment Module</header><div class="container"><button class="secondary" type="button" onclick="showScreen('apartmentFileScreen')">← Back to Apartment</button><div id="apartmentModuleContent"></div></div></section>
 <section id="searchScreen" class="screen"><header>Search</header><div class="container">
 <button class="secondary" data-screen="dashboardScreen">← Back to Dashboard</button><div class="card"><div class="title">Search Records</div><input id="searchInput" placeholder="Apartment / Building / Customer / Lift Number"></div><div id="searchResults"></div>
 </div></section>
@@ -147,7 +149,7 @@ const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_wKQWg06T6Qiuv7uN5VJ4Kg_vJtl0x7H
 const ADMIN_EMAIL = "sunilkumarjelly11@gmail.com";
 let supabaseClient = null;
 let liftRecords = [], breakdownRecords = [], maintenanceRecords = [], serviceRecords = [];
-let currentApartment = "", currentReportType = "breakdown";
+let currentApartment = "", currentReportType = "breakdown", currentModule = "controls", apartmentAssets = [];
 
 function $(id){return document.getElementById(id);}
 function esc(value){return String(value == null ? "" : value).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");}
@@ -196,6 +198,7 @@ function showScreen(id){
  if(id==="breakdownScreen")loadBreakdownApartments();
  if(id==="maintenanceScreen")loadMaintenanceApartments();
  if(id==="apartmentFileScreen")renderApartmentFile();
+ if(id==="apartmentModuleScreen")loadApartmentModule();
 }
 async function loadAllData(){
  if(!supabaseClient&&!initSupabase())return;
@@ -249,7 +252,7 @@ async function saveLift(latitude,longitude){
 }
 function getApartmentOptions(){
  const names=new Set(liftRecords.map(r=>(r.customer||"").trim()).filter(Boolean));
- return Array.from(names).sort((a,b)=>a.localeCompare(b));
+ return Array.from(names).sort((a,b)=>a.localeCompare(b,undefined,{numeric:true,sensitivity:"base"}));
 }
 function fillApartmentSelect(selectId,displayId){
  const select=$(selectId);if(!select)return;
@@ -314,7 +317,7 @@ async function loadApartments(){
  try{
   const {data,error}=await supabaseClient.from("apartments").select("*").order("name",{ascending:true});if(error)throw error;
   const names=new Set((data||[]).map(a=>a.name).filter(Boolean));liftRecords.forEach(r=>{if(r.customer)names.add(r.customer);});
-  const apartments=Array.from(names).sort();
+  const apartments=Array.from(names).sort((a,b)=>a.localeCompare(b,undefined,{numeric:true,sensitivity:"base"}));
   if(!apartments.length){box.innerHTML='<div class="empty">No apartments found.</div>';return;}
   box.innerHTML=apartments.map(name=>{
    const lifts=liftRecords.filter(r=>sameApartment(r.customer,name));
@@ -331,6 +334,26 @@ function filterApartmentCards(){
  });
 }
 function openApartmentFile(name){currentApartment=name;showScreen("apartmentFileScreen");}
+function openDashboardModule(category){currentApartment="";currentModule=category;showScreen("apartmentModuleScreen");}
+function openApartmentModule(category){currentModule=category;showScreen("apartmentModuleScreen");}
+const MODULE_NAMES={controls:"Controls",manuals:"Manuals",motors:"Motors",gallery:"Gallery",camera:"Camera",video:"Videos"};
+function moduleTile(category,emoji){return `<button class="module-tile" type="button" onclick="openApartmentModule('${category}')">${emoji}<br><b>${MODULE_NAMES[category]}</b></button>`;}
+async function loadApartmentModule(){
+ const box=$("apartmentModuleContent");if(!box)return;
+ $("moduleHeader").textContent=(currentApartment?currentApartment+" — ":"All Apartments — ")+(MODULE_NAMES[currentModule]||"Module");
+ if(!currentApartment){box.innerHTML=`<div class="card"><div class="title">${MODULE_NAMES[currentModule]}</div><p>ఈ విభాగం ప్రతి Apartment లో విడిగా ఉంటుంది. ముందుగా Apartments నుంచి ఒక Apartment తెరవండి.</p><button class="primary" onclick="showScreen('dashboardScreen')">Go to Apartments</button></div>`;return;}
+ box.innerHTML=`<div class="card"><div class="title">${esc(currentApartment)} · ${MODULE_NAMES[currentModule]}</div><label>Title / Name</label><input id="assetTitle" placeholder="Enter name or model"><label>Details / Notes</label><textarea id="assetNotes" placeholder="Enter details, model number, wiring notes..."></textarea><label>Attach photos, videos or PDF</label><input id="assetFiles" type="file" ${currentModule==="camera"?'accept="image/*" capture="environment"':currentModule==="gallery"?'accept="image/*"':currentModule==="video"?'accept="video/*"':'accept="image/*,video/*,.pdf"'} multiple><div class="small">These files will be saved only under ${esc(currentApartment)}.</div><button class="primary" type="button" onclick="saveApartmentAsset()">SAVE ${MODULE_NAMES[currentModule].toUpperCase()}</button><div id="assetStatus"></div></div><div id="assetList"><div class="empty">Loading saved items...</div></div>`;
+ try{const {data,error}=await supabaseClient.from("apartment_assets").select("*").eq("technician",technician()).eq("apartment_name",currentApartment).eq("category",currentModule).order("created_at",{ascending:false});if(error)throw error;apartmentAssets=data||[];renderApartmentAssets();}
+ catch(e){$("assetList").innerHTML=`<div class="card error">Could not load: ${esc(e.message)}<br><small>Please run the SQL setup supplied with this update.</small></div>`;}
+}
+function renderApartmentAssets(){const box=$("assetList");if(!box)return;box.innerHTML=apartmentAssets.length?apartmentAssets.map(r=>{const files=Array.isArray(r.media_urls)?r.media_urls:[];return `<div class="card"><div class="title">${esc(r.title||MODULE_NAMES[currentModule])}</div><p>${esc(r.notes||"")}</p>${files.map(f=>f.type&&f.type.startsWith("video")?`<video controls style="width:100%;border-radius:12px" src="${esc(f.url)}"></video>`:f.type==="application/pdf"?`<p><a href="${esc(f.url)}" target="_blank" rel="noopener">📄 Open PDF</a></p>`:`<a href="${esc(f.url)}" target="_blank" rel="noopener"><img src="${esc(f.url)}" style="width:100%;max-width:360px;border-radius:12px"></a>`).join("")}<p class="small">${formatDate(r.created_at)}</p></div>`;}).join(""):'<div class="empty">No items saved for this apartment yet.</div>';}
+async function saveApartmentAsset(){
+ const title=$("assetTitle").value.trim(),notes=$("assetNotes").value.trim(),files=[...($("assetFiles").files||[])];
+ const btn=document.querySelector("#apartmentModuleContent button.primary");if(!title&&!notes&&!files.length){setStatus("assetStatus","Enter a title, details or select a file.","error");return;}btn.disabled=true;
+ try{const media=[];for(const file of files){const safe=file.name.replace(/[^a-zA-Z0-9._-]/g,"_");const path=`${technician().replace(/[^a-zA-Z0-9_-]/g,"_")}/${encodeURIComponent(currentApartment)}/${currentModule}/${Date.now()}_${safe}`;const {error:upErr}=await supabaseClient.storage.from("breakdown-media").upload(path,file,{contentType:file.type||"application/octet-stream",upsert:false});if(upErr)throw upErr;const {data}=supabaseClient.storage.from("breakdown-media").getPublicUrl(path);media.push({url:data.publicUrl,type:file.type||"application/octet-stream",name:file.name});}
+ const {error}=await supabaseClient.from("apartment_assets").insert({technician:technician(),apartment_name:currentApartment,category:currentModule,title,notes,media_urls:media});if(error)throw error;setStatus("assetStatus","Saved successfully.","success");await loadApartmentModule();
+ }catch(e){setStatus("assetStatus","Save failed: "+e.message,"error");}finally{btn.disabled=false;}
+}
 function apartmentReportForms(lifts){
  const options=lifts.map(r=>`<option value="${esc(r.liftNumber)}">Lift ${esc(r.liftNumber)}${r.brand?" - "+esc(r.brand):""}</option>`).join("");
  const empty=lifts.length?"":"<option value=\"\">No lift records for this apartment</option>";
@@ -364,6 +387,7 @@ function renderApartmentFile(){
  const maint=maintenanceRecords.filter(r=>sameApartment(r.customer,currentApartment));
  const services=serviceRecords.filter(r=>sameApartment(r.customer,currentApartment));
  let h=`<div class="card"><div class="title">🏢 ${esc(currentApartment)}</div><p>Lifts: <b>${lifts.length}</b></p><p>Breakdowns: <b>${breakdowns.length}</b></p><p>Maintenance: <b>${maint.length}</b></p><p>Services: <b>${services.length}</b></p></div>`;
+ h+=`<div class="card"><div class="title">Apartment Sections</div><div class="module-grid">${moduleTile("controls","🎛️")}${moduleTile("manuals","📘")}${moduleTile("motors","⚙️")}${moduleTile("gallery","🖼️")}${moduleTile("camera","📷")}${moduleTile("video","🎥")}</div></div>`;
  const mappedLift=[...lifts].reverse().find(validCoordinates)||null;
  h+=`<div class="card"><div class="title">📍 Apartment Location</div>${mappedLift?`<iframe class="map-frame" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="${googleEmbedUrl(currentApartment,mappedLift)}" title="Map for ${esc(currentApartment)}"></iframe><p class="map-note">Saved GPS: ${esc(mappedLift.latitude)}, ${esc(mappedLift.longitude)} · Lift ${esc(mappedLift.liftNumber)}</p>`:`<div class="empty">No GPS coordinates saved for this apartment yet. Add lift details and capture GPS to show the exact map.</div>`}${mapActionsHtml(currentApartment,mappedLift)}</div>`;
  h+=apartmentReportForms(lifts);
