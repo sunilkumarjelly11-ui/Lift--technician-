@@ -1,262 +1,179 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JSK Elevators Dashboard</title>
-    <!-- Supabase JS Client -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f4f8; margin: 0; padding: 0; }
-        header { background-color: #1a365d; color: white; padding: 20px; text-align: center; font-size: 24px; font-weight: bold; }
-        .container { max-width: 600px; margin: 20px auto; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
-        .card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; text-align: center; cursor: pointer; transition: 0.2s; }
-        .card:hover { background: #edf2f7; border-color: #cbd5e0; }
-        .card h3 { margin: 10px 0 0 0; color: #2d3748; font-size: 16px; }
-        .card-icon { font-size: 24px; }
-        .section-title { color: #2d3748; font-size: 20px; font-weight: bold; margin-bottom: 10px; border-bottom: 2px solid #e2e8f0; padding-bottom: 5px; }
-        .welcome { color: #718096; font-size: 14px; margin-bottom: 15px; }
-        input[type="text"] { width: 100%; padding: 12px; border: 1px solid #cbd5e0; border-radius: 8px; box-sizing: border-box; margin-bottom: 15px; font-size: 16px; }
-        .error-box { background: #fff5f5; color: #c53030; border: 1px solid #feb2b2; padding: 15px; border-radius: 8px; margin-bottom: 15px; display: none; }
-        .success-box { background: #f0fff4; color: #276749; border: 1px solid #9ae6b4; padding: 15px; border-radius: 8px; margin-bottom: 15px; display: none; }
-        .hidden { display: none !important; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#062542">
+<title>JSK ELEVATORS - Lift Technician</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{--navy:#062542;--blue:#1769aa;--bg:#eef3f8;--line:#dbe4ee;--muted:#64748b;--green:#16834a;--red:#b42318}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Arial,Helvetica,sans-serif;color:#172b3a}header{background:var(--navy);color:white;padding:18px 14px;text-align:center;font-size:22px;font-weight:800;letter-spacing:1px}.container{width:min(720px,calc(100% - 24px));margin:18px auto;background:#fff;padding:18px;border-radius:14px;box-shadow:0 3px 14px #0b274014}.hidden{display:none!important}.title{font-size:20px;font-weight:800;border-bottom:2px solid var(--line);padding-bottom:10px;margin:0 0 14px;color:#20384d}.sub{color:var(--muted);font-size:13px;margin:-5px 0 14px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.card{border:1px solid var(--line);border-radius:12px;padding:17px 10px;text-align:center;background:#f8fafc;cursor:pointer;min-height:95px}.card:active{background:#eaf2fa}.ico{font-size:27px}.card h3{font-size:15px;margin:8px 0 0}.apt-card,.asset-card{border:1px solid var(--line);border-radius:11px;padding:13px;margin:10px 0;background:white}.apt-card{display:flex;justify-content:space-between;align-items:center;gap:10px}.apt-card strong{display:block}.muted{font-size:12px;color:var(--muted);margin-top:4px}input,select,textarea{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:8px;font-size:15px;margin:6px 0 12px;background:#fff}textarea{min-height:88px;resize:vertical}label{font-size:13px;font-weight:700;color:#334155}button{border:0;border-radius:8px;padding:12px 14px;font-size:15px;font-weight:700;cursor:pointer}.primary{background:var(--blue);color:white}.success{background:var(--green);color:white}.secondary{background:#e8eef5;color:#18364f}.danger{background:#fff0ef;color:var(--red)}.full{width:100%}.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.row>*{flex:1}.back{margin-bottom:12px}.message{padding:12px;border-radius:8px;margin:10px 0;display:none;white-space:pre-wrap}.error{background:#fff1f0;color:#a61b1b;border:1px solid #ffc9c4}.ok{background:#effaf2;color:#17663a;border:1px solid #b7e4c7}.small{font-size:12px;color:var(--muted)}.asset-link{display:inline-block;margin-top:8px;color:#075ca8;word-break:break-all}.asset-media{display:block;max-width:100%;max-height:240px;margin-top:10px;border-radius:8px}.pill{display:inline-block;padding:4px 8px;border-radius:20px;background:#eaf2fa;color:#174b78;font-size:11px;font-weight:700}.topline{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:12px}.topline button{padding:9px 11px}.empty{text-align:center;color:#8291a2;padding:22px 8px}.file-note{font-size:12px;color:var(--muted);margin:-5px 0 12px}
+@media(max-width:420px){.container{padding:14px}.grid{gap:9px}.card{padding:14px 8px}}
+</style>
 </head>
 <body>
+<header>JSK ELEVATORS</header>
 
-    <header>JSK ELEVATORS</header>
+<section id="login-screen" class="container">
+  <h2 class="title">Technician Login</h2>
+  <p class="sub">Sign in with your Supabase account.</p>
+  <div id="login-message" class="message error"></div>
+  <label for="email">Email</label><input id="email" type="email" autocomplete="username" placeholder="Enter your email">
+  <label for="password">Password</label><input id="password" type="password" autocomplete="current-password" placeholder="Enter your password">
+  <button class="primary full" id="login-btn" onclick="login()">Sign In</button>
+  <button class="secondary full" style="margin-top:9px" onclick="signUp()">Create New Account</button>
+  <p class="small">If you already have a technician account, use Sign In. New accounts may require email confirmation.</p>
+</section>
 
-    <!-- Login Screen -->
-    <div id="login-screen" class="container">
-        <h2 class="section-title">Login</h2>
-        <input type="text" id="email" placeholder="Email (e.g., sunilkumarjelly11@gmail.com)">
-        <input type="text" id="password" placeholder="Password" type="password">
-        <button onclick="login()" style="width: 100%; padding: 12px; background: #3182ce; color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer;">Sign In</button>
-    </div>
+<section id="dashboard-screen" class="container hidden">
+  <div class="topline"><div><h2 class="title" style="border:0;margin:0;padding:0">Dashboard</h2><div class="small">Welcome, <strong id="user-email"></strong></div></div><button class="danger" onclick="logout()">Logout</button></div>
+  <div id="dashboard-message" class="message"></div>
+  <div class="grid">
+    <div class="card" onclick="openApartmentList('')"><div class="ico">🏢</div><h3>Apartments</h3></div>
+    <div class="card" onclick="openApartmentList('controls')"><div class="ico">🎛️</div><h3>Controls</h3></div>
+    <div class="card" onclick="openApartmentList('manuals')"><div class="ico">📘</div><h3>Manuals</h3></div>
+    <div class="card" onclick="openApartmentList('motors')"><div class="ico">⚙️</div><h3>Motors</h3></div>
+  </div>
+  <h3 class="title" style="margin-top:22px">Add Apartment</h3>
+  <label for="new-apt-name">Apartment / Building Name</label><input id="new-apt-name" type="text" placeholder="Example: Green Park Apartments">
+  <button class="success full" onclick="addApartment()">+ Save Apartment</button>
+  <p class="small">Each apartment has its own Breakdown, Service, Gallery, Camera, Video, Map, Controls, Manuals and Motors sections.</p>
+</section>
 
-    <!-- Dashboard Screen -->
-    <div id="dashboard-screen" class="container hidden">
-        <h2 class="section-title">JSK ELEVATORS Dashboard</h2>
-        
-        <div class="grid">
-            <div class="card" onclick="selectCategory('apartments')">
-                <div class="card-icon">🏢</div>
-                <h3>Apartments</h3>
-            </div>
-            <div class="card" onclick="selectCategory('controls')">
-                <div class="card-icon">🎛️</div>
-                <h3>Controls</h3>
-            </div>
-            <div class="card" onclick="selectCategory('manuals')">
-                <div class="card-icon">📘</div>
-                <h3>Manuals</h3>
-            </div>
-            <div class="card" onclick="selectCategory('motors')">
-                <div class="card-icon">⚙️</div>
-                <h3>Motors</h3>
-            </div>
-        </div>
+<section id="apartment-list-screen" class="container hidden">
+  <div class="topline"><button class="secondary back" onclick="showScreen('dashboard-screen')">← Dashboard</button><span id="list-filter-label" class="pill">All Apartments</span></div>
+  <h2 class="title">Apartments</h2>
+  <input id="apartment-search" type="search" placeholder="Search apartment name..." oninput="filterApartmentList()">
+  <div id="apartment-list"></div>
+</section>
 
-        <h2 class="section-title">Apartments</h2>
-        <div class="welcome">Welcome, <strong id="user-email-display"></strong></div>
-        
-        <!-- Error/Success Messages -->
-        <div id="error-msg" class="error-box"></div>
-        <div id="success-msg" class="success-box"></div>
+<section id="apartment-screen" class="container hidden">
+  <button class="secondary back" onclick="showScreen('apartment-list-screen')">← Apartments</button>
+  <h2 class="title" id="apartment-heading">Apartment</h2>
+  <p class="sub">All information saved here belongs only to this apartment.</p>
+  <div class="grid" id="module-grid"></div>
+</section>
 
-        <!-- Search -->
-        <input type="text" id="search-input" placeholder="Search apartment name..." onkeyup="searchAssets()">
+<section id="module-screen" class="container hidden">
+  <button class="secondary back" onclick="showScreen('apartment-screen')">← Apartment</button>
+  <h2 class="title" id="module-heading">Module</h2>
+  <div id="module-message" class="message"></div>
+  <div id="module-assets"></div>
+  <h3 class="title" style="font-size:17px;margin-top:20px">Add New Record</h3>
+  <label for="asset-title">Title / Description</label><input id="asset-title" type="text" placeholder="Example: Main lift controller panel">
+  <label for="asset-details">Details / Notes</label><textarea id="asset-details" placeholder="Enter model number, issue, service details or notes..."></textarea>
+  <label for="asset-date">Date</label><input id="asset-date" type="date">
+  <label for="asset-file">Photo / Video / Document (optional)</label><input id="asset-file" type="file" accept="image/*,video/*,.pdf,.doc,.docx,.xls,.xlsx" capture="environment">
+  <p class="file-note">You can save a text record without attaching a file. Large video uploads may depend on your Supabase storage limits.</p>
+  <button class="success full" id="save-asset-btn" onclick="saveAsset()">Save Record</button>
+</section>
 
-        <!-- Dynamic Content Area -->
-        <div id="assets-list">
-            <p style="color: #a0aec0; text-align: center;">No assets found yet. Upload one below.</p>
-        </div>
+<script>
+// Supabase project settings: Project URL and Publishable (anon) key are different values.
+const SUPABASE_URL = 'https://bszdhcodjwflhoqxjtqb.supabase.co';
+const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_wKQWg06T6Qiuv7uN5VJ4Kg_vJtl0x7H';
+const STORAGE_BUCKET = 'breakdown-media';
+const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
 
-        <!-- Upload Form (For Demo, using basic file input) -->
-        <div style="margin-top: 20px; border-top: 1px solid #e2e8f0; padding-top: 20px;">
-            <h3 style="color: #2d3748; margin-bottom: 10px;">Upload New Asset</h3>
-            <input type="text" id="apt-name-input" placeholder="Apartment Name">
-            <select id="category-input" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #cbd5e0; margin-bottom: 15px;">
-                <option value="controls">Controls</option>
-                <option value="manuals">Manuals</option>
-                <option value="motors">Motors</option>
-                <option value="gallery">Gallery</option>
-                <option value="camera">Camera</option>
-                <option value="video">Video</option>
-            </select>
-            <input type="file" id="file-input" style="margin-bottom: 15px;">
-            <button onclick="uploadAsset()" style="width: 100%; padding: 12px; background: #38a169; color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer;">Upload</button>
-        </div>
-    </div>
+let currentUser = null;
+let apartments = [];
+let currentApartment = null;
+let currentModule = '';
+let apartmentFilter = '';
+const MODULES = [
+  {id:'breakdown',name:'Breakdown',icon:'🛠️'},
+  {id:'service',name:'Service',icon:'🧰'},
+  {id:'gallery',name:'Gallery',icon:'🖼️'},
+  {id:'camera',name:'Camera',icon:'📷'},
+  {id:'video',name:'Video',icon:'🎥'},
+  {id:'map',name:'Map',icon:'📍'},
+  {id:'controls',name:'Controls',icon:'🎛️'},
+  {id:'manuals',name:'Manuals',icon:'📘'},
+  {id:'motors',name:'Motors',icon:'⚙️'}
+];
 
-    <script>
-        // 1. Initialize Supabase (REPLACE WITH YOUR ACTUAL SUPABASE URL AND ANON KEY)
-        const SUPABASE_URL = 'sb_publishable_wKQWg06T6Qiuv7uN5VJ4Kg_vJtl0x7H';
-        const SUPABASE_ANON_KEY = 'your-anon-key';
-        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+function el(id){return document.getElementById(id)}
+function showScreen(id){['login-screen','dashboard-screen','apartment-list-screen','apartment-screen','module-screen'].forEach(x=>el(x).classList.add('hidden'));el(id).classList.remove('hidden');window.scrollTo(0,0)}
+function showMessage(id,msg,type='error'){const box=el(id);box.textContent=msg;box.className='message '+(type==='ok'?'ok':'error');box.style.display='block'}
+function hideMessage(id){const box=el(id);box.style.display='none';box.textContent=''}
+function escapeHTML(value){return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function safeDate(value){if(!value)return '';const d=new Date(value+'T00:00:00');return Number.isNaN(d.getTime())?'':d.toLocaleDateString()}
 
-        let currentUserEmail = 'sunilkumarjelly11@gmail.com';
+async function login(){
+  hideMessage('login-message');const email=el('email').value.trim();const password=el('password').value;
+  if(!email||!password){showMessage('login-message','Please enter both email and password.');return}
+  el('login-btn').disabled=true;el('login-btn').textContent='Signing in...';
+  try{const {data,error}=await db.auth.signInWithPassword({email,password});if(error)throw error;currentUser=data.user;await afterLogin()}
+  catch(err){showMessage('login-message','Login failed: '+(err.message||'Please check your email and password.'))}
+  finally{el('login-btn').disabled=false;el('login-btn').textContent='Sign In'}
+}
+async function signUp(){
+  hideMessage('login-message');const email=el('email').value.trim();const password=el('password').value;
+  if(!email||!password){showMessage('login-message','Enter email and password first.');return}
+  if(password.length<6){showMessage('login-message','Password must contain at least 6 characters.');return}
+  try{const {data,error}=await db.auth.signUp({email,password});if(error)throw error;if(data.session){currentUser=data.user;await afterLogin()}else{showMessage('login-message','Account request created. Check your email for confirmation, then sign in.','ok')}}
+  catch(err){showMessage('login-message','Sign up failed: '+err.message)}
+}
+async function afterLogin(){el('user-email').textContent=currentUser.email||'';showScreen('dashboard-screen');await loadApartments()}
+async function logout(){await db.auth.signOut();currentUser=null;apartments=[];currentApartment=null;showScreen('login-screen')}
 
-        // 2. Login Function
-        async function login() {
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            
-            // For demo purposes, we bypass actual auth if you don't have passwords set up yet.
-            // In production, use: const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-            
-            currentUserEmail = email;
-            document.getElementById('user-email-display').innerText = email;
-            document.getElementById('login-screen').classList.add('hidden');
-            document.getElementById('dashboard-screen').classList.remove('hidden');
-            
-            // Fetch data after login
-            fetchAssets();
-        }
+async function restoreSession(){try{const {data}=await db.auth.getSession();if(data.session){currentUser=data.session.user;await afterLogin()}else{showScreen('login-screen')}}catch(e){showScreen('login-screen')}}
 
-        // 3. Fetch Assets with SAFE NULL CHECKS
-        async function fetchAssets() {
-            const { data, error } = await supabase
-                .from('apartment_assets')
-                .select('*')
-                .eq('technician', currentUserEmail)
-                .order('created_at', { ascending: false });
+async function loadApartments(){
+  if(!currentUser)return;
+  try{const {data,error}=await db.from('apartments').select('id,name,created_at').eq('user_id',currentUser.id).order('name',{ascending:true});if(error)throw error;apartments=data||[];}
+  catch(err){showMessage('dashboard-message','Could not load apartments: '+err.message+'\nPlease run the supplied SQL setup in Supabase.');return}
+  renderApartmentList();
+}
+async function addApartment(){
+  const name=el('new-apt-name').value.trim();if(!name){showMessage('dashboard-message','Please enter an apartment name.');return}
+  const exists=apartments.some(a=>a.name.toLowerCase()===name.toLowerCase());if(exists){showMessage('dashboard-message','This apartment is already in your list.');return}
+  try{const {error}=await db.from('apartments').insert([{user_id:currentUser.id,technician:currentUser.email, name}]);if(error)throw error;el('new-apt-name').value='';hideMessage('dashboard-message');await loadApartments();showMessage('dashboard-message','Apartment saved successfully.','ok')}
+  catch(err){showMessage('dashboard-message','Could not save apartment: '+err.message)}
+}
+function openApartmentList(filter){apartmentFilter=filter||'';el('list-filter-label').textContent=filter?filter.toUpperCase():'All Apartments';el('apartment-search').value='';renderApartmentList();showScreen('apartment-list-screen')}
+function renderApartmentList(){
+  const list=el('apartment-list');if(!list)return;const query=(el('apartment-search')?.value||'').trim().toLowerCase();
+  const rows=apartments.filter(a=>a.name.toLowerCase().includes(query)).sort((a,b)=>a.name.localeCompare(b.name,undefined,{numeric:true,sensitivity:'base'}));
+  if(!rows.length){list.innerHTML='<div class="empty">No apartments found. Add an apartment from the Dashboard.</div>';return}
+  list.innerHTML=rows.map(a=>`<div class="apt-card"><div><strong>${escapeHTML(a.name)}</strong><div class="muted">Open apartment modules</div></div><button class="primary" onclick="openApartment('${a.id}')">Open →</button></div>`).join('');
+}
+function filterApartmentList(){renderApartmentList()}
+function openApartment(id){const apt=apartments.find(a=>a.id===id);if(!apt)return;currentApartment=apt;el('apartment-heading').textContent=apt.name;el('module-grid').innerHTML=MODULES.map(m=>`<div class="card" onclick="openModule('${m.id}')"><div class="ico">${m.icon}</div><h3>${m.name}</h3></div>`).join('');showScreen('apartment-screen')}
+function openModule(module){currentModule=module;const item=MODULES.find(m=>m.id===module);el('module-heading').textContent=currentApartment.name+' — '+(item?item.name:module);el('asset-title').value='';el('asset-details').value='';el('asset-file').value='';el('asset-date').value=new Date().toISOString().slice(0,10);hideMessage('module-message');showScreen('module-screen');loadModuleAssets()}
 
-            if (error) {
-                showError("Failed to load data: " + error.message);
-                return;
-            }
+async function loadModuleAssets(){
+  if(!currentUser||!currentApartment)return;el('module-assets').innerHTML='<div class="empty">Loading records...</div>';
+  try{const {data,error}=await db.from('apartment_assets').select('*').eq('user_id',currentUser.id).eq('apartment_id',currentApartment.id).eq('category',currentModule).order('created_at',{ascending:false});if(error)throw error;renderModuleAssets(data||[])}
+  catch(err){el('module-assets').innerHTML='';showMessage('module-message','Could not load records: '+err.message)}
+}
+function renderModuleAssets(rows){
+  const box=el('module-assets');if(!rows.length){box.innerHTML='<div class="empty">No records in this section yet.</div>';return}
+  box.innerHTML=rows.map(r=>{
+    const title=escapeHTML(r.title||'Untitled record');const details=escapeHTML(r.details||'');const date=safeDate(r.record_date);const urls=Array.isArray(r.media_urls)?r.media_urls:[];
+    const links=urls.map(url=>{const u=String(url);const safe=u.startsWith('https://')?u:'';if(!safe)return '';const ext=safe.split('?')[0].toLowerCase();if(/\.(jpg|jpeg|png|gif|webp|heic)$/.test(ext))return `<a href="${escapeHTML(safe)}" target="_blank" rel="noopener"><img class="asset-media" src="${escapeHTML(safe)}" alt="Attachment"></a>`;if(/\.(mp4|webm|mov|m4v)$/.test(ext))return `<video class="asset-media" controls src="${escapeHTML(safe)}"></video>`;return `<a class="asset-link" href="${escapeHTML(safe)}" target="_blank" rel="noopener">📎 Open attachment</a>`}).join('');
+    return `<article class="asset-card"><div class="row" style="justify-content:space-between"><strong>${title}</strong><span class="pill">${escapeHTML(currentModule.toUpperCase())}</span></div>${date?`<div class="muted">Date: ${escapeHTML(date)}</div>`:''}${details?`<p>${details}</p>`:''}${links}<div class="muted">Saved: ${escapeHTML(new Date(r.created_at).toLocaleString())}</div></article>`;
+  }).join('');
+}
+async function saveAsset(){
+  if(!currentUser||!currentApartment){showMessage('module-message','Please sign in and open an apartment first.');return}
+  const title=el('asset-title').value.trim();const details=el('asset-details').value.trim();const recordDate=el('asset-date').value||new Date().toISOString().slice(0,10);const file=el('asset-file').files[0];
+  if(!title&&!details&&!file){showMessage('module-message','Enter a title, details, or select a file.');return}
+  const button=el('save-asset-btn');button.disabled=true;button.textContent='Saving...';let uploadedPath='';
+  try{
+    const mediaUrls=[];
+    if(file){const safeName=file.name.replace(/[^a-zA-Z0-9._-]/g,'_');const path=`${currentUser.id}/${currentApartment.id}/${currentModule}/${Date.now()}_${safeName}`;
+      const {error:uploadError}=await db.storage.from(STORAGE_BUCKET).upload(path,file,{upsert:false,contentType:file.type||undefined});if(uploadError)throw new Error('File upload failed: '+uploadError.message);uploadedPath=path;
+      const {data:urlData}=db.storage.from(STORAGE_BUCKET).getPublicUrl(path);if(urlData?.publicUrl)mediaUrls.push(urlData.publicUrl);
+    }
+    const {error}=await db.from('apartment_assets').insert([{user_id:currentUser.id,technician:currentUser.email,apartment_id:currentApartment.id,apartment_name:currentApartment.name,category:currentModule,title:title||file?.name||'Record',details,record_date:recordDate,media_urls:mediaUrls,storage_path:uploadedPath||null}]);if(error)throw error;
+    el('asset-title').value='';el('asset-details').value='';el('asset-file').value='';hideMessage('module-message');showMessage('module-message','Saved successfully for '+currentApartment.name+'.','ok');await loadModuleAssets();
+  }catch(err){showMessage('module-message',err.message||'Could not save record.')}
+  finally{button.disabled=false;button.textContent='Save Record'}
+}
 
-            renderAssets(data);
-        }
-
-        // 4. Render Assets (Prevents the "latitude" crash)
-        function renderAssets(assets) {
-            const list = document.getElementById('assets-list');
-            list.innerHTML = '';
-
-            if (!assets || assets.length === 0) {
-                list.innerHTML = '<p style="color: #a0aec0; text-align: center;">No assets found. Upload one above.</p>';
-                return;
-            }
-
-            assets.forEach(asset => {
-                // SAFE ACCESS: Using optional chaining (?.) to prevent "Cannot read properties of null"
-                const title = asset?.title || 'Untitled';
-                const aptName = asset?.apartment_name || 'Unknown Apartment';
-                const category = asset?.category || 'N/A';
-                const urls = asset?.media_urls || [];
-
-                // Safely handle media URLs
-                let mediaHTML = '';
-                if (urls.length > 0 && urls[0]) {
-                    mediaHTML = `<a href="${urls[0]}" target="_blank" style="color: #3182ce; font-size: 14px;">📎 View Attachment</a>`;
-                }
-
-                const div = document.createElement('div');
-                div.style.cssText = 'border: 1px solid #e2e8f0; padding: 15px; border-radius: 8px; margin-bottom: 10px; background: #fff;';
-                div.innerHTML = `
-                    <h4 style="margin: 0 0 5px 0; color: #2d3748;">${aptName} - ${category.toUpperCase()}</h4>
-                    <p style="margin: 0; color: #718096; font-size: 14px;">${title}</p>
-                    ${mediaHTML}
-                `;
-                list.appendChild(div);
-            });
-        }
-
-        // 5. Upload Asset
-        async function uploadAsset() {
-            const aptName = document.getElementById('apt-name-input').value;
-            const category = document.getElementById('category-input').value;
-            const fileInput = document.getElementById('file-input');
-            const file = fileInput.files[0];
-
-            if (!aptName) {
-                showError("Please enter an apartment name.");
-                return;
-            }
-
-            let fileUrl = '';
-            if (file) {
-                // SAFE FOLDER NAME: Replaces special chars (like @) to match database policy
-                const safeFolderName = currentUserEmail.replace(/[^a-zA-Z0-9_-]/g, '_');
-                const filePath = `${safeFolderName}/${Date.now()}_${file.name}`;
-                
-                // Upload to Supabase Storage
-                const { data: uploadData, error: uploadError } = await supabase.storage
-                    .from('breakdown-media')
-                    .upload(filePath, file);
-
-                if (uploadError) {
-                    showError("Upload failed: " + uploadError.message);
-                    return;
-                }
-
-                // Get public URL
-                const { data: urlData } = supabase.storage
-                    .from('breakdown-media')
-                    .getPublicUrl(filePath);
-                
-                fileUrl = urlData.publicUrl;
-            }
-
-            // Insert into Database
-            const { error: dbError } = await supabase
-                .from('apartment_assets')
-                .insert([{
-                    technician: currentUserEmail,
-                    apartment_name: aptName,
-                    category: category,
-                    title: file ? file.name : 'No File',
-                    media_urls: fileUrl ? [fileUrl] : []
-                }]);
-
-            if (dbError) {
-                showError("Database error: " + dbError.message);
-            } else {
-                showSuccess("Asset uploaded successfully!");
-                document.getElementById('apt-name-input').value = '';
-                fileInput.value = '';
-                fetchAssets(); // Refresh list
-            }
-        }
-
-        // 6. Search Function
-        function searchAssets() {
-            const query = document.getElementById('search-input').value.toLowerCase();
-            const items = document.getElementById('assets-list').children;
-            
-            for (let i = 0; i < items.length; i++) {
-                const text = items[i].innerText.toLowerCase();
-                items[i].style.display = text.includes(query) ? '' : 'none';
-            }
-        }
-
-        // 7. UI Helpers
-        function showError(msg) {
-            const el = document.getElementById('error-msg');
-            el.innerText = msg;
-            el.style.display = 'block';
-            setTimeout(() => el.style.display = 'none', 5000);
-        }
-
-        function showSuccess(msg) {
-            const el = document.getElementById('success-msg');
-            el.innerText = msg;
-            el.style.display = 'block';
-            setTimeout(() => el.style.display = 'none', 5000);
-        }
-        
-        function selectCategory(cat) {
-            if (cat === 'apartments') {
-                // Just scroll to search
-                document.getElementById('search-input').focus();
-            } else {
-                document.getElementById('category-input').value = cat;
-                document.getElementById('apt-name-input').focus();
-            }
-        }
-    </script>
+restoreSession();
+</script>
 </body>
 </html>
